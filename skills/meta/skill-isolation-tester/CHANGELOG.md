@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Network isolation testing
 - Multi-OS testing (Ubuntu, Debian, Fedora)
 
-## [0.1.0] - 2025-11-02
+## [0.1.0] - 2025-11-01
 
 ### Added
 - Initial release of Skill Isolation Tester

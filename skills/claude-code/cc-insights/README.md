@@ -15,18 +15,6 @@ This skill transforms your Claude Code conversations into actionable insights wi
 - 🎯 **Zero Manual Effort**: Fully automatic processing of existing conversations
 - 🚀 **Fast Performance**: <1s search, <10s report generation
 
-## Installation Status
-
-✅ **Globally Installed and Operational** (October 26, 2025)
-
-- **Location**: `~/.claude/skills/cc-insights/`
-- **Database**: 19 conversations indexed (5 claudex + 14 heisenberg)
-- **Messages**: 5,003 total (1,667 user, 2,341 assistant)
-- **RAG Index**: 19 conversations embedded with all-MiniLM-L6-v2 (384-dim)
-- **Status**: Fully functional and ready for use across all projects
-
-**Cross-Project Support**: This skill uses a global database, enabling insights across multiple projects (claudex, heisenberg, etc.).
-
 ## Quick Start
 
 ### 1. Installation
@@ -48,10 +36,10 @@ Process your existing conversations:
 
 ```bash
 # Process all conversations for current project
-python scripts/conversation-processor.py --project-name claudex --verbose --stats
+python scripts/conversation-processor.py --project-name annex --verbose --stats
 
 # Build semantic search index
-python scripts/rag_indexer.py --verbose --stats
+python scripts/rag-indexer.py --verbose --stats
 ```
 
 This one-time setup will:
@@ -121,7 +109,7 @@ User: "Show me files I've modified most often"
 │
 ├── scripts/                   # Core functionality
 │   ├── conversation-processor.py   # Parse JSONL, extract metadata
-│   ├── rag_indexer.py              # Build vector embeddings
+│   ├── rag-indexer.py              # Build vector embeddings
 │   ├── search-conversations.py     # Search interface
 │   └── insight-generator.py        # Report generation
 │
@@ -146,7 +134,7 @@ Parse JSONL files and extract conversation metadata.
 python scripts/conversation-processor.py [OPTIONS]
 
 Options:
-  --project-name TEXT    Project to process (default: claudex)
+  --project-name TEXT    Project to process (default: annex)
   --db-path PATH         Database path
   --reindex              Reprocess all (ignore cache)
   --verbose              Show detailed logs
@@ -164,13 +152,13 @@ Options:
 - SQLite database at `.processed/conversations.db`
 - Processing state for incremental updates
 
-### rag_indexer.py
+### rag-indexer.py
 
 Build vector embeddings for semantic search.
 
 **Usage:**
 ```bash
-python scripts/rag_indexer.py [OPTIONS]
+python scripts/rag-indexer.py [OPTIONS]
 
 Options:
   --db-path PATH         Database path
@@ -309,17 +297,6 @@ All processed data is stored locally in `.processed/` (gitignored):
 
 ## Troubleshooting
 
-### "Cannot import rag_indexer"
-
-**Problem:** Import error when running search-conversations.py
-
-**Solution:** Python module names cannot contain dashes. The file is now named `rag_indexer.py` (underscore, not dash). If you encounter import errors:
-```bash
-cd ~/.claude/skills/cc-insights/scripts
-# Verify the file is named with underscore (not dash)
-ls rag_indexer.py
-```
-
 ### "Database not found"
 
 **Problem:** Scripts can't find `conversations.db`
@@ -327,7 +304,7 @@ ls rag_indexer.py
 **Solution:**
 ```bash
 # Run processor first
-python scripts/conversation-processor.py --project-name claudex --verbose
+python scripts/conversation-processor.py --project-name annex --verbose
 ```
 
 ### "No conversations found"
@@ -363,10 +340,10 @@ pip install sentence-transformers chromadb jinja2 click python-dateutil
 **Solution:**
 ```bash
 # Use smaller batch size
-python scripts/rag_indexer.py --batch-size 16
+python scripts/rag-indexer.py --batch-size 16
 
 # Or use faster model (lower quality)
-python scripts/rag_indexer.py --model all-MiniLM-L6-v2
+python scripts/rag-indexer.py --model all-MiniLM-L6-v2
 ```
 
 ### "Out of memory"
@@ -376,7 +353,7 @@ python scripts/rag_indexer.py --model all-MiniLM-L6-v2
 **Solution:**
 ```bash
 # Smaller batch size
-python scripts/rag_indexer.py --batch-size 8
+python scripts/rag-indexer.py --batch-size 8
 
 # Or process in chunks by date
 python scripts/conversation-processor.py --date-from 2025-10-01 --date-to 2025-10-15
@@ -397,8 +374,8 @@ The system automatically handles incremental updates:
 **Recommended workflow:**
 ```bash
 # Daily/weekly: Run both for new conversations
-python scripts/conversation-processor.py --project-name claudex
-python scripts/rag_indexer.py
+python scripts/conversation-processor.py --project-name annex
+python scripts/rag-indexer.py
 
 # Takes <5s if only a few new conversations
 ```
@@ -480,7 +457,7 @@ Potential additions (not currently implemented):
 A: Never, unless changing models. Use incremental updates.
 
 **Q: Can I change the embedding model?**
-A: Yes, use `--model` flag with rag_indexer.py, then `--rebuild`.
+A: Yes, use `--model` flag with rag-indexer.py, then `--rebuild`.
 
 **Q: Does this work with incognito mode?**
 A: No, incognito conversations aren't saved to JSONL files.
@@ -519,5 +496,5 @@ For issues or questions:
 
 ---
 
-**Built for Connor's claudex project**
+**Built for Connor's annex project**
 *Zero-effort conversation intelligence*

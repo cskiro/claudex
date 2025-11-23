@@ -1,7 +1,7 @@
 ---
 name: tdd-automation
 version: 0.2.0
-description: Automated TDD enforcement for LLM-assisted development with comprehensive safety features
+description: Use PROACTIVELY when starting new projects requiring strict TDD adherence, or when user wants to enforce test-first workflow. Automates red-green-refactor cycle for LLM-assisted development with git hooks, npm scripts, and CLAUDE.md configuration. Not for prototypes or projects without test requirements.
 author: Pattern Suggestion Pipeline
 category: productivity
 status: stable

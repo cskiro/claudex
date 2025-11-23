@@ -1,9 +1,9 @@
-# OpenTelemetry Monitoring Setup Skill
+# Claude Code OpenTelemetry Setup Skill
 
 Automated workflow for setting up OpenTelemetry telemetry collection for Claude Code usage monitoring, cost tracking, and productivity analytics.
 
 **Version:** 1.0.0
-**Author:** Connor
+**Author:** Prometheus Team
 
 ---
 
@@ -20,44 +20,17 @@ Automated workflow for setting up OpenTelemetry telemetry collection for Claude 
 
 ## Quick Start
 
-### Prerequisites Check
-
-**RECOMMENDED:** Run the pre-flight check script before setup:
-
-```bash
-bash templates/preflight-check.sh
-```
-
-This will verify all prerequisites automatically. Alternatively, check manually:
+### Prerequisites
 
 **For Mode 1 (Local PoC):**
-- ✅ Docker Desktop installed and running
-- ✅ Claude Code installed
-- ✅ Write access to `~/.claude/settings.json`
-- ✅ Ports available: 3000, 4317, 4318, 8889, 9090
-- ✅ 5GB+ free disk space
+- Docker Desktop installed and running
+- Claude Code installed
+- Write access to `~/.claude/settings.json`
 
 **For Mode 2 (Enterprise):**
-- ✅ OTEL Collector endpoint URL
-- ✅ Authentication credentials
-- ✅ Write access to `~/.claude/settings.json`
-
-### Critical Configuration Requirements
-
-⚠️ **IMPORTANT:** These settings are REQUIRED in `~/.claude/settings.json`:
-
-```json
-{
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_METRICS_EXPORTER": "otlp",    // CRITICAL - metrics won't send without this
-    "OTEL_LOGS_EXPORTER": "otlp",        // CRITICAL - logs won't send without this
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4317"
-  }
-}
-```
-
-**Missing `OTEL_METRICS_EXPORTER` or `OTEL_LOGS_EXPORTER` will cause silent failure** - telemetry appears enabled but no data is sent.
+- OTEL Collector endpoint URL
+- Authentication credentials
+- Write access to `~/.claude/settings.json`
 
 ### Installation
 
@@ -100,62 +73,22 @@ This skill is designed to be invoked by Claude Code. No manual installation requ
 
 ---
 
-## Common Pitfalls & Fixes
-
-### Issue 1: OTEL Collector Crashes on Startup
-
-**Symptom:** `docker logs claude-otel-collector` shows configuration errors
-
-**Root Causes:**
-1. ❌ `otlphttp/loki` exporter not available in standard collector image
-2. ❌ Deprecated `logging` exporter (use `debug` instead)
-3. ❌ Deprecated `address` field in `service.telemetry.metrics`
-
-**Solution:** Use the provided templates which have these issues fixed.
-
-### Issue 2: No Metrics Appearing in Grafana
-
-**Symptom:** Grafana dashboards show "No data"
-
-**Root Causes:**
-1. ❌ Missing `OTEL_METRICS_EXPORTER: "otlp"` in settings.json
-2. ❌ Missing `OTEL_LOGS_EXPORTER: "otlp"` in settings.json
-3. ❌ Claude Code not restarted after settings change
-
-**Solution:**
-- Add both exporter variables to settings.json
-- Completely restart Claude Code (settings only load at startup)
-- Wait 60 seconds for metrics to export
-
-### Issue 3: Containers Keep Restarting
-
-**Solution:** Check logs and verify configuration against templates:
-
-```bash
-docker logs claude-otel-collector --tail 50
-bash templates/verify-setup.sh
-```
-
----
-
 ## Directory Structure
 
 ```
-otel-monitoring-setup/
+claude-code-otel-setup/
 ├── SKILL.md                  # Main skill definition
 ├── README.md                 # This file
 ├── modes/
 │   ├── mode1-poc-setup.md    # Detailed local setup workflow
 │   └── mode2-enterprise.md   # Detailed enterprise setup workflow
 ├── templates/
-│   ├── docker-compose.yml    # Docker Compose configuration (Loki optional)
-│   ├── otel-collector-config.yml  # OTEL Collector config (fixed)
+│   ├── docker-compose.yml    # Docker Compose configuration
+│   ├── otel-collector-config.yml  # OTEL Collector configuration
 │   ├── prometheus.yml        # Prometheus scrape configuration
 │   ├── grafana-datasources.yml    # Grafana datasource provisioning
-│   ├── settings.json.local   # Complete local settings template
-│   ├── settings.json.enterprise  # Complete enterprise settings template
-│   ├── preflight-check.sh    # Pre-flight validation script (NEW)
-│   ├── verify-setup.sh       # Post-setup verification script (NEW)
+│   ├── settings.json.local   # Local telemetry settings template
+│   ├── settings.json.enterprise  # Enterprise settings template
 │   ├── start-telemetry.sh    # Start script
 │   └── stop-telemetry.sh     # Stop script
 ├── dashboards/
@@ -312,7 +245,27 @@ docker compose logs
 
 ## Known Issues
 
-### Issue 1: Metric Double Prefix
+### Issue 1: 🚨 CRITICAL - Missing OTEL Exporters
+
+**Description:** Claude Code not sending telemetry even with `CLAUDE_CODE_ENABLE_TELEMETRY=1`
+
+**Cause:** Missing required `OTEL_METRICS_EXPORTER` and `OTEL_LOGS_EXPORTER` settings
+
+**Solution:** The skill templates include these by default. **Always verify** they're present in settings.json. See Configuration Reference for details.
+
+---
+
+### Issue 2: OTEL Collector Deprecated 'address' Field
+
+**Description:** Collector crashes with "'address' has invalid keys" error
+
+**Cause:** The `address` field in `service.telemetry.metrics` is deprecated in collector v0.123.0+
+
+**Solution:** Skill templates have this removed. If using custom config, remove the deprecated field.
+
+---
+
+### Issue 3: Metric Double Prefix
 
 **Description:** Metrics are named `claude_code_claude_code_*` instead of `claude_code_*`
 
@@ -322,7 +275,7 @@ docker compose logs
 
 ---
 
-### Issue 2: Dashboard Datasource UID Mismatch
+### Issue 4: Dashboard Datasource UID Mismatch
 
 **Description:** Dashboard shows "datasource prometheus not found"
 
@@ -332,7 +285,7 @@ docker compose logs
 
 ---
 
-### Issue 3: OTEL Collector Deprecated Exporter
+### Issue 5: OTEL Collector Deprecated Exporter
 
 **Description:** Container fails with "logging exporter has been deprecated"
 
@@ -346,12 +299,21 @@ docker compose logs
 
 ### Settings.json (Local)
 
+**🚨 CRITICAL REQUIREMENTS:**
+
+The following settings are **REQUIRED** (not optional) for telemetry to work:
+- `CLAUDE_CODE_ENABLE_TELEMETRY: "1"` - Enables telemetry system
+- `OTEL_METRICS_EXPORTER: "otlp"` - **REQUIRED** to send metrics (most common missing setting!)
+- `OTEL_LOGS_EXPORTER: "otlp"` - **REQUIRED** to send events/logs
+
+Without `OTEL_METRICS_EXPORTER` and `OTEL_LOGS_EXPORTER`, telemetry will not send even if `CLAUDE_CODE_ENABLE_TELEMETRY=1` is set.
+
 ```json
 {
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_METRICS_EXPORTER": "otlp",
-    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_METRICS_EXPORTER": "otlp",           // REQUIRED!
+    "OTEL_LOGS_EXPORTER": "otlp",              // REQUIRED!
     "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
     "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4317",
     "OTEL_METRIC_EXPORT_INTERVAL": "60000",
@@ -367,12 +329,16 @@ docker compose logs
 
 ### Settings.json (Enterprise)
 
+**Same CRITICAL requirements apply:**
+- `OTEL_METRICS_EXPORTER: "otlp"` - **REQUIRED!**
+- `OTEL_LOGS_EXPORTER: "otlp"` - **REQUIRED!**
+
 ```json
 {
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_METRICS_EXPORTER": "otlp",
-    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_METRICS_EXPORTER": "otlp",           // REQUIRED!
+    "OTEL_LOGS_EXPORTER": "otlp",              // REQUIRED!
     "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
     "OTEL_EXPORTER_OTLP_ENDPOINT": "https://otel.company.com:4317",
     "OTEL_EXPORTER_OTLP_HEADERS": "Authorization=Bearer YOUR_API_KEY",
@@ -530,6 +496,22 @@ This skill is maintained by the Prometheus Team.
 ---
 
 ## Changelog
+
+### Version 1.1.0 (2025-11-01)
+
+**Critical Updates from Production Testing:**
+- 🚨 **CRITICAL FIX**: Documented missing OTEL_METRICS_EXPORTER/OTEL_LOGS_EXPORTER as #1 cause of "telemetry not working"
+- ✅ Added deprecated `address` field fix for OTEL Collector v0.123.0+
+- ✅ Enhanced troubleshooting with prominent exporter configuration section
+- ✅ Updated all documentation with CRITICAL warnings for required settings
+- ✅ Added comprehensive Known Issues section covering production scenarios
+- ✅ Verified templates have correct exporter configuration
+
+**What Changed:**
+- Troubleshooting guide now prioritizes missing exporters as root cause
+- Known Issues expanded from 3 to 6 issues with production learnings
+- Configuration Reference includes prominent CRITICAL requirements callout
+- SKILL.md Important Reminders section updated with exporter warnings
 
 ### Version 1.0.0 (2025-10-31)
 

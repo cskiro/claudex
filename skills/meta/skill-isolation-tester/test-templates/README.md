@@ -11,6 +11,61 @@ These templates provide standardized testing workflows for different skill types
 - Detailed reporting with pass/fail criteria
 - Automatic cleanup on exit (success or failure)
 
+## CI/CD Integration with JSON Output
+
+All test templates support JSON output for integration with CI/CD pipelines. The JSON reporter generates:
+- **Structured JSON** - Machine-readable test results
+- **JUnit XML** - Compatible with Jenkins, GitLab CI, GitHub Actions
+- **Markdown Summary** - Human-readable reports for GitHub Actions
+
+**Enable JSON output:**
+```bash
+export JSON_ENABLED=true
+./test-templates/docker-skill-test-json.sh my-skill
+```
+
+**Output files:**
+- `test-report.json` - Full structured test data
+- `test-report.junit.xml` - JUnit format for CI systems
+- `test-report.md` - Markdown summary
+
+**JSON Report Structure:**
+```json
+{
+  "test_name": "docker-skill-test",
+  "skill_name": "my-skill",
+  "timestamp": "2025-11-02T12:00:00Z",
+  "status": "passed",
+  "duration_seconds": 45,
+  "exit_code": 0,
+  "metrics": {
+    "containers_created": 2,
+    "images_created": 1,
+    "execution_duration_seconds": 12
+  },
+  "issues": [],
+  "recommendations": []
+}
+```
+
+**GitHub Actions Integration:**
+```yaml
+- name: Test Skill
+  run: |
+    export JSON_ENABLED=true
+    ./test-templates/docker-skill-test-json.sh my-skill
+
+- name: Upload Test Results
+  uses: actions/upload-artifact@v3
+  with:
+    name: test-results
+    path: /tmp/skill-test-*/test-report.*
+```
+
+See `lib/json-reporter.sh` for full API documentation.
+
+---
+
 ## Available Templates
 
 ### 1. Docker Skill Test (`docker-skill-test.sh`)

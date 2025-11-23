@@ -217,5 +217,5 @@ Apache 2.0 - Example skill for demonstration
 ---
 
 **Maintained By**: Connor (based on Anthropic Skills framework)
-**Repository**: https://github.com/cskiro/claudex/tree/main/claude-md-auditor
+**Repository**: https://github.com/cskiro/annex/tree/main/claude-md-auditor
 **Documentation**: See README.md and reference/ directory

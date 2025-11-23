@@ -29,8 +29,13 @@ exporters:
     const_labels:
       source: claude_code_telemetry
 
+  # Export logs to Loki via OTLP HTTP
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+
   # Debug exporter (outputs to console for troubleshooting)
-  # Use this to view incoming telemetry data in real-time
   debug:
     verbosity: normal
 
@@ -44,13 +49,8 @@ service:
     logs:
       receivers: [otlp]
       processors: [memory_limiter, batch, resource]
-      exporters: [debug]
+      exporters: [otlphttp/loki, debug]
 
   telemetry:
     logs:
       level: info
-
-# NOTE: Log export to Loki requires additional configuration.
-# The otlphttp/loki exporter is not available in the standard collector image.
-# For log collection, consider using Promtail or Grafana Alloy as separate services.
-# Current setup uses debug exporter to view logs in collector output for troubleshooting.

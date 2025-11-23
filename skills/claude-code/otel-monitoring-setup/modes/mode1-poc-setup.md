@@ -8,26 +8,12 @@ Complete step-by-step process for setting up a local OpenTelemetry stack for Cla
 
 **Goal:** Create a complete local telemetry monitoring stack
 **Time:** 5-7 minutes
-**Prerequisites:** Docker Desktop, Claude Code
+**Prerequisites:** Docker Desktop, Claude Code, 2GB+ free disk space
 **Output:** Running Grafana dashboard with Claude Code metrics
 
 ---
 
 ## Phase 0: Prerequisites Verification
-
-**RECOMMENDED:** Run the automated pre-flight check script before manual verification:
-
-```bash
-# Download and run the pre-flight check
-curl -fsSL https://raw.githubusercontent.com/your-repo/otel-monitoring-setup/main/templates/preflight-check.sh | bash
-
-# Or if you have the skill installed:
-bash ~/.claude/skills/otel-monitoring-setup/templates/preflight-check.sh
-```
-
-The script will automatically check all prerequisites below. If you prefer manual verification, continue with the steps below.
-
----
 
 ### Step 0.1: Check Docker Installation
 
@@ -96,6 +82,7 @@ The following ports are required but already in use:
 - 4318: OTEL Collector (HTTP)
 - 8889: OTEL Collector (Prometheus exporter)
 - 9090: Prometheus
+- 3100: Loki
 
 Options:
 1. Stop services using these ports
@@ -110,12 +97,17 @@ Options:
 # Check available disk space
 df -h ~
 
-# Recommended: At least 5GB free
+# Minimum: 2GB free (for Docker images ~1.5GB + data volumes)
+# Recommended: 5GB+ free for comfortable operation
 ```
 
 **If low disk space:**
 ```
-Low disk space detected. Docker images and data require ~2-3GB.
+Low disk space detected. Setup requires:
+- Initial: ~1.5GB for Docker images (OTEL, Prometheus, Grafana, Loki)
+- Runtime: 500MB+ for data volumes (grows over time)
+- Minimum: 2GB free disk space required
+
 Please free up space before continuing.
 ```
 
@@ -148,7 +140,7 @@ ls -la ~/.claude/telemetry
 services:
   # OpenTelemetry Collector - receives telemetry from Claude Code
   otel-collector:
-    image: otel/opentelemetry-collector-contrib:latest
+    image: otel/opentelemetry-collector-contrib:0.115.1
     container_name: claude-otel-collector
     command: ["--config=/etc/otel-collector-config.yml"]
     volumes:
@@ -162,7 +154,7 @@ services:
 
   # Prometheus - stores metrics
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.55.1
     container_name: claude-prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -182,7 +174,7 @@ services:
 
   # Loki - stores logs
   loki:
-    image: grafana/loki:latest
+    image: grafana/loki:3.0.0
     container_name: claude-loki
     ports:
       - "3100:3100"
@@ -194,7 +186,7 @@ services:
 
   # Grafana - visualization dashboards
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:11.3.0
     container_name: claude-grafana
     ports:
       - "3000:3000"
@@ -223,14 +215,20 @@ volumes:
 
 **Write to:** `~/.claude/telemetry/docker-compose.yml`
 
+**Note on Image Versions:**
+- Versions are pinned to prevent breaking changes from upstream
+- Current versions (tested and stable):
+  - OTEL Collector: 0.115.1
+  - Prometheus: v2.55.1
+  - Loki: 3.0.0
+  - Grafana: 11.3.0
+- To update: Change version tags in docker-compose.yml and run `docker compose pull`
+
 ### Step 2.2: Create OTEL Collector Configuration
 
-**Template:** `templates/otel-collector-config.yml`
+**Template:** `templates/otel-collector-config-template.yml`
 
-**CRITICAL FIXES:**
-- ✅ Uses `debug` exporter (not deprecated `logging` exporter)
-- ✅ Removed `otlphttp/loki` exporter (not available in standard collector image)
-- ✅ No deprecated `address` field in telemetry section
+**CRITICAL:** Use `debug` exporter, not deprecated `logging` exporter
 
 ```yaml
 receivers:
@@ -264,7 +262,13 @@ exporters:
     const_labels:
       source: claude_code_telemetry
 
-  # Debug exporter (outputs to console for troubleshooting)
+  # Export logs to Loki via OTLP HTTP
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+
+  # Debug exporter (replaces deprecated logging exporter)
   debug:
     verbosity: normal
 
@@ -278,15 +282,11 @@ service:
     logs:
       receivers: [otlp]
       processors: [memory_limiter, batch, resource]
-      exporters: [debug]
+      exporters: [otlphttp/loki, debug]
 
   telemetry:
     logs:
       level: info
-
-# NOTE: Log export to Loki requires additional configuration.
-# The otlphttp/loki exporter is not available in the standard collector image.
-# For log collection, consider using Promtail or Grafana Alloy as separate services.
 ```
 
 **Write to:** `~/.claude/telemetry/otel-collector-config.yml`
@@ -396,14 +396,61 @@ docker compose down
 
 echo "✅ Telemetry stack stopped"
 echo ""
-echo "💡 To completely remove data volumes, run:"
-echo "   cd ~/.claude/telemetry && docker compose down -v"
+echo "Note: Data is preserved in Docker volumes."
+echo "To start again: ./start-telemetry.sh"
+echo "To completely remove all data: ./cleanup-telemetry.sh"
 ```
 
 **Write to:** `~/.claude/telemetry/stop-telemetry.sh`
 
 ```bash
 chmod +x ~/.claude/telemetry/stop-telemetry.sh
+```
+
+**Cleanup Script (Full Data Removal):**
+
+```bash
+#!/bin/bash
+# cleanup-telemetry.sh
+
+echo "⚠️  WARNING: This will remove ALL telemetry data including:"
+echo "  - All containers"
+echo "  - All Docker volumes (Grafana, Prometheus, Loki data)"
+echo "  - Network configuration"
+echo ""
+read -p "Are you sure you want to proceed? (yes/no): " -r
+echo
+
+if [[ ! $REPLY =~ ^[Yy][Ee][Ss]$ ]]; then
+    echo "Cleanup cancelled."
+    exit 0
+fi
+
+echo "Performing full cleanup of Claude Code telemetry stack..."
+
+cd ~/.claude/telemetry || exit 1
+
+docker compose down -v
+
+echo ""
+echo "✅ Full cleanup complete!"
+echo ""
+echo "Removed:"
+echo "  ✓ All containers (otel-collector, prometheus, loki, grafana)"
+echo "  ✓ All volumes (all historical data)"
+echo "  ✓ Network configuration"
+echo ""
+echo "Preserved:"
+echo "  ✓ Configuration files in ~/.claude/telemetry/"
+echo "  ✓ Claude Code settings in ~/.claude/settings.json"
+echo ""
+echo "To start fresh: ./start-telemetry.sh"
+```
+
+**Write to:** `~/.claude/telemetry/cleanup-telemetry.sh`
+
+```bash
+chmod +x ~/.claude/telemetry/cleanup-telemetry.sh
 ```
 
 ---
@@ -478,12 +525,6 @@ cat ~/.claude/settings.json
 
 ### Step 4.3: Merge Telemetry Configuration
 
-**CRITICAL:** The following variables are REQUIRED for telemetry to work:
-- ✅ `CLAUDE_CODE_ENABLE_TELEMETRY`: "1"
-- ✅ `OTEL_METRICS_EXPORTER`: "otlp" (REQUIRED - metrics won't send without this)
-- ✅ `OTEL_LOGS_EXPORTER`: "otlp" (REQUIRED - logs won't send without this)
-- ✅ `OTEL_EXPORTER_OTLP_ENDPOINT`: "http://localhost:4317"
-
 **Add to settings.json `env` section:**
 
 ```json
@@ -505,11 +546,9 @@ cat ~/.claude/settings.json
 }
 ```
 
-**Template:** Use `templates/settings.json.local` as a complete reference
+**Template:** `templates/settings-env-template.json`
 
-**IMPORTANT:**
-- Merge with existing env vars, don't replace entire settings file
-- Missing OTEL_METRICS_EXPORTER or OTEL_LOGS_EXPORTER will cause silent failure (no metrics sent)
+**Note:** Merge with existing env vars, don't replace entire settings file
 
 ### Step 4.4: Verify Settings Updated
 
@@ -608,21 +647,6 @@ curl -X POST http://admin:admin@localhost:3000/api/dashboards/db \
 ---
 
 ## Phase 6: Verification & Testing
-
-**RECOMMENDED:** Run the automated verification script:
-
-```bash
-# Run from telemetry directory
-cd ~/.claude/telemetry
-bash ../skills/otel-monitoring-setup/templates/verify-setup.sh
-
-# Or download directly
-curl -fsSL https://raw.githubusercontent.com/your-repo/otel-monitoring-setup/main/templates/verify-setup.sh | bash
-```
-
-The script will automatically verify all components below. For manual verification, continue with the steps below.
-
----
 
 ### Step 6.1: Verify OTEL Collector Receiving Data
 
@@ -734,9 +758,10 @@ Use Claude Code to:
    • Tool execution metrics
 
 ⚙️  Management:
-   Start:  ~/.claude/telemetry/start-telemetry.sh
-   Stop:   ~/.claude/telemetry/stop-telemetry.sh
-   Logs:   docker logs claude-otel-collector
+   Start:   ~/.claude/telemetry/start-telemetry.sh
+   Stop:    ~/.claude/telemetry/stop-telemetry.sh (preserves data)
+   Cleanup: ~/.claude/telemetry/cleanup-telemetry.sh (removes all data)
+   Logs:    docker logs claude-otel-collector
 
 🚀 Next Steps:
    1. ✅ Restart Claude Code (telemetry activates on startup)

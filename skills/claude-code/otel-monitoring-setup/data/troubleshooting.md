@@ -4,22 +4,6 @@ Common issues and solutions for Claude Code OpenTelemetry setup.
 
 ---
 
-## Quick Diagnostics
-
-**Before manual troubleshooting, run these automated scripts:**
-
-```bash
-# Pre-flight check (before setup)
-bash templates/preflight-check.sh
-
-# Setup verification (after setup)
-bash templates/verify-setup.sh
-```
-
-These scripts will automatically detect most common issues and provide specific fixes.
-
----
-
 ## Container Issues
 
 ### Docker Not Running
@@ -55,45 +39,18 @@ docker compose logs prometheus
 
 **Common Causes:**
 
-**1. OTEL Collector Configuration Error - Loki Exporter**
-
-**Symptom:**
-```bash
-docker logs claude-otel-collector
-# Error: failed to get config: cannot unmarshal the configuration
-# '' has invalid keys: otlphttp/loki
-```
-
-**Root Cause:** The `otlphttp/loki` exporter is not available in the standard OTEL Collector image.
-
-**Solution:** Update `otel-collector-config.yml` to remove Loki exporter:
-```yaml
-exporters:
-  # Remove this:
-  # otlphttp/loki:
-  #   endpoint: http://loki:3100/otlp
-
-  # Keep only:
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-  debug:
-    verbosity: normal
-
-service:
-  pipelines:
-    logs:
-      receivers: [otlp]
-      processors: [memory_limiter, batch, resource]
-      exporters: [debug]  # Changed from [otlphttp/loki, debug]
-```
-
-**2. Deprecated Logging Exporter**
+**1. OTEL Collector Configuration Error**
 ```bash
 # Check for errors
-docker compose logs otel-collector | grep -i "logging exporter"
+docker compose logs otel-collector | grep -i error
+
+# Common issues:
+# - Deprecated logging exporter
+# - Deprecated 'address' field in telemetry.metrics
 ```
 
-**Solution:** Update `otel-collector-config.yml`:
+**Solution A - Deprecated logging exporter:**
+Update `otel-collector-config.yml`:
 ```yaml
 exporters:
   debug:
@@ -103,26 +60,21 @@ exporters:
   #   loglevel: info
 ```
 
-**3. Deprecated Address Field**
+**Solution B - Deprecated 'address' field (v0.123.0+):**
 
-**Symptom:**
-```bash
-docker logs claude-otel-collector
-# Error: '' has invalid keys: address
-```
+If logs show: `'address' has invalid keys` or similar error:
 
-**Root Cause:** The `address` field in `service.telemetry.metrics` is deprecated in newer OTEL Collector versions.
-
-**Solution:** Remove the address field from otel-collector-config.yml:
+Update `otel-collector-config.yml`:
 ```yaml
 service:
   telemetry:
-    logs:
-      level: info
-    # Remove this entire metrics section:
-    # metrics:
-    #   address: localhost:8888
+    metrics:
+      level: detailed
+      # REMOVE this line (deprecated in v0.123.0+):
+      # address: ":8888"
 ```
+
+The `address` field in `service.telemetry.metrics` is deprecated in newer OTEL Collector versions. Simply remove it - the collector will use default internal metrics endpoint.
 
 **2. Port Already in Use**
 ```bash
@@ -175,35 +127,63 @@ docker compose logs --tail=50 <service-name>
 
 ## Claude Code Settings Issues
 
-### Telemetry Not Sending
+### 🚨 CRITICAL: Telemetry Not Sending (Most Common Issue)
 
 **Symptom:** No metrics appearing in Prometheus after Claude Code restart
 
+**ROOT CAUSE (90% of cases):** Missing required exporter environment variables
+
+Even when `CLAUDE_CODE_ENABLE_TELEMETRY=1` is set, telemetry **will not send** without explicit exporter configuration. This is the #1 most common issue.
+
 **Diagnosis Checklist:**
 
-**1. Verify telemetry is enabled:**
+**1. Check REQUIRED exporters (MOST IMPORTANT):**
+```bash
+jq '.env.OTEL_METRICS_EXPORTER' ~/.claude/settings.json
+# Must return: "otlp" (NOT null, NOT missing)
+
+jq '.env.OTEL_LOGS_EXPORTER' ~/.claude/settings.json
+# Should return: "otlp" (recommended for event tracking)
+```
+
+**If either returns `null` or is missing, this is your problem!**
+
+**2. Verify telemetry is enabled:**
 ```bash
 jq '.env.CLAUDE_CODE_ENABLE_TELEMETRY' ~/.claude/settings.json
 # Should return: "1"
 ```
 
-**2. CRITICAL: Check for REQUIRED OTEL exporter variables:**
+**3. Check OTEL endpoint:**
 ```bash
-# These are REQUIRED - metrics won't send without them!
-jq '.env.OTEL_METRICS_EXPORTER' ~/.claude/settings.json
-# Must return: "otlp"
-
-jq '.env.OTEL_LOGS_EXPORTER' ~/.claude/settings.json
-# Must return: "otlp"
+jq '.env.OTEL_EXPORTER_OTLP_ENDPOINT' ~/.claude/settings.json
+# Should return: "http://localhost:4317" (for local setup)
 ```
 
-**Common Issue:** Missing OTEL_METRICS_EXPORTER and OTEL_LOGS_EXPORTER
-
-Even if `CLAUDE_CODE_ENABLE_TELEMETRY` is set to "1", Claude Code will not send metrics unless these exporters are explicitly configured.
-
-**Solution:**
+**3. Verify JSON is valid:**
 ```bash
-# Add to ~/.claude/settings.json under "env":
+jq empty ~/.claude/settings.json
+# No output = valid JSON
+```
+
+**4. Check if Claude Code was restarted:**
+```bash
+# Telemetry config only loads at startup!
+# Must quit and restart Claude Code completely
+```
+
+**5. Test OTEL endpoint connectivity:**
+```bash
+nc -zv localhost 4317
+# Should show: Connection to localhost port 4317 [tcp/*] succeeded!
+```
+
+**Solutions:**
+
+**If exporters are missing (MOST COMMON):**
+
+Add these REQUIRED settings to ~/.claude/settings.json:
+```json
 {
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
@@ -215,33 +195,7 @@ Even if `CLAUDE_CODE_ENABLE_TELEMETRY` is set to "1", Claude Code will not send 
 }
 ```
 
-Then restart Claude Code completely.
-
-**3. Check OTEL endpoint:**
-```bash
-jq '.env.OTEL_EXPORTER_OTLP_ENDPOINT' ~/.claude/settings.json
-# Should return: "http://localhost:4317" (for local setup)
-```
-
-**4. Verify JSON is valid:**
-```bash
-jq empty ~/.claude/settings.json
-# No output = valid JSON
-```
-
-**5. Check if Claude Code was restarted:**
-```bash
-# Telemetry config only loads at startup!
-# Must quit and restart Claude Code completely
-```
-
-**6. Test OTEL endpoint connectivity:**
-```bash
-nc -zv localhost 4317
-# Should show: Connection to localhost port 4317 [tcp/*] succeeded!
-```
-
-**Solutions:**
+Then **MUST restart Claude Code** (settings only load at startup).
 
 **If endpoint unreachable:**
 - Verify OTEL Collector container is running
