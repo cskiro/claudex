@@ -193,6 +193,45 @@ When team members trust your repository, plugins install automatically.
 
 ---
 
+## Troubleshooting
+
+### Plugin Not Found: productivity-tools
+
+**Error:**
+```
+✘ productivity-tools@claudex
+   Plugin 'productivity-tools' not found in marketplace 'claudex'
+```
+
+**Cause:** In marketplace v1.1.3 (November 2025), `productivity-tools` was renamed to `claude-code-tools` to better reflect its purpose.
+
+**Solution:** Update your Claude Code settings to use the new plugin name:
+
+1. **Check user settings** (`~/.claude/settings.json`):
+   ```json
+   {
+     "enabledPlugins": [
+       "claude-code-tools@claudex"  // ← was "productivity-tools@claudex"
+     ]
+   }
+   ```
+
+2. **Check project settings** (`.claude/settings.json` in your project):
+   ```json
+   {
+     "enabledPlugins": [
+       "claude-code-tools@claudex"  // ← was "productivity-tools@claudex"
+     ]
+   }
+   ```
+
+3. **Update the marketplace** to ensure you have the latest plugin structure:
+   ```bash
+   /plugin marketplace update claudex
+   ```
+
+---
+
 ## License
 
 Apache 2.0
