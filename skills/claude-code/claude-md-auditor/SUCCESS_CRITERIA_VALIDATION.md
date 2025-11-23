@@ -185,7 +185,7 @@ Connor's CLAUDE.md demonstrates excellent clarity:
 - ✅ **Specific standards**: "TypeScript strict mode", "80% test coverage"
 - ✅ **Measurable criteria**: Numeric thresholds, explicit rules
 - ✅ **No vague advice**: All instructions actionable
-- ✅ **Project-specific**: Focused on claudex project requirements
+- ✅ **Project-specific**: Focused on annex project requirements
 
 **Refactored Template Clarity**:
 ```markdown

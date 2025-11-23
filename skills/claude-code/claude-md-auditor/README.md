@@ -130,8 +130,8 @@ ls ~/.claude/skills/claude-md-auditor/SKILL.md
 
 ```bash
 # Clone repository
-git clone https://github.com/cskiro/claudex.git
-cd claudex/claude-md-auditor
+git clone https://github.com/cskiro/annex.git
+cd annex/claude-md-auditor
 
 # Run directly (Python 3.8+ required, no dependencies)
 python scripts/analyzer.py path/to/CLAUDE.md

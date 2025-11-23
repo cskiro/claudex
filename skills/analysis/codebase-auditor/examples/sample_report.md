@@ -40,7 +40,7 @@
 Found potential secret on line 12
 
 ```typescript
-const API_KEY = "sk_live_[REDACTED_FOR_SECURITY]";
+const API_KEY = "sk_live_1234567890abcdef1234567890abcdef";
 ```
 
 **Impact**: Exposed secrets can lead to unauthorized access and data breaches

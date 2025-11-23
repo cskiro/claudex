@@ -10,11 +10,10 @@ datasources:
     jsonData:
       timeInterval: "15s"
 
-  # Loki datasource - Uncomment if you enable Loki service in docker-compose.yml
-  # - name: Loki
-  #   type: loki
-  #   access: proxy
-  #   url: http://loki:3100
-  #   editable: true
-  #   jsonData:
-  #     maxLines: 1000
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    editable: true
+    jsonData:
+      maxLines: 1000
