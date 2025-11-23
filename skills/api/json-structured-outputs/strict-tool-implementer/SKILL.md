@@ -1,9 +1,10 @@
 ---
 name: strict-tool-implementer
-version: 0.1.0
-description: Use PROACTIVELY when building multi-step agentic workflows with validated tool parameters. Implements Anthropic's strict tool use mode (`strict: true`) for guaranteed schema compliance. Covers tool schema design, multi-tool agent workflows, error handling, testing, and production patterns. Not for data extraction or classification tasks (use json-outputs-implementer instead).
-author: Connor
-category: api-features
+description: >-
+  Use PROACTIVELY when building multi-step agentic workflows with validated tool parameters.
+  Implements Anthropic's strict tool use mode for guaranteed schema compliance.
+  Covers tool schema design, multi-tool agent workflows, error handling, testing, and production patterns.
+  Not for data extraction or classification tasks (use json-outputs-implementer instead).
 ---
 
 # Strict Tool Implementer

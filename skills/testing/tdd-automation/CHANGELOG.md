@@ -1,21 +1,14 @@
 # Changelog
 
-All notable changes to the TDD Automation skill will be documented in this file.
+## 0.2.0
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+- Refactored to Anthropic progressive disclosure pattern
+- Updated description with "Use PROACTIVELY when..." format
+- Removed version/author/category/tags from frontmatter
 
-## [Unreleased]
+## 0.1.0
 
-### Added
-- Initial skill implementation
-- Automated TDD workflow enforcement
-- Test execution and validation
-
-## [0.1.0] - 2024-11-14
-
-### Added
-- Initial release of TDD Automation skill
-- RED-GREEN-REFACTOR cycle enforcement
+- Initial release with RED-GREEN-REFACTOR cycle enforcement
+- Automated TDD workflow with git hooks and npm scripts
 - CPU usage prevention safeguards
-- Integration with testing trophy methodology
+- Integration with Testing Trophy methodology

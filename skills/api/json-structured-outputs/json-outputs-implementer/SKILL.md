@@ -1,9 +1,10 @@
 ---
 name: json-outputs-implementer
-version: 0.1.0
-description: Use PROACTIVELY when extracting structured data from text/images, classifying content, or formatting API responses with guaranteed schema compliance. Implements Anthropic's JSON outputs mode (`output_format`) with Pydantic/Zod SDK integration. Covers schema design, validation, testing, and production optimization. Not for tool parameter validation or agentic workflows (use strict-tool-implementer instead).
-author: Connor
-category: api-features
+description: >-
+  Use PROACTIVELY when extracting structured data from text/images, classifying content, or formatting API responses with guaranteed schema compliance.
+  Implements Anthropic's JSON outputs mode with Pydantic/Zod SDK integration.
+  Covers schema design, validation, testing, and production optimization.
+  Not for tool parameter validation or agentic workflows (use strict-tool-implementer instead).
 ---
 
 # JSON Outputs Implementer
