@@ -180,12 +180,18 @@ jobs:
 
           # Pattern for markdown links: [text](path)
           link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+          # Pattern for fenced code blocks
+          code_block_pattern = re.compile(r'```[\s\S]*?```', re.MULTILINE)
 
           for md_file in Path('skills').rglob('*.md'):
               with open(md_file) as f:
                   content = f.read()
 
-              for match in link_pattern.finditer(content):
+              # Remove code blocks before checking links
+              # (links in code blocks are examples, not real links)
+              content_without_code = code_block_pattern.sub('', content)
+
+              for match in link_pattern.finditer(content_without_code):
                   link_text = match.group(1)
                   link_path = match.group(2)
 
