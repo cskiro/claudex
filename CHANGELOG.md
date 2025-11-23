@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2025-11-23
+
 ### Added
 - Troubleshooting section in README for `productivity-tools` → `claude-code-tools` migration
+- CHANGELOG.md with full marketplace version history
 
 ## [1.3.0] - 2025-11-23
 
@@ -79,7 +82,8 @@ See [README Troubleshooting](README.md#troubleshooting) for detailed instruction
 - **Claude Code Tools**: `cc-insights`, `sub-agent-creator`, `mcp-server-creator`, `claude-md-auditor`, `otel-monitoring-setup`
 - **Meta Tools**: `skill-creator`, `skill-isolation-tester`
 
-[Unreleased]: https://github.com/cskiro/claudex/compare/marketplace@1.3.0...HEAD
+[Unreleased]: https://github.com/cskiro/claudex/compare/marketplace@1.3.1...HEAD
+[1.3.1]: https://github.com/cskiro/claudex/compare/marketplace@1.3.0...marketplace@1.3.1
 [1.3.0]: https://github.com/cskiro/claudex/compare/marketplace@1.2.0...marketplace@1.3.0
 [1.2.0]: https://github.com/cskiro/claudex/compare/marketplace@1.1.3...marketplace@1.2.0
 [1.1.3]: https://github.com/cskiro/claudex/compare/marketplace@1.1.2...marketplace@1.1.3
