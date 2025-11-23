@@ -1,6 +1,6 @@
 ---
 name: claude-md-auditor
-description: Validates CLAUDE.md files against official Anthropic documentation, community best practices, and research on LLM context optimization. Detects security violations, anti-patterns, and compliance issues. Use when reviewing configurations, onboarding projects, or ensuring standards compliance.
+description: Use PROACTIVELY when reviewing CLAUDE.md configurations, onboarding new projects, or before committing memory file changes. Validates against official Anthropic documentation, community best practices, and LLM context optimization research. Detects security violations, anti-patterns, and compliance issues. Not for runtime behavior testing or imported file validation.
 ---
 
 # CLAUDE.md Auditor

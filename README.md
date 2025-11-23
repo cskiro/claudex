@@ -200,7 +200,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v1.0.0
-**Last Updated**: 2025-11-14
+**Current Version**: v1.3.0
+**Last Updated**: 2025-11-23
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*

@@ -1,6 +1,6 @@
 ---
 name: git-worktree-setup
-description: Automated git worktree setup for parallel Claude Code sessions with prerequisite checking, development environment initialization, and safe cleanup. Use when working on multiple branches simultaneously.
+description: Use PROACTIVELY when working on multiple branches simultaneously or creating parallel Claude Code sessions. Automates git worktree creation with prerequisite checking, development environment initialization, and safe cleanup. Supports single worktree, batch creation, and worktree removal. Not for non-git projects or branch management without worktrees.
 ---
 
 # Git Worktree Setup

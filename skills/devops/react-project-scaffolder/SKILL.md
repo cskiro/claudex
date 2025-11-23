@@ -1,6 +1,6 @@
 ---
 name: react-project-scaffolder
-description: Automated React project scaffolding with three modes - simple sandbox for testing, enterprise-grade with modern tooling, and mobile React Native with production best practices
+description: Use PROACTIVELY when creating new React projects requiring modern tooling and best practices. Provides three modes - sandbox (Vite + React for quick experiments), enterprise (Next.js with testing and CI/CD), and mobile (Expo + React Native). Enforces TypeScript strict mode, Testing Trophy approach, and 80% coverage. Not for non-React projects or modifying existing applications.
 version: 0.2.0
 author: Connor
 category: productivity

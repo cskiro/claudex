@@ -1,6 +1,6 @@
 ---
 name: skill-creator
-description: Automated skill generation tool that creates production-ready Claude Code skills following Claudex marketplace standards with intelligent templates, pattern detection, and quality validation. Use when creating new skills from scratch.
+description: Use PROACTIVELY when creating new Claude Code skills from scratch. Automated generation tool following Claudex marketplace standards with intelligent templates, pattern detection, and quality validation. Supports guided creation, quick start templates, clone-and-modify, and validation-only modes. Not for modifying existing skills or non-skill Claude Code configurations.
 ---
 
 # Skill Creator

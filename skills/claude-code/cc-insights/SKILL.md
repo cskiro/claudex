@@ -1,6 +1,6 @@
 ---
 name: cc-insights
-description: Automatically processes Claude Code conversations from the project's history, enables RAG-powered semantic search, generates insight reports with pattern detection, and provides an optional dashboard for visualization. Transforms conversation data into actionable knowledge without manual intervention.
+description: Use PROACTIVELY when searching past Claude Code conversations, analyzing development patterns, or generating activity reports. Automatically processes conversation history from the project, enables RAG-powered semantic search, and generates insight reports with pattern detection. Provides optional dashboard for visualization. Not for real-time analysis or cross-project searches.
 ---
 
 # Claude Code Insights

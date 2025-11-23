@@ -1,6 +1,6 @@
 ---
-name: claude-code-otel-setup
-description: Automated OpenTelemetry setup for Claude Code with local PoC mode (full Docker stack) and enterprise mode (centralized infrastructure). Configures telemetry, imports Grafana dashboards, and verifies data flow. Use for any OpenTelemetry setup - local development or team rollout.
+name: otel-monitoring-setup
+description: Use PROACTIVELY when setting up OpenTelemetry monitoring for Claude Code usage tracking, cost analysis, or productivity metrics. Provides local PoC mode (full Docker stack with Grafana) and enterprise mode (centralized infrastructure). Configures telemetry collection, imports dashboards, and verifies data flow. Not for non-Claude telemetry or custom metric definitions.
 ---
 
 # Claude Code OpenTelemetry Setup
