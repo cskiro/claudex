@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
@@ -82,6 +82,15 @@
       "strict": false,
       "skills": [
         "./skills/release-management/semantic-release-tagger"
+      ]
+    },
+    {
+      "name": "planning-tools",
+      "description": "Visual planning and documentation tools including ASCII diagrams for architecture, migrations, and data flows",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/planning/ascii-diagram-creator"
       ]
     },
     {
