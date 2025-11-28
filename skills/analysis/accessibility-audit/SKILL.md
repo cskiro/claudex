@@ -3,8 +3,6 @@ name: accessibility-audit
 version: 0.1.0
 description: WCAG 2.2 Level AA accessibility auditing with risk-based severity scoring
 author: Connor
-created: 2025-10-04
-updated: 2025-11-24
 triggers:
   - accessibility audit
   - WCAG compliance
@@ -12,7 +10,6 @@ triggers:
   - screen reader
   - keyboard navigation
   - color contrast
-  - aria attributes
 ---
 
 # Accessibility Audit Skill
@@ -45,24 +42,26 @@ npm install --save-dev eslint-plugin-jsx-a11y jest-axe @axe-core/playwright
 
 ## Workflow
 
-1. **[Setup & Preparation](workflow/setup.md)** - Install tooling, create output directories
-2. **[Static Analysis](workflow/static-analysis.md)** - ESLint jsx-a11y scan
-3. **[Runtime Analysis](workflow/runtime-analysis.md)** - jest-axe and Playwright
-4. **[Manual Validation](workflow/manual-validation.md)** - Keyboard, screen reader, contrast
-5. **[Report Generation](workflow/reporting.md)** - JSON + Markdown outputs
+| Phase | Description |
+|-------|-------------|
+| 1. Setup | Install tooling, create output directories |
+| 2. Static Analysis | ESLint jsx-a11y scan |
+| 3. Runtime Analysis | jest-axe and Playwright |
+| 4. Manual Validation | Keyboard, screen reader, contrast |
+| 5. Report Generation | JSON + Markdown outputs |
+
+### Phase 1: Setup
+
+See [workflow/setup.md](workflow/setup.md) for installation and configuration.
+
+### Phase 4: Manual Validation
+
+See [workflow/manual-validation.md](workflow/manual-validation.md) for keyboard and screen reader testing.
 
 ## Reference
 
-- **[Severity Rubric](reference/severity-rubric.md)** - Impact x Likelihood calculation
-- **[WCAG Criteria](reference/wcag-criteria.md)** - All 60 Level AA criteria with interpretations
-- **[MUI Framework](reference/mui-awareness.md)** - Built-in accessibility features (avoid false positives)
-- **[Tooling Guide](reference/tooling.md)** - ESLint, jest-axe, Playwright configuration
-- **[Output Schemas](reference/output-schemas.md)** - JSON schema for gap reports
-
-## Examples
-
-- **[Gap Report](examples/gap-report.md)** - Sample accessibility findings
-- **[Remediation Plan](examples/remediation-plan.md)** - Prioritized fix list
+- [Severity Rubric](reference/severity-rubric.md) - Impact x Likelihood calculation
+- [MUI Framework Awareness](reference/mui-awareness.md) - Built-in accessibility features
 
 ## Common False Positives to Avoid
 
@@ -80,6 +79,7 @@ npm install --save-dev eslint-plugin-jsx-a11y jest-axe @axe-core/playwright
 Run accessibility audit on [component/page] following WCAG 2.2 AA standards
 ```
 
----
+## Related Skills
 
-**Source**: Migrated from `~/.claude/protocols/ACCESSIBILITY_AUDIT.yaml` v2.0.0
+- `codebase-auditor` - General code quality analysis
+- `bulletproof-react-auditor` - React architecture review

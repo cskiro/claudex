@@ -86,4 +86,4 @@ mkdir -p docs/accessibility
 
 ## Next Step
 
-Proceed to [Static Analysis](static-analysis.md)
+Continue with Static Analysis (ESLint jsx-a11y scan).

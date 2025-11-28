@@ -122,4 +122,4 @@ Some criteria require human judgment:
 
 ## Next Step
 
-Proceed to [Report Generation](reporting.md)
+Proceed with Report Generation (JSON + Markdown outputs).
