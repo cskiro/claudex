@@ -1,0 +1,164 @@
+/* Academic PDF Style Template
+ * For use with pandoc + weasyprint
+ * Based on: paralleLLM empathy-experiment-v1.0.pdf
+ */
+
+/* ==========================================================================
+   Base Typography
+   ========================================================================== */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2em;
+}
+
+h1, h2, h3, h4 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  margin-top: 2em;
+}
+
+h3 {
+  margin-top: 1.5em;
+}
+
+/* ==========================================================================
+   Tables (Academic Style)
+   ========================================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  page-break-inside: avoid;
+}
+
+table th, table td {
+  padding: 0.5em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Academic-style borders: top/bottom on header, bottom on last row */
+table thead th {
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  font-weight: bold;
+}
+
+table tbody td {
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 2px solid #000;
+}
+
+/* ==========================================================================
+   Block Elements
+   ========================================================================== */
+
+blockquote {
+  border-left: 4px solid #ddd;
+  margin: 1em 0;
+  padding-left: 1em;
+  color: #555;
+  page-break-inside: avoid;
+}
+
+code {
+  background: #f5f5f5;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: #f5f5f5;
+  padding: 1em;
+  border-radius: 5px;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 2em 0;
+}
+
+/* ==========================================================================
+   Figures and Images
+   ========================================================================== */
+
+figure {
+  page-break-inside: avoid;
+  margin: 1.5em 0;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+figcaption {
+  text-align: center;
+  font-style: italic;
+  margin-top: 0.5em;
+  font-size: 0.9em;
+}
+
+/* ==========================================================================
+   Page Control (Print/PDF)
+   ========================================================================== */
+
+@page {
+  margin: 2cm;
+}
+
+/* Keep headings with following content */
+h2, h3, h4 {
+  page-break-after: avoid;
+}
+
+/* Prevent orphan paragraphs */
+p {
+  orphans: 3;
+  widows: 3;
+}
+
+/* Keep lists together when possible */
+ul, ol {
+  page-break-inside: avoid;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+/* For centered figures in weasyprint */
+.figure-centered {
+  margin: 2em auto;
+  text-align: center;
+}
+
+.figure-centered img {
+  display: inline-block;
+  max-width: 100%;
+}
+
+/* Small text for appendix tables */
+.small-text {
+  font-size: 0.85em;
+}

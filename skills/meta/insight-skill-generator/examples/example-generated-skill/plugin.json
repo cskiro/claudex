@@ -1,0 +1,15 @@
+{
+  "name": "hook-deduplication-guide",
+  "version": "0.1.0",
+  "description": "Use PROACTIVELY when developing Claude Code hooks to implement content-based deduplication and prevent duplicate insight storage across sessions",
+  "type": "skill",
+  "author": "Connor",
+  "category": "productivity",
+  "tags": [
+    "hooks",
+    "deduplication",
+    "state-management",
+    "bash",
+    "generated-from-insights"
+  ]
+}

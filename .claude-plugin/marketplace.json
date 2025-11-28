@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
@@ -28,7 +28,8 @@
       "strict": false,
       "skills": [
         "./skills/analysis/codebase-auditor",
-        "./skills/analysis/bulletproof-react-auditor"
+        "./skills/analysis/bulletproof-react-auditor",
+        "./skills/analysis/accessibility-audit"
       ]
     },
     {
@@ -51,7 +52,8 @@
       "strict": false,
       "skills": [
         "./skills/meta/skill-creator",
-        "./skills/meta/skill-isolation-tester"
+        "./skills/meta/skill-isolation-tester",
+        "./skills/meta/insight-skill-generator"
       ]
     },
     {
@@ -91,6 +93,18 @@
       "strict": false,
       "skills": [
         "./skills/planning/ascii-diagram-creator"
+      ]
+    },
+    {
+      "name": "benchmarking",
+      "description": "Publication-quality diagrams, PDF export, and academic report templates for AI/ML benchmarking and research documentation",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/benchmarking/html-diagram-creator",
+        "./skills/benchmarking/html-to-png-converter",
+        "./skills/benchmarking/markdown-to-pdf-converter",
+        "./skills/benchmarking/report-creator"
       ]
     },
     {

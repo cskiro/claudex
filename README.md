@@ -18,6 +18,8 @@
 /plugin install release-management@claudex
 /plugin install testing-tools@claudex
 /plugin install devops-tools@claudex
+/plugin install planning-tools@claudex
+/plugin install benchmarking@claudex
 
 # (Optional) Install productivity hooks
 /plugin install productivity-hooks@claudex
@@ -45,7 +47,10 @@ claudex/
 │   ├── claude-code/     # Claude Code ecosystem tools
 │   ├── meta/            # Tools for creating/testing skills
 │   ├── testing/         # Testing frameworks
-│   └── devops/          # Infrastructure & project automation
+│   ├── devops/          # Infrastructure & project automation
+│   ├── planning/        # Visual planning and diagrams
+│   ├── release-management/  # Versioning and releases
+│   └── benchmarking/    # Academic reports and diagrams
 ├── hooks/               # Event-driven automation
 │   └── extract-explanatory-insights/
 ├── commands/            # (Future) Custom slash commands
@@ -75,6 +80,7 @@ claudex/
 |-------|-------------|
 | **codebase-auditor** | Comprehensive codebase analysis against 2024-25 SDLC standards (OWASP, WCAG, DORA) |
 | **bulletproof-react-auditor** | React application auditor based on Bulletproof React architecture patterns |
+| **accessibility-audit** | WCAG 2.2 Level AA accessibility auditing with risk-based severity scoring |
 
 ### Claude Code Tools
 
@@ -96,6 +102,7 @@ claudex/
 |-------|-------------|
 | **skill-creator** | Generate skills following Claudex marketplace standards |
 | **skill-isolation-tester** | Test skills in isolated environments (worktree, Docker, VMs) |
+| **insight-skill-generator** | Transform Claude Code explanatory insights into production-ready skills |
 
 ### Release Management
 
@@ -123,6 +130,25 @@ claudex/
 | **react-project-scaffolder** | React project setup (sandbox, enterprise, mobile modes) |
 | **github-repo-setup** | GitHub repository creation with security, CI/CD, and governance |
 | **git-worktree-setup** | Parallel Claude Code sessions via git worktrees |
+
+### Planning Tools
+
+**`planning-tools`** - Visual planning and documentation tools
+
+| Skill | Description |
+|-------|-------------|
+| **ascii-diagram-creator** | Terminal-compatible ASCII diagrams for architecture, migrations, and data flows |
+
+### Benchmarking
+
+**`benchmarking`** - Publication-quality documentation for AI/ML research
+
+| Skill | Description |
+|-------|-------------|
+| **html-diagram-creator** | Publication-quality HTML diagrams following academic paper conventions |
+| **html-to-png-converter** | Export HTML diagrams to PNG with retina quality support |
+| **markdown-to-pdf-converter** | Professional PDF generation via pandoc + weasyprint |
+| **report-creator** | Academic research report templates with professional structure |
 
 ### Productivity Hooks
 
@@ -155,7 +181,7 @@ claudex/
 
 ## Features
 
-- **18 Skills** across 7 categories (api, analysis, claude-code, meta, release-management, testing, devops)
+- **25 Skills** across 10 categories (api, analysis, claude-code, meta, release-management, testing, devops, planning, benchmarking)
 - **1 Hook** for automated insight extraction
 - **Semantic categorization** - Skills organized by purpose, not theme
 - **Multi-feature support** - Skills, hooks, commands (future), agents (future)
@@ -184,6 +210,8 @@ Add to `.claude/settings.json` for automatic installation:
     "meta-tools@claudex",
     "testing-tools@claudex",
     "devops-tools@claudex",
+    "planning-tools@claudex",
+    "benchmarking@claudex",
     "productivity-hooks@claudex"
   ]
 }
@@ -239,7 +267,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v1.3.0
-**Last Updated**: 2025-11-23
+**Current Version**: v1.5.0
+**Last Updated**: 2025-11-27
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*

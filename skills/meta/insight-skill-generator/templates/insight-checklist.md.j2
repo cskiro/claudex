@@ -1,0 +1,71 @@
+# Template: Actionable Checklist (templates/checklist.md)
+
+This template creates actionable checklists from insight action items.
+
+# {{ skill_title }} - Checklist
+
+This checklist extracts actionable items from the insights that inform this skill.
+
+## Overview
+
+Use this checklist to ensure you've applied all recommendations from the **{{ skill_title }}** skill.
+
+**Total Items**: {{ total_items }}
+**Estimated Time**: {{ estimated_time }}
+
+---
+
+{% for section in sections %}
+## {{ section.name }}
+
+{{ section.description }}
+
+{% for item in section.items %}
+- [ ] {{ item.description }}
+  {% if item.details %}
+  - Details: {{ item.details }}
+  {% endif %}
+  {% if item.why %}
+  - Why: {{ item.why }}
+  {% endif %}
+  {% if item.how %}
+  - How: {{ item.how }}
+  {% endif %}
+  {% if item.validation %}
+  - Validation: {{ item.validation }}
+  {% endif %}
+{% endfor %}
+
+{% if section.notes %}
+**Notes**:
+{% for note in section.notes %}
+- {{ note }}
+{% endfor %}
+{% endif %}
+
+---
+
+{% endfor %}
+
+## Verification
+
+After completing this checklist:
+
+{% for verification in verifications %}
+- [ ] {{ verification }}
+{% endfor %}
+
+## Common Mistakes
+
+{% for mistake in common_mistakes %}
+{{ loop.index }}. **{{ mistake.what }}**
+   - How to avoid: {{ mistake.how_to_avoid }}
+   {% if mistake.fix %}
+   - If you made this mistake: {{ mistake.fix }}
+   {% endif %}
+{% endfor %}
+
+---
+
+**Source**: Generated from {{ insight_count }} insight(s)
+**Last Updated**: {{ updated_date }}

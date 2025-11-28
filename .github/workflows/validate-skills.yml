@@ -48,9 +48,16 @@ jobs:
 
           # Per Anthropic docs, only name and description are required
           required_fields = ['name', 'description']
+          # Directories to exclude from validation (examples, templates, etc.)
+          EXCLUDE_PATTERNS = ['examples/', 'templates/', 'test-templates/']
           errors = []
 
           for skill_file in Path('skills').rglob('SKILL.md'):
+              # Skip files in excluded directories
+              if any(pattern in str(skill_file) for pattern in EXCLUDE_PATTERNS):
+                  print(f"Skipping (excluded): {skill_file}")
+                  continue
+
               print(f"Checking {skill_file}")
 
               with open(skill_file) as f:
@@ -98,10 +105,18 @@ jobs:
           TARGET_LINES = 200
           THRESHOLD = 300
 
+          # Directories to exclude from validation (examples, templates, etc.)
+          EXCLUDE_PATTERNS = ['examples/', 'templates/', 'test-templates/']
+
           warnings = []
           errors = []
 
           for skill_file in Path('skills').rglob('SKILL.md'):
+              # Skip files in excluded directories
+              if any(pattern in str(skill_file) for pattern in EXCLUDE_PATTERNS):
+                  print(f"Skipping (excluded): {skill_file}")
+                  continue
+
               with open(skill_file) as f:
                   lines = len(f.readlines())
 
@@ -140,12 +155,19 @@ jobs:
           import sys
           from pathlib import Path
 
+          # Directories to exclude from validation (examples, templates, etc.)
+          EXCLUDE_PATTERNS = ['examples/', 'templates/', 'test-templates/']
           errors = []
 
           # Find all skill directories (contain SKILL.md)
           skill_dirs = [p.parent for p in Path('skills').rglob('SKILL.md')]
 
           for skill_dir in skill_dirs:
+              # Skip directories in excluded patterns
+              if any(pattern in str(skill_dir) for pattern in EXCLUDE_PATTERNS):
+                  print(f"Skipping (excluded): {skill_dir}")
+                  continue
+
               print(f"Checking {skill_dir}")
 
               # Required files per Anthropic docs
