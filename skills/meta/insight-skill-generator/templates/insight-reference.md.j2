@@ -1,0 +1,96 @@
+# Template: Insights Reference (data/insights-reference.md)
+
+This template consolidates the original insights that informed a generated skill.
+
+# Insights Reference: {{ skill_name }}
+
+This document contains the original insights from Claude Code's Explanatory output style that were used to create the **{{ skill_title }}** skill.
+
+## Overview
+
+**Total Insights**: {{ insight_count }}
+**Date Range**: {{ earliest_date }} to {{ latest_date }}
+**Categories**: {{ categories|join(', ') }}
+**Sessions**: {{ session_count }} unique session(s)
+
+---
+
+{% for insight in insights %}
+## {{ loop.index }}. {{ insight.title }}
+
+**Metadata**:
+- **Date**: {{ insight.date }}
+- **Category**: {{ insight.category }}
+- **Session**: {{ insight.session_id }}
+- **Source File**: {{ insight.source_file }}
+
+**Original Content**:
+
+{{ insight.content }}
+
+{% if insight.code_examples %}
+**Code Examples from this Insight**:
+
+{% for example in insight.code_examples %}
+```{{ example.language }}
+{{ example.code }}
+```
+{% endfor %}
+{% endif %}
+
+{% if insight.related_insights %}
+**Related Insights**: {{ insight.related_insights|join(', ') }}
+{% endif %}
+
+---
+
+{% endfor %}
+
+## Insight Clustering Analysis
+
+**Similarity Scores**:
+{% for cluster in clusters %}
+- Cluster {{ loop.index }}: {{ cluster.insights|join(', ') }} (score: {{ cluster.score }})
+{% endfor %}
+
+**Common Keywords**:
+{% for keyword in common_keywords %}
+- {{ keyword.word }} (frequency: {{ keyword.count }})
+{% endfor %}
+
+**Category Distribution**:
+{% for category, count in category_distribution.items() %}
+- {{ category }}: {{ count }} insight(s)
+{% endfor %}
+
+---
+
+## How These Insights Inform the Skill
+
+{% for mapping in insight_mappings %}
+### {{ mapping.insight_title }} → {{ mapping.skill_section }}
+
+{{ mapping.explanation }}
+
+{% endfor %}
+
+---
+
+## Additional Context
+
+**Why These Insights Were Selected**:
+{{ selection_rationale }}
+
+**Insights Not Included** (if any):
+{% if excluded_insights %}
+{% for excluded in excluded_insights %}
+- {{ excluded.title }}: {{ excluded.reason }}
+{% endfor %}
+{% else %}
+All relevant insights were included.
+{% endif %}
+
+---
+
+**Generated**: {{ generated_date }}
+**Last Updated**: {{ updated_date }}

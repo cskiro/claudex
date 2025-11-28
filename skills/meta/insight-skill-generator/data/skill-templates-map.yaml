@@ -1,0 +1,304 @@
+# Skill Templates Mapping
+# Maps insight characteristics to appropriate skill patterns and structures
+# Version: 0.1.0
+
+# Pattern Definitions
+# Based on Anthropic's skill creation patterns
+patterns:
+  phase-based:
+    description: "Linear workflow with sequential phases"
+    best_for:
+      - "Step-by-step processes"
+      - "Problem-diagnosis-solution flows"
+      - "Single-path workflows"
+    structure:
+      - "## Phase 1: [Name]"
+      - "## Phase 2: [Name]"
+      - "## Phase 3: [Name]"
+    example_skills:
+      - "skill-creator"
+      - "mcp-server-creator"
+
+  mode-based:
+    description: "Multiple distinct workflows/approaches"
+    best_for:
+      - "Different use cases for same domain"
+      - "Beginner vs advanced paths"
+      - "Alternative strategies"
+    structure:
+      - "## Mode 1: [Name]"
+      - "## Mode 2: [Name]"
+      - "## Mode Selection Guide"
+    example_skills:
+      - "react-project-scaffolder"
+
+  validation:
+    description: "Analysis and checking pattern"
+    best_for:
+      - "Code review insights"
+      - "Quality assessment insights"
+      - "Security/performance audits"
+    structure:
+      - "## Analysis Phase"
+      - "## Issue Detection"
+      - "## Recommendations"
+    example_skills:
+      - "codebase-auditor"
+      - "bulletproof-react-auditor"
+
+  data-processing:
+    description: "Transform or analyze data"
+    best_for:
+      - "File parsing insights"
+      - "Data transformation insights"
+      - "Report generation insights"
+    structure:
+      - "## Input Processing"
+      - "## Transformation Logic"
+      - "## Output Generation"
+    example_skills:
+      - "cc-insights"
+
+# Insight-to-Pattern Mapping Rules
+mapping_rules:
+  - condition:
+      insight_contains:
+        - "step"
+        - "process"
+        - "workflow"
+        - "first"
+        - "then"
+        - "finally"
+    recommended_pattern: phase-based
+    confidence: high
+
+  - condition:
+      insight_contains:
+        - "approach"
+        - "strategy"
+        - "alternative"
+        - "different ways"
+        - "option"
+    recommended_pattern: mode-based
+    confidence: high
+
+  - condition:
+      insight_contains:
+        - "check"
+        - "validate"
+        - "ensure"
+        - "verify"
+        - "audit"
+        - "review"
+    recommended_pattern: validation
+    confidence: medium
+
+  - condition:
+      insight_contains:
+        - "parse"
+        - "transform"
+        - "analyze data"
+        - "process file"
+        - "extract"
+    recommended_pattern: data-processing
+    confidence: medium
+
+  - condition:
+      has_code_examples: true
+      has_step_by_step: true
+    recommended_pattern: phase-based
+    confidence: high
+
+  - condition:
+      cluster_size: 1
+      complexity: low
+    recommended_pattern: phase-based
+    confidence: high
+
+  - condition:
+      cluster_size: "> 4"
+      has_multiple_approaches: true
+    recommended_pattern: mode-based
+    confidence: medium
+
+# Insight Content → Skill Section Mappings
+content_mappings:
+  problem_description:
+    triggers:
+      - "The problem"
+      - "Challenge"
+      - "Issue"
+      - "We encountered"
+    maps_to:
+      section: "## Overview"
+      subsection: "Problem Statement"
+
+  solution_explanation:
+    triggers:
+      - "The solution"
+      - "To fix this"
+      - "We resolved"
+      - "The approach"
+    maps_to:
+      section: "## Workflow"
+      subsection: "Implementation Steps"
+
+  code_example:
+    triggers:
+      - "```"
+      - "Example:"
+      - "For instance"
+    maps_to:
+      section: "## Examples"
+      file: "examples/code-samples.md"
+
+  best_practice:
+    triggers:
+      - "Best practice"
+      - "Always"
+      - "Never"
+      - "Recommended"
+      - "Avoid"
+    maps_to:
+      section: "## Important Reminders"
+      file: "data/insights-reference.md"
+
+  checklist_items:
+    triggers:
+      - "- [ ]"
+      - "1."
+      - "2."
+      - "Steps:"
+    maps_to:
+      section: "## Workflow"
+      file: "templates/checklist.md"
+
+  trade_offs:
+    triggers:
+      - "trade-off"
+      - "pros and cons"
+      - "advantage"
+      - "disadvantage"
+      - "however"
+    maps_to:
+      section: "## Decision Guide"
+      subsection: "Considerations"
+
+  warning_caution:
+    triggers:
+      - "Warning"
+      - "Caution"
+      - "Note"
+      - "Important"
+      - "Be careful"
+    maps_to:
+      section: "## Important Reminders"
+      priority: high
+
+# Skill Complexity Matrix
+# Determines file structure based on insight characteristics
+complexity_matrix:
+  minimal:
+    condition:
+      insight_count: 1
+      total_lines: "< 50"
+      has_code: false
+    structure:
+      - "SKILL.md"
+      - "README.md"
+      - "plugin.json"
+      - "CHANGELOG.md"
+    pattern: phase-based
+
+  standard:
+    condition:
+      insight_count: "2-4"
+      total_lines: "50-200"
+      has_code: true
+    structure:
+      - "SKILL.md"
+      - "README.md"
+      - "plugin.json"
+      - "CHANGELOG.md"
+      - "data/insights-reference.md"
+      - "examples/usage-examples.md"
+    pattern: phase-based
+
+  complex:
+    condition:
+      insight_count: "> 4"
+      total_lines: "> 200"
+      has_multiple_topics: true
+    structure:
+      - "SKILL.md"
+      - "README.md"
+      - "plugin.json"
+      - "CHANGELOG.md"
+      - "data/insights-reference.md"
+      - "examples/usage-examples.md"
+      - "examples/code-samples.md"
+      - "templates/checklist.md"
+      - "templates/workflow-template.md"
+    pattern: mode-based
+
+# Category-Specific Skill Patterns
+category_patterns:
+  testing:
+    preferred_pattern: validation
+    skill_name_suffix: "testing-guide"
+    description_template: "Use PROACTIVELY when [testing context] to ensure [quality aspect]"
+    typical_sections:
+      - "Test Strategy"
+      - "Common Pitfalls"
+      - "Best Practices"
+      - "Example Tests"
+
+  architecture:
+    preferred_pattern: validation
+    skill_name_suffix: "architecture-advisor"
+    description_template: "Guides [architecture decision] with [architectural principle]"
+    typical_sections:
+      - "Architectural Principles"
+      - "Pattern Selection"
+      - "Trade-offs Analysis"
+      - "Implementation Guidance"
+
+  hooks-and-events:
+    preferred_pattern: phase-based
+    skill_name_suffix: "hook-automation"
+    description_template: "Automates [hook-related task] for [benefit]"
+    typical_sections:
+      - "Hook Configuration"
+      - "Event Handling"
+      - "Debugging Tips"
+      - "Common Patterns"
+
+  performance:
+    preferred_pattern: validation
+    skill_name_suffix: "performance-optimizer"
+    description_template: "Analyzes [performance aspect] and generates [optimization]"
+    typical_sections:
+      - "Performance Analysis"
+      - "Optimization Techniques"
+      - "Measurement Approach"
+      - "Expected Improvements"
+
+  security:
+    preferred_pattern: validation
+    skill_name_suffix: "security-validator"
+    description_template: "Validates [security aspect] against [security standard]"
+    typical_sections:
+      - "Security Checklist"
+      - "Vulnerability Detection"
+      - "Remediation Steps"
+      - "Verification"
+
+  configuration:
+    preferred_pattern: phase-based
+    skill_name_suffix: "config-helper"
+    description_template: "Guides [configuration task] with [configuration approach]"
+    typical_sections:
+      - "Configuration Setup"
+      - "Common Patterns"
+      - "Troubleshooting"
+      - "Validation"

@@ -1,0 +1,205 @@
+# Clustering Configuration for Insight-to-Skill Generator
+# Version: 0.1.0
+
+# Similarity Scoring Weights
+similarity_weights:
+  same_category: 0.3       # Base score if insights are in same category
+  shared_keyword: 0.1      # Added per shared keyword
+  temporal_proximity: 0.05 # If insights created within temporal_window
+  title_similarity: 0.15   # If titles share significant words
+  content_overlap: 0.2     # If content has overlapping concepts
+
+# Clustering Thresholds
+thresholds:
+  cluster_minimum: 0.6     # Minimum score to group insights together
+  standalone_quality: 0.8  # Score for single insight to become standalone skill
+  split_cluster_size: 5    # If cluster > this size, consider splitting by sub-topics
+
+# Temporal Settings
+temporal_window: 7         # Days - insights within this window get proximity bonus
+
+# Category Keywords (from extract-explanatory-insights hook)
+# Used for semantic grouping beyond directory structure
+categories:
+  testing:
+    keywords:
+      - test
+      - testing
+      - coverage
+      - tdd
+      - unit
+      - integration
+      - e2e
+      - vitest
+      - jest
+      - assertion
+      - mock
+      - fixture
+    skill_category: tooling
+
+  configuration:
+    keywords:
+      - config
+      - configuration
+      - settings
+      - inheritance
+      - yaml
+      - json
+      - env
+      - environment
+    skill_category: tooling
+
+  hooks-and-events:
+    keywords:
+      - hook
+      - lifecycle
+      - event
+      - trigger
+      - callback
+      - listener
+      - middleware
+    skill_category: productivity
+
+  security:
+    keywords:
+      - security
+      - vulnerability
+      - auth
+      - authentication
+      - authorization
+      - encryption
+      - sanitize
+      - injection
+      - xss
+      - csrf
+    skill_category: analysis
+
+  performance:
+    keywords:
+      - performance
+      - optimize
+      - optimization
+      - cache
+      - caching
+      - lazy
+      - memoize
+      - bundle
+      - latency
+      - throughput
+    skill_category: productivity
+
+  architecture:
+    keywords:
+      - architecture
+      - design
+      - pattern
+      - structure
+      - module
+      - component
+      - layer
+      - separation
+      - coupling
+      - cohesion
+    skill_category: analysis
+
+  version-control:
+    keywords:
+      - git
+      - commit
+      - branch
+      - merge
+      - rebase
+      - pull request
+      - pr
+      - cherry-pick
+    skill_category: devops
+
+  react:
+    keywords:
+      - react
+      - component
+      - tsx
+      - jsx
+      - hooks
+      - useEffect
+      - useState
+      - props
+      - state
+      - render
+    skill_category: tooling
+
+  typescript:
+    keywords:
+      - typescript
+      - type
+      - interface
+      - generic
+      - enum
+      - type guard
+      - union
+      - intersection
+    skill_category: tooling
+
+  general:
+    keywords:
+      - general
+      - best practice
+      - lesson
+      - debugging
+      - troubleshooting
+    skill_category: productivity
+
+# Complexity Assessment Rules
+# Determines whether insight(s) become minimal/standard/complex skill
+complexity_rules:
+  minimal:
+    max_insights: 1
+    max_paragraphs: 3
+    has_code_examples: false
+    description: "Single focused insight, phase-based workflow"
+
+  standard:
+    max_insights: 4
+    min_paragraphs: 3
+    requires_data_dir: true
+    description: "Multiple related insights, comprehensive workflow with reference materials"
+
+  complex:
+    min_insights: 5
+    requires_modes: true
+    requires_examples: true
+    description: "Large insight cluster, mode-based with extensive examples and templates"
+
+# Skill Naming Heuristics
+naming:
+  max_length: 40           # Max chars for skill name (kebab-case)
+  remove_words:            # Common words to remove from auto-generated names
+    - "insight"
+    - "lesson"
+    - "learned"
+    - "the"
+    - "a"
+    - "an"
+  preferred_suffixes:      # Preferred endings for skill names
+    - "guide"
+    - "advisor"
+    - "helper"
+    - "automation"
+    - "analyzer"
+
+# Description Generation
+description:
+  max_length: 150          # Soft limit for description (actual limit is 1024)
+  required_elements:
+    - action_verb          # Must start with verb (e.g., "Use", "Analyzes", "Guides")
+    - trigger_phrase       # Must include "PROACTIVELY when" or "Use when"
+    - benefit              # Must describe value/outcome
+  action_verbs:
+    - "Use PROACTIVELY when"
+    - "Guides"
+    - "Analyzes"
+    - "Automates"
+    - "Validates"
+    - "Optimizes"
+    - "Generates"
+    - "Monitors"

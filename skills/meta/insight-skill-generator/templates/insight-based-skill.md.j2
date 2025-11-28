@@ -1,0 +1,211 @@
+# Template: Insight-Based Skill (SKILL.md)
+
+This template shows the recommended structure for skills generated from insights.
+Use this as a reference pattern when creating SKILL.md files.
+
+---
+name: {{ skill_name }}
+description: {{ description }}
+---
+
+# {{ skill_title }}
+
+## Overview
+
+{{ overview_text }}
+
+**Based on {{ insight_count }} insight(s)**:
+{% for insight in insights %}
+- {{ insight.title }} ({{ insight.category }}, {{ insight.date }})
+{% endfor %}
+
+**Key Capabilities**:
+{% for capability in capabilities %}
+- {{ capability }}
+{% endfor %}
+
+## When to Use This Skill
+
+**Trigger Phrases**:
+{% for trigger in trigger_phrases %}
+- "{{ trigger }}"
+{% endfor %}
+
+**Use Cases**:
+{% for use_case in use_cases %}
+- {{ use_case }}
+{% endfor %}
+
+**Do NOT use when**:
+{% for anti_use_case in anti_use_cases %}
+- {{ anti_use_case }}
+{% endfor %}
+
+## Response Style
+
+{{ response_style }}
+
+---
+
+{% if pattern == 'phase-based' %}
+## Workflow
+
+{% for phase in phases %}
+### Phase {{ loop.index }}: {{ phase.name }}
+
+**Purpose**: {{ phase.purpose }}
+
+**Steps**:
+{% for step in phase.steps %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+**Output**: {{ phase.output }}
+
+{% if phase.common_issues %}
+**Common Issues**:
+{% for issue in phase.common_issues %}
+- {{ issue }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% elif pattern == 'mode-based' %}
+## Mode Selection
+
+This skill operates in {{ modes|length }} distinct modes. Choose based on your needs:
+
+{% for mode in modes %}
+### Mode {{ loop.index }}: {{ mode.name }}
+
+**When to use**: {{ mode.when_to_use }}
+
+**Steps**:
+{% for step in mode.steps %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+**Output**: {{ mode.output }}
+
+{% endfor %}
+
+{% elif pattern == 'validation' %}
+## Validation Workflow
+
+### Analysis Phase
+
+**Steps**:
+{% for step in analysis_steps %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+### Issue Detection
+
+**Checks performed**:
+{% for check in checks %}
+- {{ check }}
+{% endfor %}
+
+### Recommendations
+
+**Output format**:
+- Issue severity (Critical/High/Medium/Low)
+- Issue description
+- Recommended fix
+- Code examples (if applicable)
+
+{% endif %}
+
+---
+
+## Reference Materials
+
+{% if has_data_dir %}
+Detailed reference information is available in:
+- [Insights Reference](data/insights-reference.md) - Original insights that informed this skill
+{% if has_additional_data %}
+{% for data_file in data_files %}
+- [{{ data_file.title }}](data/{{ data_file.filename }}) - {{ data_file.description }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% if has_examples %}
+**Examples**:
+{% for example in examples %}
+- [{{ example.title }}](examples/{{ example.filename }}) - {{ example.description }}
+{% endfor %}
+{% endif %}
+
+{% if has_templates %}
+**Templates**:
+{% for template in templates %}
+- [{{ template.title }}](templates/{{ template.filename }}) - {{ template.description }}
+{% endfor %}
+{% endif %}
+
+---
+
+## Important Reminders
+
+{% for reminder in important_reminders %}
+- {{ reminder }}
+{% endfor %}
+
+{% if warnings %}
+**Warnings**:
+{% for warning in warnings %}
+- ⚠️  {{ warning }}
+{% endfor %}
+{% endif %}
+
+---
+
+## Best Practices
+
+{% for practice in best_practices %}
+{{ loop.index }}. **{{ practice.title }}**: {{ practice.description }}
+{% endfor %}
+
+---
+
+## Troubleshooting
+
+{% for issue in troubleshooting %}
+### {{ issue.problem }}
+
+**Symptoms**: {{ issue.symptoms }}
+
+**Solution**: {{ issue.solution }}
+
+{% if issue.prevention %}
+**Prevention**: {{ issue.prevention }}
+{% endif %}
+
+{% endfor %}
+
+---
+
+## Next Steps
+
+After using this skill:
+{% for next_step in next_steps %}
+{{ loop.index }}. {{ next_step }}
+{% endfor %}
+
+---
+
+## Metadata
+
+**Source Insights**:
+{% for insight in insights %}
+- Session: {{ insight.session_id }}
+- Date: {{ insight.date }}
+- Category: {{ insight.category }}
+- File: {{ insight.source_file }}
+{% endfor %}
+
+**Skill Version**: {{ version }}
+**Generated**: {{ generated_date }}
+**Last Updated**: {{ updated_date }}
