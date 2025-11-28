@@ -10,17 +10,16 @@ category: documentation
 
 ## Overview
 
-This skill provides templates for creating publication-quality reports with professional structure, styling, and PDF export optimization.
+Provides templates for creating publication-quality research reports with professional structure, styling, and PDF export optimization.
 
 **Available Templates**:
-- **Academic Research Report**: Full empirical study format (Abstract, Methodology, Results, Discussion, Appendices)
+- **Academic Research Report**: Full empirical study format
 
 **Key Capabilities**:
-- **Academic structure**: Abstract, Executive Summary, numbered sections, Appendices
-- **Professional tables**: Academic-style borders (2px top/bottom on headers)
-- **Figure support**: Centered figures with captions, page-break protection
-- **PDF-optimized CSS**: Proper page breaks, orphan/widow control, margins
-- **Metadata header**: Title, subtitle, date, model/system tested, sample size
+- Academic structure (Abstract, Methodology, Results, Discussion)
+- Professional tables with academic borders
+- Figure support with captions and page-break protection
+- PDF-optimized CSS via pandoc + weasyprint
 
 ## When to Use
 
@@ -29,442 +28,106 @@ This skill provides templates for creating publication-quality reports with prof
 - "write up my experiment results"
 - "technical whitepaper template"
 - "empirical study format"
-- "academic report structure"
 
 **Use Cases**:
 - AI/ML experiment reports
 - Benchmark evaluation writeups
 - Technical research documentation
 - Empirical study publications
-- Policy compliance evaluations
 
 **NOT for**:
 - Blog posts or casual documentation
-- API documentation (use dedicated tools)
-- Presentation slides (use Marp)
+- API documentation
+- Presentation slides
 - Quick README files
 
 ## Document Structure
 
-### Required Sections
+| Section | Content |
+|---------|---------|
+| Abstract | 150-250 word summary |
+| Executive Summary | Key finding + metrics table |
+| 1. Background | Research context, hypotheses |
+| 2. Methodology | Design, variables, protocol |
+| 3. Results | Statistics, observations |
+| 4. Discussion | Hypothesis evaluation, implications |
+| 5. Limitations | Methodological, dataset, evaluation |
+| 6. Future Work | Research directions |
+| 7. Conclusion | Synthesis, bottom line |
+| Appendices | Supporting materials |
+
+## Quick Start
+
+1. Copy template from [reference/report-template.md](reference/report-template.md)
+2. Fill in sections with your research data
+3. Add figures using HTML figure tags
+4. Export to PDF:
 
-```markdown
-# [Title]
-## [Subtitle - descriptive]
-
-**Date**: [Date]
-**Model Tested**: [model-id] (if applicable)
-**Trials**: [sample size description]
-
----
-
-## Abstract
-
-[150-250 word summary of research question, methodology, key findings, implications]
-
----
-
-## Executive Summary
-
-**Key Finding**: [One-sentence summary of most important result]
-
-| Metric | Result |
-|--------|--------|
-| Primary hypothesis | [Supported/Rejected] — [brief reason] |
-| Secondary hypothesis | [Status] — [brief reason] |
-| Sample size | n = [N] |
-| Practical implication | [Key takeaway] |
-
----
-
-## 1. Background and Motivation
-
-### 1.1 Research Context
-[Problem statement, why this matters, prior work]
-
-### 1.2 Hypotheses
-**H1 (Primary)**: [Testable prediction]
-**H2 (Secondary)**: [Additional prediction]
-
----
-
-## 2. Methodology
-
-### 2.1 Experimental Design
-
-#### 2.1.1 Overview
-[Design summary: conditions × scenarios × trials]
-
-#### 2.1.2 Variables
-
-**Independent Variable**: [What you manipulated]
-
-| Level | Description | Example |
-|-------|-------------|---------|
-| 1. [Condition] | [Description] | [Example framing] |
-| 2. [Condition] | [Description] | [Example framing] |
-
-**Dependent Variables**:
-
-| Variable | Type | Measurement |
-|----------|------|-------------|
-| [Metric] | Continuous (0-1) | [How measured] |
-
-**Control Variables**:
-- [List of held-constant factors]
-
-### 2.2 Dataset Design
-[Scenario distribution, categories, sampling]
-
-### 2.3 Scoring Logic
-[How pass/fail or scores determined]
-
-### 2.4 Experimental Protocol
-```
-Model: [model-id]
-Provider: [API provider]
-Test Cases: [N]
-Trials per Case: [N]
-Total Completions: [N]
-Runtime: [duration]
-```
-
-### 2.5 Test Infrastructure
-[Figure showing pipeline/architecture]
-
----
-
-## 3. Results
-
-### 3.1 Summary Statistics
-[Main results table with all conditions]
-
-### 3.2 [Key Metric] by [Grouping Variable]
-[Visualization or detailed breakdown]
-
-### 3.3 Key Observations
-
-**Finding 1: [Title]**
-[Description with specific numbers]
-
-**Finding 2: [Title]**
-[Description with specific numbers]
-
----
-
-## 4. Analysis and Discussion
-
-### 4.1 Hypothesis Evaluation
-
-| Hypothesis | Status | Evidence |
-|------------|--------|----------|
-| H1 | [REJECTED/SUPPORTED] | [Summary] |
-| H2 | [REJECTED/SUPPORTED] | [Summary] |
-
-### 4.2 Interpretation
-[What the results mean, behavioral modes identified]
-
-### 4.3 Theoretical Implications
-[Broader significance, model behavior insights]
-
-### 4.4 Practical Implications
-[Deployment recommendations, risk assessment]
-
----
-
-## 5. Limitations
-
-### 5.1 Methodological Limitations
-1. **[Limitation]**: [Explanation]
-2. **[Limitation]**: [Explanation]
-
-### 5.2 Dataset Limitations
-[Sample size, language, cultural scope]
-
-### 5.3 Evaluation Limitations
-[Scoring limitations, validation gaps]
-
----
-
-## 6. Future Work
-1. **[Direction]**: [Description]
-2. **[Direction]**: [Description]
-
----
-
-## 7. Conclusion
-[3-5 paragraph synthesis: main findings, implications, bottom line]
-
----
-
-## Appendix A: [Title]
-
-### A.1 [Subsection]
-[Supporting materials, sample prompts, raw data excerpts]
-
-## Appendix B: [Title]
-
-### B.1 [Technical Details]
-[Implementation details, indicator lists, architecture diagrams]
-
----
-
-*Report generated by [Author]*
-```
-
-## CSS Template
-
-Save as `pdf-style.css` alongside your markdown:
-
-```css
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2em;
-}
-
-h1, h2, h3, h4 {
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-}
-
-/* Academic-style tables */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1em 0;
-  page-break-inside: avoid;
-}
-
-table th, table td {
-  padding: 0.5em 0.75em;
-  text-align: left;
-  vertical-align: top;
-}
-
-table thead th {
-  border-top: 2px solid #000;
-  border-bottom: 2px solid #000;
-  font-weight: bold;
-}
-
-table tbody td {
-  border-bottom: 1px solid #ddd;
-}
-
-table tbody tr:last-child td {
-  border-bottom: 2px solid #000;
-}
-
-/* Blockquotes for prompts/examples */
-blockquote {
-  border-left: 4px solid #ddd;
-  margin: 1em 0;
-  padding-left: 1em;
-  color: #555;
-  page-break-inside: avoid;
-}
-
-/* Code blocks */
-code {
-  background: #f5f5f5;
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-size: 0.9em;
-}
-
-pre {
-  background: #f5f5f5;
-  padding: 1em;
-  overflow-x: auto;
-  border-radius: 5px;
-  page-break-inside: avoid;
-}
-
-pre code {
-  background: none;
-  padding: 0;
-}
-
-/* Horizontal rules as section dividers */
-hr {
-  border: none;
-  border-top: 1px solid #ddd;
-  margin: 2em 0;
-}
-
-/* Page break control */
-@page {
-  margin: 2cm;
-}
-
-figure {
-  page-break-inside: avoid;
-  margin: 1.5em 0;
-}
-
-figure img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-figcaption {
-  text-align: center;
-  font-style: italic;
-  margin-top: 0.5em;
-  font-size: 0.9em;
-}
-
-/* Keep headings with following content */
-h2, h3, h4 {
-  page-break-after: avoid;
-}
-
-h2 {
-  page-break-before: auto;
-  margin-top: 2em;
-}
-
-/* Prevent orphan paragraphs */
-p {
-  orphans: 3;
-  widows: 3;
-}
-
-/* Keep lists together */
-ul, ol {
-  page-break-inside: avoid;
-}
-
-/* Reduced spacing for subsections */
-h3 {
-  margin-top: 1.5em;
-}
-
-/* Bold findings/labels stay with content */
-p strong:first-child {
-  page-break-after: avoid;
-}
-```
-
-## Conversion Commands
-
-### Two-Step Conversion
 ```bash
-# Step 1: Markdown to HTML
-pandoc report.md -o report.html --standalone --css=pdf-style.css
-
-# Step 2: HTML to PDF
-weasyprint report.html report.pdf
-```
-
-### One-Liner
-```bash
+# One-liner conversion
 pandoc report.md --standalone --css=pdf-style.css -t html | weasyprint - report.pdf
 ```
 
-### Prerequisites Check
-```bash
-which pandoc weasyprint  # Both should return paths
-```
+## Reference Files
 
-## Figure Embedding
+| File | Content |
+|------|---------|
+| [report-template.md](reference/report-template.md) | Full markdown template |
+| [pdf-style.css](reference/pdf-style.css) | Academic CSS styling |
+| [table-patterns.md](reference/table-patterns.md) | Table and figure patterns |
 
-### Standard Figure (from PNG)
-```html
-<figure style="margin: 2em auto; page-break-inside: avoid; text-align: center;">
-  <img src="figure-1.png" alt="Description" style="max-width: 100%; height: auto;">
-  <figcaption>Figure 1: Descriptive caption explaining what the figure shows.</figcaption>
-</figure>
-```
+## Key Formatting Patterns
 
-### Figure with Border (for diagrams)
-```html
-<figure style="margin: 2em auto; page-break-inside: avoid; text-align: center; border: 1px solid #eee; padding: 1em; border-radius: 8px;">
-  <img src="architecture.png" alt="System architecture">
-  <figcaption>Figure 2: System architecture showing data flow.</figcaption>
-</figure>
-```
-
-## Table Formatting Guidelines
-
-### Summary Statistics Table
-```markdown
-| Identity | N | Mean Score | Std Dev | Pass Rate | Metric |
-|----------|---|------------|---------|-----------|--------|
-| condition_a | 100 | 0.584 | 0.259 | 59.0% | **8.0%** |
-| condition_b | 99 | 0.658 | 0.138 | **87.9%** | 12.1% |
-```
-
-### Hypothesis Evaluation Table
-```markdown
-| Hypothesis | Status | Evidence |
-|------------|--------|----------|
-| H1 | **REJECTED** | [Brief summary with numbers] |
-| H2 | **NOT SUPPORTED** | [Brief summary with numbers] |
-| H3 | **PARTIALLY SUPPORTED** | [Brief summary with numbers] |
-```
-
-### Variables Table (3-column)
-```markdown
-| Level | Description | Example Framing |
-|-------|-------------|-----------------|
-| 1. Direct Human | Control condition | "Hi, I'm Sarah..." |
-| 2. AI Testing | Explicit evaluation | "[AUTOMATED TEST]..." |
-```
-
-## Typography Conventions
-
-| Element | Usage |
-|---------|-------|
-| **Bold** | Key findings, important metrics, hypothesis status |
-| *Italic* | Figure captions, emphasis, latin terms |
-| `code` | Model IDs, technical terms, file names |
-| > Blockquote | Sample prompts, user messages, system messages |
-
-## Checklist for Report Completion
-
-```markdown
-## Report Quality Checklist
-
-### Structure
-- [ ] Title and subtitle are descriptive
-- [ ] Abstract summarizes question, method, findings, implications
-- [ ] Executive summary has key finding and metrics table
-- [ ] All 7 main sections present
-- [ ] Appendices include sample prompts and technical details
-
-### Tables
-- [ ] Academic borders applied (2px top/bottom headers)
-- [ ] All tables have headers
-- [ ] Key metrics bolded
-- [ ] Tables don't split across pages
+### Tables (Academic Style)
+- 2px borders on header top/bottom
+- 1px borders between rows
+- 2px border on final row
+- `page-break-inside: avoid`
 
 ### Figures
-- [ ] All figures have numbered captions
-- [ ] Figures are centered
-- [ ] max-width: 100% applied
-- [ ] page-break-inside: avoid set
-
-### Findings
-- [ ] Numbered findings with bold titles
-- [ ] Specific numbers cited (not vague claims)
-- [ ] Hypothesis status table in Discussion
-
-### Quality
-- [ ] No orphaned headings at page bottoms
-- [ ] Consistent terminology throughout
-- [ ] Author attribution at end
+```html
+<figure style="margin: 2em auto; page-break-inside: avoid; text-align: center;">
+  <img src="figure-1.png" alt="Description" style="max-width: 100%;">
+  <figcaption>Figure 1: Caption text.</figcaption>
+</figure>
 ```
+
+### Typography
+| Element | Usage |
+|---------|-------|
+| **Bold** | Key findings, hypothesis status |
+| *Italic* | Figure captions, emphasis |
+| `code` | Model IDs, file names |
+| > Quote | Sample prompts, messages |
+
+## Conversion Commands
+
+```bash
+# Prerequisites
+which pandoc weasyprint  # Both required
+
+# Two-step
+pandoc report.md -o report.html --standalone --css=pdf-style.css
+weasyprint report.html report.pdf
+
+# One-liner
+pandoc report.md --standalone --css=pdf-style.css -t html | weasyprint - report.pdf
+```
+
+## Completion Checklist
+
+- [ ] All 7 main sections present
+- [ ] Abstract summarizes question, method, findings
+- [ ] Executive summary has metrics table
+- [ ] Tables have academic borders
+- [ ] Figures have numbered captions
+- [ ] No orphaned headings at page bottoms
 
 ## Related Skills
 
-- **html-diagram-creator**: Create publication-quality figures for embedding
-- **html-to-png-converter**: Export HTML diagrams to PNG
-- **markdown-to-pdf-converter**: General markdown-to-PDF conversion
+- **html-diagram-creator**: Create figures for embedding
+- **html-to-png-converter**: Export diagrams to PNG
+- **markdown-to-pdf-converter**: General markdown conversion
 
 ---
 
