@@ -141,14 +141,11 @@ claudex/
 
 ### Benchmarking
 
-**`benchmarking`** - Publication-quality documentation for AI/ML research
+**`benchmarking`** - End-to-end benchmark report creation for AI/ML research
 
 | Skill | Description |
 |-------|-------------|
-| **html-diagram-creator** | Publication-quality HTML diagrams following academic paper conventions |
-| **html-to-png-converter** | Export HTML diagrams to PNG with retina quality support |
-| **markdown-to-pdf-converter** | Professional PDF generation via pandoc + weasyprint |
-| **report-creator** | Academic research report templates with professional structure |
+| **benchmark-report-creator** | Complete pipeline orchestrator: structure, diagrams, hi-res PNG capture, and PDF export |
 
 ### Productivity Hooks
 
@@ -181,7 +178,7 @@ claudex/
 
 ## Features
 
-- **25 Skills** across 10 categories (api, analysis, claude-code, meta, release-management, testing, devops, planning, benchmarking)
+- **22 Skills** across 10 categories (api, analysis, claude-code, meta, release-management, testing, devops, planning, benchmarking)
 - **1 Hook** for automated insight extraction
 - **Semantic categorization** - Skills organized by purpose, not theme
 - **Multi-feature support** - Skills, hooks, commands (future), agents (future)
@@ -267,7 +264,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v1.5.0
-**Last Updated**: 2025-11-27
+**Current Version**: v1.6.0
+**Last Updated**: 2025-11-30
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*

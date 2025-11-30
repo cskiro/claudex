@@ -1,0 +1,334 @@
+/* Academic PDF Style Template
+ * For use with pandoc + weasyprint
+ * Based on: paralleLLM empathy-experiment-v1.0.pdf and v2.0.pdf
+ *
+ * Usage:
+ *   pandoc report.md --standalone --css=pdf-style.css -t html | weasyprint - report.pdf
+ */
+
+/* ==========================================================================
+   Base Typography
+   ========================================================================== */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2em;
+  color: #1a1a1a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2em;
+  margin-top: 0;
+  border-bottom: 2px solid #000;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-top: 2em;
+}
+
+h3 {
+  font-size: 1.25em;
+  margin-top: 1.5em;
+}
+
+h4 {
+  font-size: 1.1em;
+}
+
+p {
+  margin: 1em 0;
+}
+
+/* ==========================================================================
+   Tables (Academic Style - empathy v1.0/v2.0)
+   ========================================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  page-break-inside: avoid;
+  font-size: 0.95em;
+}
+
+table th, table td {
+  padding: 0.5em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Academic-style borders: 2px top/bottom on header, 2px on last row */
+table thead th {
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  font-weight: 600;
+  background: none;  /* No background color - academic style */
+}
+
+table tbody td {
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 2px solid #000;
+}
+
+/* Alternating row colors (optional - comment out for pure academic) */
+/*
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+*/
+
+/* ==========================================================================
+   Block Elements
+   ========================================================================== */
+
+blockquote {
+  border-left: 4px solid #ddd;
+  margin: 1.5em 0;
+  padding: 0.5em 1em;
+  color: #555;
+  background: #f9f9f9;
+  page-break-inside: avoid;
+}
+
+blockquote p {
+  margin: 0.5em 0;
+}
+
+blockquote p:first-child {
+  margin-top: 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Code styling */
+code {
+  background: #f5f5f5;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+}
+
+pre {
+  background: #f5f5f5;
+  padding: 1em;
+  border-radius: 5px;
+  page-break-inside: avoid;
+  overflow-x: visible;  /* weasyprint compatible */
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Section dividers */
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 2em 0;
+}
+
+/* Lists */
+ul, ol {
+  margin: 1em 0;
+  padding-left: 2em;
+  page-break-inside: avoid;
+}
+
+li {
+  margin: 0.3em 0;
+}
+
+/* Nested lists */
+ul ul, ol ol, ul ol, ol ul {
+  margin: 0.3em 0;
+}
+
+/* ==========================================================================
+   Figures and Images (CRITICAL for empathy reports)
+   ========================================================================== */
+
+figure {
+  page-break-inside: avoid;
+  margin: 2em auto;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;   /* CRITICAL: NOT min-width */
+  height: auto;
+  display: inline-block;
+}
+
+figcaption {
+  text-align: center;
+  font-style: italic;
+  margin-top: 1em;
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Inline images (not in figures) */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   Page Control (Print/PDF - weasyprint)
+   ========================================================================== */
+
+@page {
+  margin: 2cm;
+  size: letter;  /* or A4 */
+}
+
+@page :first {
+  margin-top: 3cm;  /* Extra space on first page */
+}
+
+/* Keep headings with following content */
+h1, h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+}
+
+/* Prevent orphan paragraphs and widows */
+p {
+  orphans: 3;
+  widows: 3;
+}
+
+/* Keep certain elements from breaking */
+table, figure, blockquote, pre {
+  page-break-inside: avoid;
+}
+
+/* Allow long tables to break if necessary */
+table.allow-break {
+  page-break-inside: auto;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+/* Centered figure container (use inline style or this class) */
+.figure-centered {
+  margin: 2em auto;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+.figure-centered img {
+  display: inline-block;
+  max-width: 100%;
+}
+
+/* Small text for appendix tables or footnotes */
+.small-text {
+  font-size: 0.85em;
+}
+
+/* Bold findings or key points */
+.key-finding {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Manual page break (use sparingly) */
+.page-break {
+  page-break-before: always;
+}
+
+/* No page break before */
+.no-break-before {
+  page-break-before: avoid;
+}
+
+/* ==========================================================================
+   Abstract/Summary Styling
+   ========================================================================== */
+
+/* Style for abstract section */
+.abstract {
+  background: #f9f9f9;
+  padding: 1.5em;
+  border-left: 4px solid #1976D2;
+  margin: 2em 0;
+  font-style: italic;
+}
+
+.abstract p {
+  margin: 0;
+}
+
+/* Executive summary metrics table */
+.metrics-table th {
+  background: #E3F2FD;
+}
+
+/* ==========================================================================
+   Print-specific adjustments
+   ========================================================================== */
+
+@media print {
+  body {
+    max-width: none;
+    padding: 0;
+  }
+
+  /* Ensure links are visible in print */
+  a {
+    color: #1976D2;
+    text-decoration: none;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Don't show URL for internal links */
+  a[href^="#"]::after {
+    content: none;
+  }
+}
+
+/* ==========================================================================
+   Weasyprint Compatibility Notes
+   ========================================================================== */
+
+/*
+ * The following CSS properties are NOT supported by weasyprint and will
+ * generate warnings (safe to ignore, but listed here for reference):
+ *
+ * - gap (use margin on child elements instead)
+ * - overflow-x (not needed for print)
+ * - user-select (not needed for print)
+ * - backdrop-filter (not supported in print)
+ * - scroll-behavior (not needed for print)
+ *
+ * This stylesheet avoids these properties for clean output.
+ */
