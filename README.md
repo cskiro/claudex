@@ -137,7 +137,7 @@ claudex/
 
 | Skill | Version | Description |
 |-------|---------|-------------|
-| **ascii-diagram-creator** | 0.3.1 | Terminal-compatible ASCII diagrams for architecture, migrations, and data flows |
+| **ascii-diagram-creator** | 0.4.0 | Terminal-compatible ASCII diagrams for architecture, migrations, and data flows |
 
 ### Benchmarking
 

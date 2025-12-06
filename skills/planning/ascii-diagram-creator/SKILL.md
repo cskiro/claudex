@@ -1,6 +1,6 @@
 ---
 name: ascii-diagram-creator
-version: 0.3.1
+version: 0.4.0
 description: Use PROACTIVELY when user asks for ASCII diagrams, text diagrams, or visual representations of systems, workflows, or relationships. Triggers on "ascii diagram", "text diagram", "visualize", "show how X connects/synergizes", "diagram the flow/phases", or "illustrate relationships". Generates terminal-compatible diagrams using box-drawing characters. Supports architecture, before/after, phased migration, data flow, and relationship/synergy diagrams. Not for image generation or graphical output.
 ---
 
