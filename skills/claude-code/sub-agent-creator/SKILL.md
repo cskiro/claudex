@@ -1,5 +1,6 @@
 ---
 name: sub-agent-creator
+version: 0.2.0
 description: Use PROACTIVELY when creating specialized Claude Code sub-agents for task delegation. Automates agent creation following Anthropic's official patterns with proper frontmatter, tool configuration, and system prompts. Generates domain-specific agents, proactive auto-triggering agents, and security-sensitive agents with limited tools. Not for modifying existing agents or general prompt engineering.
 ---
 
@@ -49,6 +50,7 @@ Automates creation of Claude Code sub-agents with proper configuration and proac
 ```yaml
 ---
 name: agent-name
+version: 0.2.0
 description: Use PROACTIVELY to [action] when [condition]
 tools: Read, Grep, Glob  # Omit for all tools
 model: sonnet             # Omit to inherit

@@ -66,94 +66,94 @@ claudex/
 
 **`api-tools`** - Leverage Anthropic API features like structured outputs
 
-| Skill | Description |
-|-------|-------------|
-| **structured-outputs-advisor** | Expert advisor for choosing between JSON outputs and strict tool use modes |
-| **json-outputs-implementer** | Implement JSON outputs mode with guaranteed schema compliance |
-| **strict-tool-implementer** | Implement strict tool use mode with guaranteed parameter validation |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **structured-outputs-advisor** | 0.2.0 | Expert advisor for choosing between JSON outputs and strict tool use modes |
+| **json-outputs-implementer** | 0.2.0 | Implement JSON outputs mode with guaranteed schema compliance |
+| **strict-tool-implementer** | 0.2.0 | Implement strict tool use mode with guaranteed parameter validation |
 
 ### Analysis Tools
 
 **`analysis-tools`** - Code quality, security, and architecture analysis
 
-| Skill | Description |
-|-------|-------------|
-| **codebase-auditor** | Comprehensive codebase analysis against 2024-25 SDLC standards (OWASP, WCAG, DORA) |
-| **bulletproof-react-auditor** | React application auditor based on Bulletproof React architecture patterns |
-| **accessibility-audit** | WCAG 2.2 Level AA accessibility auditing with risk-based severity scoring |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **codebase-auditor** | 0.2.0 | Comprehensive codebase analysis against 2024-25 SDLC standards (OWASP, WCAG, DORA) |
+| **bulletproof-react-auditor** | 0.2.0 | React application auditor based on Bulletproof React architecture patterns |
+| **accessibility-audit** | 0.1.0 | WCAG 2.2 Level AA accessibility auditing with risk-based severity scoring |
 
 ### Claude Code Tools
 
 **`claude-code-tools`** - Enhance and extend the Claude Code ecosystem
 
-| Skill | Description |
-|-------|-------------|
-| **cc-insights** | RAG-powered conversation analysis with semantic search and insight reports |
-| **sub-agent-creator** | Generate Claude Code sub-agents following Anthropic's official patterns |
-| **mcp-server-creator** | Create Model Context Protocol servers with TypeScript/Python SDKs |
-| **claude-md-auditor** | Validate CLAUDE.md files against official standards and best practices |
-| **otel-monitoring-setup** | Automated OpenTelemetry setup with Docker stack and Grafana dashboards |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **cc-insights** | 0.2.0 | RAG-powered conversation analysis with semantic search and insight reports |
+| **sub-agent-creator** | 0.2.0 | Generate Claude Code sub-agents following Anthropic's official patterns |
+| **mcp-server-creator** | 0.2.0 | Create Model Context Protocol servers with TypeScript/Python SDKs |
+| **claude-md-auditor** | 0.2.0 | Validate CLAUDE.md files against official standards and best practices |
+| **otel-monitoring-setup** | 0.2.0 | Automated OpenTelemetry setup with Docker stack and Grafana dashboards |
 
 ### Meta Tools
 
 **`meta-tools`** - Create and test Claude Code skills
 
-| Skill | Description |
-|-------|-------------|
-| **skill-creator** | Generate skills following Claudex marketplace standards |
-| **skill-isolation-tester** | Test skills in isolated environments (worktree, Docker, VMs) |
-| **insight-skill-generator** | Transform Claude Code explanatory insights into production-ready skills |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **skill-creator** | 0.2.0 | Generate skills following Claudex marketplace standards |
+| **skill-isolation-tester** | 0.2.0 | Test skills in isolated environments (worktree, Docker, VMs) |
+| **insight-skill-generator** | 0.1.0 | Transform Claude Code explanatory insights into production-ready skills |
 
 ### Release Management
 
 **`release-management`** - Automated release workflows and versioning
 
-| Skill | Description |
-|-------|-------------|
-| **semantic-release-tagger** | Automated git tagging agent with conventional commit parsing and GitHub release integration |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **semantic-release-tagger** | 0.2.0 | Automated git tagging agent with conventional commit parsing and GitHub release integration |
 
 ### Testing Tools
 
 **`testing-tools`** - Automated testing frameworks
 
-| Skill | Description |
-|-------|-------------|
-| **playwright-e2e-automation** | LLM-powered e2e testing with visual debugging and regression testing |
-| **tdd-automation** | Automated TDD enforcement for LLM-assisted development |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **playwright-e2e-automation** | 0.3.0 | LLM-powered e2e testing with visual debugging and regression testing |
+| **tdd-automation** | 0.2.0 | Automated TDD enforcement for LLM-assisted development |
 
 ### DevOps Tools
 
 **`devops-tools`** - Infrastructure automation and project scaffolding
 
-| Skill | Description |
-|-------|-------------|
-| **react-project-scaffolder** | React project setup (sandbox, enterprise, mobile modes) |
-| **github-repo-setup** | GitHub repository creation with security, CI/CD, and governance |
-| **git-worktree-setup** | Parallel Claude Code sessions via git worktrees |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **react-project-scaffolder** | 0.2.0 | React project setup (sandbox, enterprise, mobile modes) |
+| **github-repo-setup** | 0.2.0 | GitHub repository creation with security, CI/CD, and governance |
+| **git-worktree-setup** | 0.2.0 | Parallel Claude Code sessions via git worktrees |
 
 ### Planning Tools
 
 **`planning-tools`** - Visual planning and documentation tools
 
-| Skill | Description |
-|-------|-------------|
-| **ascii-diagram-creator** | Terminal-compatible ASCII diagrams for architecture, migrations, and data flows |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **ascii-diagram-creator** | 0.4.0 | Terminal-compatible ASCII diagrams for architecture, migrations, and data flows |
 
 ### Benchmarking
 
 **`benchmarking`** - End-to-end benchmark report creation for AI/ML research
 
-| Skill | Description |
-|-------|-------------|
-| **benchmark-report-creator** | Complete pipeline orchestrator: structure, diagrams, hi-res PNG capture, and PDF export |
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **benchmark-report-creator** | 0.1.0 | Complete pipeline orchestrator: structure, diagrams, hi-res PNG capture, and PDF export |
 
 ### Productivity Hooks
 
 **`productivity-hooks`** - Automated insight extraction and learning
 
-| Hook | Description |
-|------|-------------|
-| **extract-explanatory-insights** | Auto-extracts `★ Insight` blocks from Explanatory responses to categorized docs |
+| Hook | Version | Description |
+|------|---------|-------------|
+| **extract-explanatory-insights** | 0.1.0 | Auto-extracts `★ Insight` blocks from Explanatory responses to categorized docs |
 
 **Usage:**
 1. Install: `/plugin install productivity-hooks@claudex`
@@ -264,7 +264,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v1.6.0
-**Last Updated**: 2025-11-30
+**Current Version**: v2.0.0
+**Last Updated**: 2025-12-05
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*

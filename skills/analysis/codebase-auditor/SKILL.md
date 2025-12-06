@@ -1,5 +1,6 @@
 ---
 name: codebase-auditor
+version: 0.2.0
 description: Use PROACTIVELY when evaluating code quality, assessing technical debt, or preparing for production deployment. Comprehensive audit tool analyzing software engineering practices, security vulnerabilities (OWASP Top 10), and technical debt using modern SDLC best practices (2024-25 standards). Generates prioritized remediation plans with effort estimates. Not for runtime profiling or real-time monitoring.
 ---
 

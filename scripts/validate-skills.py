@@ -2,13 +2,16 @@
 """
 Skills Validation Script for claudex
 
-Validates individual skills against Anthropic's quality standards and progressive disclosure patterns.
-Based on docs/standards/skills-validation-template.md
+Validates individual skills against Anthropic's official skill specification and quality standards.
+Based on:
+  - Official Spec: github.com/anthropics/skills/spec/agent-skills-spec.md
+  - docs/standards/skill-anatomy.md (comprehensive guide)
+  - docs/standards/skill-structure.md (claudex standards)
 
 Usage:
-    python3 .claude-plugin/validate-skills.py                    # Validate all skills
-    python3 .claude-plugin/validate-skills.py skills/analysis    # Validate specific directory
-    python3 .claude-plugin/validate-skills.py --verbose          # Show detailed output
+    python3 scripts/validate-skills.py                    # Validate all skills
+    python3 scripts/validate-skills.py skills/analysis    # Validate specific directory
+    python3 scripts/validate-skills.py --verbose          # Show detailed output
 
 Exit Codes:
     0 - All validations passed
@@ -16,10 +19,12 @@ Exit Codes:
 """
 
 import json
+import os
 import re
+import stat
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 import argparse
 
 # ANSI color codes for terminal output
@@ -35,18 +40,23 @@ class Colors:
 class SkillValidator:
     """Validates a single skill against Anthropic standards."""
 
-    # Target metrics from validation template
-    MAX_SKILL_MD_LINES = 200
-    MIN_DESCRIPTION_LENGTH = 50
-    MAX_DESCRIPTION_LENGTH = 500
+    # Anthropic Spec Limits (from official spec)
+    MAX_NAME_LENGTH = 64           # Official spec limit
+    MAX_DESCRIPTION_LENGTH = 1024  # Official spec limit (~100 words)
+
+    # Best Practice Limits
+    MAX_SKILL_MD_LINES = 200       # Recommended for progressive disclosure
+    MIN_DESCRIPTION_LENGTH = 50    # Minimum for meaningful description
+    RECOMMENDED_DESC_WORDS = 100   # Optimal for indexing
 
     # Scoring weights
     WEIGHTS = {
-        'file_structure': 0.15,
-        'frontmatter': 0.10,
-        'description_quality': 0.25,
-        'progressive_disclosure': 0.25,
-        'main_instructions': 0.15,
+        'file_structure': 0.10,
+        'frontmatter': 0.15,        # Increased - spec compliance is critical
+        'spec_compliance': 0.15,    # NEW - Anthropic spec checks
+        'description_quality': 0.20,
+        'progressive_disclosure': 0.20,
+        'main_instructions': 0.10,
         'testing_invocation': 0.10
     }
 
@@ -70,6 +80,7 @@ class SkillValidator:
         # Run all validation checks
         self.scores['file_structure'] = self._validate_file_structure()
         self.scores['frontmatter'] = self._validate_frontmatter()
+        self.scores['spec_compliance'] = self._validate_spec_compliance()  # NEW
         self.scores['description_quality'] = self._validate_description_quality()
         self.scores['progressive_disclosure'] = self._validate_progressive_disclosure()
         self.scores['main_instructions'] = self._validate_main_instructions()
@@ -121,29 +132,81 @@ class SkillValidator:
             return
 
         frontmatter_text = content[3:end_match.start() + 3]
+        lines = frontmatter_text.split('\n')
 
-        # Simple YAML parsing (key: value)
-        for line in frontmatter_text.split('\n'):
-            line = line.strip()
-            if not line or line.startswith('#'):
+        # Parse YAML with support for multi-line block scalars (>- and |-)
+        current_key = None
+        current_value_lines = []
+        in_multiline = False
+        indent_level = 0
+
+        for line in lines:
+            stripped = line.strip()
+            if not stripped or stripped.startswith('#'):
+                if in_multiline and current_key:
+                    current_value_lines.append('')
                 continue
 
-            if ':' in line:
-                key, value = line.split(':', 1)
-                key = key.strip()
+            # Check if this is a new key: value pair at root level
+            if not line.startswith(' ') and ':' in stripped and not in_multiline:
+                # Save previous multi-line value if any
+                if current_key and current_value_lines:
+                    self.frontmatter[current_key] = ' '.join(current_value_lines).strip()
+                    current_value_lines = []
+
+                key, value = stripped.split(':', 1)
+                current_key = key.strip()
                 value = value.strip()
 
-                # Handle quoted strings
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1]
-                elif value.startswith("'") and value.endswith("'"):
-                    value = value[1:-1]
+                # Check for multi-line block scalar indicator
+                if value in ('>-', '|-', '>', '|'):
+                    in_multiline = True
+                    indent_level = 2  # Standard YAML indent
+                    current_value_lines = []
+                elif value.startswith('>-') or value.startswith('|-'):
+                    in_multiline = True
+                    indent_level = 2
+                    current_value_lines = []
+                else:
+                    in_multiline = False
+                    # Handle quoted strings
+                    if value.startswith('"') and value.endswith('"'):
+                        value = value[1:-1]
+                    elif value.startswith("'") and value.endswith("'"):
+                        value = value[1:-1]
 
-                # Handle arrays (basic)
-                if value.startswith('[') and value.endswith(']'):
-                    value = [v.strip().strip('"\'') for v in value[1:-1].split(',')]
+                    # Handle arrays (basic)
+                    if value.startswith('[') and value.endswith(']'):
+                        value = [v.strip().strip('"\'') for v in value[1:-1].split(',')]
 
-                self.frontmatter[key] = value
+                    self.frontmatter[current_key] = value
+                    current_key = None
+
+            elif in_multiline and current_key:
+                # This is a continuation of a multi-line value
+                if line.startswith(' '):
+                    current_value_lines.append(stripped)
+                else:
+                    # End of multi-line block
+                    self.frontmatter[current_key] = ' '.join(current_value_lines).strip()
+                    current_value_lines = []
+                    in_multiline = False
+                    # Re-process this line as a new key
+                    if ':' in stripped:
+                        key, value = stripped.split(':', 1)
+                        current_key = key.strip()
+                        value = value.strip()
+                        if value and value not in ('>-', '|-', '>', '|'):
+                            if value.startswith('"') and value.endswith('"'):
+                                value = value[1:-1]
+                            elif value.startswith("'") and value.endswith("'"):
+                                value = value[1:-1]
+                            self.frontmatter[current_key] = value
+                            current_key = None
+
+        # Don't forget the last multi-line value
+        if current_key and current_value_lines:
+            self.frontmatter[current_key] = ' '.join(current_value_lines).strip()
 
     def _validate_file_structure(self) -> float:
         """Validate required files and directory structure. Returns score 0-100."""
@@ -198,6 +261,74 @@ class SkillValidator:
             self.info.append(f"Optional frontmatter fields: {', '.join(present_optional)}")
 
         return max(0, score)
+
+    def _validate_spec_compliance(self) -> float:
+        """Validate against Anthropic's official skill specification. Returns score 0-100."""
+        score = 100
+
+        # 1. Name length check (spec: ≤64 chars)
+        if 'name' in self.frontmatter:
+            name = self.frontmatter['name']
+            if len(name) > self.MAX_NAME_LENGTH:
+                self.errors.append(f"Name exceeds spec limit: {len(name)}/{self.MAX_NAME_LENGTH} chars")
+                score -= 30
+
+            # 2. Name must match directory name (spec requirement)
+            dir_name = self.skill_path.name
+            if name != dir_name:
+                self.errors.append(f"Name '{name}' does not match directory '{dir_name}' (spec requirement)")
+                score -= 25
+
+        # 3. Description length check (spec: ≤1024 chars)
+        if 'description' in self.frontmatter:
+            desc = self.frontmatter['description']
+            if len(desc) > self.MAX_DESCRIPTION_LENGTH:
+                self.errors.append(f"Description exceeds spec limit: {len(desc)}/{self.MAX_DESCRIPTION_LENGTH} chars")
+                score -= 20
+
+            # Check word count (best practice: ~100 words)
+            word_count = len(desc.split())
+            if word_count > 150:
+                self.warnings.append(f"Description has {word_count} words (recommended: ~{self.RECOMMENDED_DESC_WORDS})")
+                score -= 5
+
+        # 4. Version field check (recommended for marketplace)
+        if 'version' not in self.frontmatter:
+            self.warnings.append("Missing 'version' field in frontmatter (recommended for marketplace)")
+            score -= 10
+
+        # 5. Check referenced files exist
+        self._check_referenced_files()
+
+        # 6. Check script permissions
+        self._check_script_permissions()
+
+        return max(0, score)
+
+    def _check_referenced_files(self):
+        """Check that markdown links to local files actually exist."""
+        # Extract markdown links: [text](path)
+        links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', self.skill_md_content)
+
+        for text, path in links:
+            # Skip external URLs and anchors
+            if path.startswith('http') or path.startswith('#'):
+                continue
+
+            # Resolve relative to skill directory
+            full_path = self.skill_path / path
+            if not full_path.exists():
+                self.warnings.append(f"Referenced file not found: {path}")
+
+    def _check_script_permissions(self):
+        """Check that shell scripts have execute permissions."""
+        scripts_dir = self.skill_path / 'scripts'
+        if not scripts_dir.exists():
+            return
+
+        for script in scripts_dir.glob('**/*.sh'):
+            if not os.access(script, os.X_OK):
+                self.warnings.append(f"Script missing execute permission: {script.name}")
 
     def _validate_description_quality(self) -> float:
         """Validate description quality (most critical). Returns score 0-100."""

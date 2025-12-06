@@ -1,5 +1,6 @@
 ---
 name: bulletproof-react-auditor
+version: 0.2.0
 description: Use PROACTIVELY when users ask about React project structure, Bulletproof React patterns, or need architecture guidance. Covers structure setup, codebase auditing, anti-pattern detection, and feature-based migration planning. Triggers on "bulletproof react", "React structure help", "organize React app", or "audit my architecture".
 ---
 

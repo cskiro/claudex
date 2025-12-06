@@ -1,5 +1,6 @@
 ---
 name: github-repo-setup
+version: 0.2.0
 description: Use PROACTIVELY when user needs to create a new GitHub repository or set up a project with best practices. Automates repository creation with four modes - quick public repos (~30s), enterprise-grade with security and CI/CD (~120s), open-source community standards (~90s), and private team collaboration with governance (~90s). Not for existing repo configuration or GitHub Actions workflow debugging.
 ---
 
