@@ -1,5 +1,6 @@
 ---
 name: semantic-release-tagger
+version: 0.2.0
 description: Use PROACTIVELY when creating releases after PR merges to main, or when user asks about versioning strategy. Automated git tagging agent that analyzes repository state, parses conventional commits, calculates semantic versions, and creates annotated git tags with GitHub releases. Supports monorepo namespaced tags with @ separator convention. Not for changelog generation or pre-release/alpha versioning.
 ---
 

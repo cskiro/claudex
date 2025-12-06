@@ -1,5 +1,6 @@
 ---
 name: strict-tool-implementer
+version: 0.2.0
 description: >-
   Use PROACTIVELY when building multi-step agentic workflows with validated tool parameters.
   Implements Anthropic's strict tool use mode for guaranteed schema compliance.

@@ -1,7 +1,7 @@
 ---
 name: benchmark-report-creator
 version: 0.1.0
-description: "Orchestrates the complete benchmark report pipeline: structure (report-creator) → diagrams (html-diagram-creator) → hi-res PNG capture → PDF export. Provides working scripts, exact CSS templates from empathy v1.0/v2.0, and complete command sequences. Use when creating publication-quality AI/ML benchmark reports."
+description: Use PROACTIVELY when creating research reports, experiment writeups, technical whitepapers, or empirical study documentation. Orchestrates the complete benchmark report pipeline with structure, diagrams, hi-res PNG capture, and PDF export. Provides working scripts, CSS templates, and complete command sequences for publication-quality AI/ML benchmark reports. Not for slides, blog posts, or simple README files.
 author: "Connor"
 category: benchmarking
 ---

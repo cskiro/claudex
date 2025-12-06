@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "1.6.0",
+    "version": "1.0.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [

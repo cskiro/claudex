@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0
+## 0.2.0
 
 - Refactored to Anthropic progressive disclosure pattern
 - Updated description with "Use PROACTIVELY when..." format

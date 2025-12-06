@@ -1,5 +1,6 @@
 ---
 name: skill-isolation-tester
+version: 0.2.0
 description: Use PROACTIVELY when validating Claude Code skills before sharing or public release. Automated testing framework using multiple isolation environments (git worktree, Docker containers, VMs) to catch environment-specific bugs, hidden dependencies, and cleanup issues. Includes production-ready test templates and risk-based mode auto-detection. Not for functional testing of skill logic or non-skill code.
 ---
 

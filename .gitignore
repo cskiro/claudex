@@ -3,16 +3,13 @@
 Thumbs.db
 Desktop.ini
 
-# Claude Code local settings and skills
-.claude/settings.local.json
-.claude/skills/
-CLAUDE.md
+# Internal documentation (only standards are public)
+/docs/archive/
+/docs/lessons-learned/
 
-# Internal documentation and planning (root level only)
-/docs/
-
-# Internal automation (not for public distribution - root level only)
-/scripts/
+# Internal automation (except validation scripts for contributors)
+/scripts/*
+!/scripts/validate-*.py
 
 # Environment files
 .env
@@ -60,5 +57,4 @@ audit-results/
 audit-output/
 bulletproof-audit*.md
 bulletproof-audit*.json
-migration-plan*.md
 claude-md-auditor/scripts/__pycache__/
