@@ -2,6 +2,12 @@
 
 All notable changes to the benchmark-report-creator skill.
 
+## [0.1.1] - 2025-12-05
+
+### Changed
+- Updated description to PROACTIVE format for improved skill triggering
+- Clarified use cases (research reports, whitepapers) and scope limitations
+
 ## [0.1.0] - 2024-11-30
 
 ### Added

@@ -1,6 +1,6 @@
 ---
 name: accessibility-audit
-version: 0.1.0
+version: 0.1.1
 description: Use PROACTIVELY when user asks for accessibility review, a11y audit, WCAG compliance check, screen reader testing, keyboard navigation validation, or color contrast analysis. Audits React/TypeScript applications for WCAG 2.2 Level AA compliance with risk-based severity scoring. Includes MUI framework awareness to avoid false positives. Not for runtime accessibility testing in production, automated remediation, or non-React frameworks.
 author: Connor
 triggers:

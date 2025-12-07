@@ -80,7 +80,7 @@ claudex/
 |-------|---------|-------------|
 | **codebase-auditor** | 0.2.0 | Comprehensive codebase analysis against 2024-25 SDLC standards (OWASP, WCAG, DORA) |
 | **bulletproof-react-auditor** | 0.2.0 | React application auditor based on Bulletproof React architecture patterns |
-| **accessibility-audit** | 0.1.0 | WCAG 2.2 Level AA accessibility auditing with risk-based severity scoring |
+| **accessibility-audit** | 0.1.1 | WCAG 2.2 Level AA accessibility auditing with MUI awareness and risk-based severity scoring |
 
 ### Claude Code Tools
 
@@ -145,7 +145,7 @@ claudex/
 
 | Skill | Version | Description |
 |-------|---------|-------------|
-| **benchmark-report-creator** | 0.1.0 | Complete pipeline orchestrator: structure, diagrams, hi-res PNG capture, and PDF export |
+| **benchmark-report-creator** | 0.1.1 | Complete pipeline orchestrator for research reports: structure, diagrams, hi-res PNG, and PDF export |
 
 ### Productivity Hooks
 
@@ -264,7 +264,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v2.0.0
-**Last Updated**: 2025-12-05
+**Current Version**: v2.0.1
+**Last Updated**: 2025-12-07
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*
