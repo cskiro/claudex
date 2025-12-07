@@ -1,6 +1,6 @@
 ---
 name: benchmark-report-creator
-version: 0.1.0
+version: 0.1.1
 description: Use PROACTIVELY when creating research reports, experiment writeups, technical whitepapers, or empirical study documentation. Orchestrates the complete benchmark report pipeline with structure, diagrams, hi-res PNG capture, and PDF export. Provides working scripts, CSS templates, and complete command sequences for publication-quality AI/ML benchmark reports. Not for slides, blog posts, or simple README files.
 author: "Connor"
 category: benchmarking
