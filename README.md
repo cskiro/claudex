@@ -78,7 +78,7 @@ claudex/
 
 | Skill | Version | Description |
 |-------|---------|-------------|
-| **codebase-auditor** | 0.2.0 | Comprehensive codebase analysis against 2024-25 SDLC standards (OWASP, WCAG, DORA) |
+| **codebase-auditor** | 0.3.0 | Comprehensive codebase analysis against 2024-25 SDLC standards (OWASP, WCAG, DORA) |
 | **bulletproof-react-auditor** | 0.2.0 | React application auditor based on Bulletproof React architecture patterns |
 | **accessibility-audit** | 0.1.1 | WCAG 2.2 Level AA accessibility auditing with MUI awareness and risk-based severity scoring |
 
@@ -118,8 +118,9 @@ claudex/
 
 | Skill | Version | Description |
 |-------|---------|-------------|
-| **playwright-e2e-automation** | 0.3.0 | LLM-powered e2e testing with visual debugging and regression testing |
-| **tdd-automation** | 0.2.0 | Automated TDD enforcement for LLM-assisted development |
+| **e2e-testing** | 0.4.0 | LLM-powered e2e testing with visual debugging and regression testing |
+| **test-driven-development** | 0.3.0 | Automated TDD enforcement for LLM-assisted development |
+| **mutation-testing** | 0.1.0 | Test suite quality assessment via mutation analysis (Stryker, mutmut) |
 
 ### DevOps Tools
 
@@ -178,7 +179,7 @@ claudex/
 
 ## Features
 
-- **22 Skills** across 10 categories (api, analysis, claude-code, meta, release-management, testing, devops, planning, benchmarking)
+- **23 Skills** across 10 categories (api, analysis, claude-code, meta, release-management, testing, devops, planning, benchmarking)
 - **1 Hook** for automated insight extraction
 - **Semantic categorization** - Skills organized by purpose, not theme
 - **Multi-feature support** - Skills, hooks, commands (future), agents (future)
@@ -264,7 +265,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v2.0.1
-**Last Updated**: 2025-12-07
+**Current Version**: v3.0.0
+**Last Updated**: 2025-12-08
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*
