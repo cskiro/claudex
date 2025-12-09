@@ -1,7 +1,7 @@
 ---
 name: mutation-testing
 version: 0.1.0
-description: Use PROACTIVELY when assessing test suite effectiveness, finding weak tests, or validating test quality beyond coverage metrics. Introduces code mutations to verify tests catch real bugs. Supports Stryker (JS/TS), PIT (Java), and mutmut (Python). Not for initial test setup or projects without existing test suites.
+description: Use PROACTIVELY when checking if tests catch real bugs, assessing test suite quality, finding weak tests, or measuring mutation score. Validates test effectiveness beyond coverage metrics by introducing code mutations. Supports Stryker (JS/TS), PIT (Java), mutmut (Python). Not for projects without existing test suites.
 ---
 
 # Mutation Testing
@@ -40,10 +40,10 @@ This skill sets up mutation testing to evaluate test suite quality by introducin
 ## Trigger Phrases
 
 - "Set up mutation testing"
-- "Check test effectiveness"
-- "Run mutation analysis"
+- "Are my tests catching bugs?"
+- "Check test effectiveness" / "Test quality analysis"
+- "Run mutation analysis" / "Mutation score"
 - "Find weak tests"
-- "Validate test quality"
 
 ## Supported Frameworks
 
