@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+- Renamed to `test-driven-development` (Anthropic purpose-based naming)
+- Added Testing Trophy model documentation (70/20/10 distribution)
+- Added coverage gates configuration
+- Updated triggers for TDD, coverage, Testing Trophy
+
 ## 0.3.0
 
 - Renamed skill from `tdd-automation` to `test-workflow-setup`

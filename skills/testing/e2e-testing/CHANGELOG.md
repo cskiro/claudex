@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+- Renamed from `playwright-e2e-automation` to `e2e-testing` (purpose-based naming)
+- Aligned with Anthropic skill naming conventions
+- Updated description for broader semantic matching
+
 ## 0.3.0
 
 - Refactored to Anthropic progressive disclosure pattern
