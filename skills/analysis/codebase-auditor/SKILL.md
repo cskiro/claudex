@@ -1,7 +1,7 @@
 ---
 name: codebase-auditor
 version: 0.3.0
-description: Use PROACTIVELY when evaluating code quality, assessing technical debt, setting up quality gates, configuring CI audit integration, auditing large codebases incrementally, tracking audit history, or preparing for production deployment. Comprehensive audit tool analyzing software engineering practices, security vulnerabilities (OWASP Top 10), and technical debt using modern SDLC best practices (2024-25 standards). Supports DORA metrics tracking. Not for runtime profiling or real-time monitoring.
+description: Use PROACTIVELY when auditing code quality, running security scans, assessing technical debt, reviewing code for production readiness, setting up CI quality gates, or tracking DORA metrics. Analyzes codebases against OWASP Top 10, SOLID principles, Testing Trophy, and 2024-25 SDLC standards. Supports incremental audits for large codebases. Not for runtime profiling or real-time monitoring.
 ---
 
 # Codebase Auditor
@@ -14,10 +14,18 @@ Comprehensive codebase audits using modern software engineering standards with a
 - Assess technical debt and estimate remediation
 - Prepare production readiness report
 - Evaluate legacy codebase for modernization
-- **Set up quality gates** for CI/CD pipelines
-- **Configure incremental audits** for large codebases (>100k LOC)
-- **Track audit history** and trends over time
-- **Measure DORA metrics** and deployment health
+- Set up quality gates for CI/CD pipelines
+- Configure incremental audits for large codebases (>100k LOC)
+- Track audit history and trends over time
+
+## Trigger Phrases
+
+- "Audit this codebase" / "Run a code audit"
+- "Security scan" / "Check for vulnerabilities"
+- "Assess technical debt" / "How much tech debt?"
+- "Production readiness review"
+- "Set up quality gates"
+- "DORA metrics" / "Deployment health"
 
 ## Audit Phases
 
