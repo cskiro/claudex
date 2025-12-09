@@ -63,7 +63,7 @@
       "strict": false,
       "skills": [
         "./skills/testing/playwright-e2e-automation",
-        "./skills/testing/tdd-automation"
+        "./skills/testing/test-workflow-setup"
       ]
     },
     {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- Renamed skill from `tdd-automation` to `test-workflow-setup`
+- Refactored to Anthropic progressive disclosure pattern (101 lines vs 237)
+- Updated description for better semantic matching (broader trigger phrases)
+- Moved detailed content to `workflow/` and `reference/` directories
+- Validation score improved from 93% to 95%
+
 ## 0.2.0
 
 - Refactored to Anthropic progressive disclosure pattern
