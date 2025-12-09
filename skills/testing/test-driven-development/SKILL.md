@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-version: 0.4.0
+version: 0.3.0
 description: Use PROACTIVELY when enforcing TDD red-green-refactor, setting up test infrastructure, configuring coverage gates, or implementing the Testing Trophy model. Installs git hooks, npm scripts, and CLAUDE.md configuration to enforce test-first development. Supports coverage thresholds and test distribution analysis. Not for prototypes or projects without test requirements.
 ---
 
@@ -10,7 +10,7 @@ description: Use PROACTIVELY when enforcing TDD red-green-refactor, setting up t
 
 This skill enforces test-driven development (TDD) workflows when using Claude Code. Once installed, Claude will automatically follow red-green-refactor patterns without manual prompting.
 
-**Version:** 0.4.0
+**Version:** 0.3.0
 **Status:** Stable
 
 ## What This Skill Does
@@ -111,7 +111,6 @@ See `reference/technical-details.md` for full documentation.
 
 ## Version History
 
-- **0.4.0** - Renamed to test-driven-development, added Testing Trophy and coverage gates
-- **0.3.0** - Renamed to test-workflow-setup, refactored to progressive disclosure
-- **0.2.0** - Stable release with full implementation
+- **0.3.0** - Renamed to test-driven-development, added Testing Trophy and coverage gates
+- **0.2.0** - Stable release (as tdd-automation)
 - **0.1.0** - Initial proof-of-concept

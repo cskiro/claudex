@@ -1,25 +1,17 @@
 # Changelog
 
-## 0.4.0
-
-- Renamed to `test-driven-development` (Anthropic purpose-based naming)
-- Added Testing Trophy model documentation (70/20/10 distribution)
-- Added coverage gates configuration
-- Updated triggers for TDD, coverage, Testing Trophy
-
 ## 0.3.0
 
-- Renamed skill from `tdd-automation` to `test-workflow-setup`
-- Refactored to Anthropic progressive disclosure pattern (101 lines vs 237)
-- Updated description for better semantic matching (broader trigger phrases)
-- Moved detailed content to `workflow/` and `reference/` directories
-- Validation score improved from 93% to 95%
+- Renamed from `tdd-automation` to `test-driven-development` (Anthropic purpose-based naming)
+- Refactored to progressive disclosure pattern
+- Added Testing Trophy model documentation
+- Added coverage gates configuration
+- Updated triggers and description for better semantic matching
 
 ## 0.2.0
 
-- Refactored to Anthropic progressive disclosure pattern
-- Updated description with "Use PROACTIVELY when..." format
-- Removed version/author/category/tags from frontmatter
+- Stable release with full implementation (as tdd-automation)
+- Automated TDD workflow with git hooks and npm scripts
 
 ## 0.1.0
 
