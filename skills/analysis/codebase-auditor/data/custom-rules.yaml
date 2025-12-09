@@ -1,0 +1,199 @@
+# Custom Rules Configuration
+# Project-specific rule definitions for codebase-auditor
+#
+# Usage:
+#   python3 scripts/audit_engine.py --config custom-rules.yaml
+#
+# This file allows you to:
+#   1. Add custom pattern-based detection rules
+#   2. Override default thresholds
+#   3. Exclude paths/files from specific checks
+#   4. Adjust severity by context
+
+# ============================================================================
+# CUSTOM PATTERN RULES
+# ============================================================================
+custom_rules:
+  # Example: Detect deprecated API usage
+  - id: custom/deprecated-api
+    name: Deprecated API Usage
+    description: Detects usage of deprecated internal APIs
+    severity: medium
+    category: quality
+    patterns:
+      - "legacyService\\."
+      - "oldApiClient\\("
+      - "@deprecated"
+    file_types: [js, ts, jsx, tsx]
+    message: "Using deprecated API. Migrate to new implementation."
+    suggestion: "See migration guide at docs/api-migration.md"
+    effort_minutes: 30
+
+  # Example: Enforce naming conventions
+  - id: custom/component-naming
+    name: React Component Naming
+    description: Components must use PascalCase
+    severity: low
+    category: quality
+    patterns:
+      - "export (const|let|var) [a-z]\\w+ = \\(.*\\) =>"
+    file_types: [jsx, tsx]
+    exclude_patterns:
+      - "^(use|with)[A-Z]"  # Allow hooks and HOCs
+    message: "Component should use PascalCase naming"
+
+  # Example: Security-sensitive patterns
+  - id: custom/no-eval
+    name: No eval() Usage
+    description: eval() is a security risk
+    severity: critical
+    category: security
+    patterns:
+      - "\\beval\\s*\\("
+      - "new Function\\s*\\("
+    file_types: [js, ts, jsx, tsx]
+    message: "eval() and new Function() are security risks"
+    suggestion: "Use JSON.parse() for data or specific parsers"
+
+# ============================================================================
+# THRESHOLD OVERRIDES
+# ============================================================================
+thresholds:
+  # Code complexity
+  cyclomatic_complexity:
+    warning: 15      # Default: 10
+    critical: 25     # Default: 20
+
+  # File length (more lenient for generated files)
+  max_file_lines:
+    default: 500
+    overrides:
+      - pattern: "**/*.generated.ts"
+        value: 2000
+      - pattern: "**/migrations/*.ts"
+        value: 1000
+
+  # Function length
+  max_function_lines:
+    default: 50
+    overrides:
+      - pattern: "**/reducers/*.ts"
+        value: 100  # Redux reducers can be longer
+
+  # Test coverage
+  coverage:
+    line: 80
+    branch: 75
+    function: 90
+    exclude:
+      - "**/test/**"
+      - "**/*.test.ts"
+      - "**/mocks/**"
+
+  # Technical debt ratio (% of dev time)
+  debt_ratio:
+    warning: 10
+    critical: 20
+
+# ============================================================================
+# PATH EXCLUSIONS
+# ============================================================================
+exclusions:
+  # Global exclusions (apply to all rules)
+  global:
+    - "node_modules/**"
+    - "dist/**"
+    - "build/**"
+    - "coverage/**"
+    - "**/*.min.js"
+    - "**/*.bundle.js"
+    - ".git/**"
+
+  # Per-rule exclusions
+  rules:
+    # Don't check complexity in test files
+    complexity:
+      - "**/*.test.ts"
+      - "**/*.spec.ts"
+      - "**/fixtures/**"
+
+    # Don't check for console.log in specific dirs
+    no-console:
+      - "**/scripts/**"
+      - "**/cli/**"
+      - "**/debug/**"
+
+    # Skip security scan on test mocks
+    security:
+      - "**/mocks/**"
+      - "**/__fixtures__/**"
+
+# ============================================================================
+# SEVERITY ADJUSTMENTS
+# ============================================================================
+severity_adjustments:
+  # Promote severity in critical paths
+  promote:
+    - paths: ["**/auth/**", "**/payment/**", "**/api/**"]
+      from: medium
+      to: high
+      reason: "Security-critical code path"
+
+    - paths: ["**/core/**", "**/domain/**"]
+      from: low
+      to: medium
+      reason: "Core business logic"
+
+  # Demote severity in less critical areas
+  demote:
+    - paths: ["**/scripts/**", "**/tools/**"]
+      from: medium
+      to: low
+      reason: "Internal tooling, lower impact"
+
+    - paths: ["**/*.stories.tsx", "**/storybook/**"]
+      from: high
+      to: medium
+      reason: "Documentation/demo code"
+
+# ============================================================================
+# RULE TOGGLES
+# ============================================================================
+rules:
+  # Disable specific built-in rules
+  disabled:
+    - no-any          # Allow 'any' in this project
+    - max-params      # Disable parameter count check
+
+  # Enable experimental rules
+  enabled:
+    - cognitive-complexity
+    - no-floating-promises
+    - strict-boolean-expressions
+
+# ============================================================================
+# REPORT CONFIGURATION
+# ============================================================================
+reporting:
+  # Group findings by...
+  group_by: category  # 'category', 'severity', 'file', 'rule'
+
+  # Sort findings by...
+  sort_by: severity   # 'severity', 'file', 'effort'
+
+  # Limit findings per group in summary
+  max_per_group: 20
+
+  # Include in report
+  include:
+    - summary
+    - findings
+    - metrics
+    - trends
+    - recommendations
+
+  # Output formats
+  formats:
+    - json
+    - markdown
+    # - html  # Uncomment for HTML dashboard

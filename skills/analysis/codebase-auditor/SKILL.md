@@ -1,7 +1,7 @@
 ---
 name: codebase-auditor
-version: 0.2.0
-description: Use PROACTIVELY when evaluating code quality, assessing technical debt, or preparing for production deployment. Comprehensive audit tool analyzing software engineering practices, security vulnerabilities (OWASP Top 10), and technical debt using modern SDLC best practices (2024-25 standards). Generates prioritized remediation plans with effort estimates. Not for runtime profiling or real-time monitoring.
+version: 0.3.0
+description: Use PROACTIVELY when evaluating code quality, assessing technical debt, setting up quality gates, configuring CI audit integration, auditing large codebases incrementally, tracking audit history, or preparing for production deployment. Comprehensive audit tool analyzing software engineering practices, security vulnerabilities (OWASP Top 10), and technical debt using modern SDLC best practices (2024-25 standards). Supports DORA metrics tracking. Not for runtime profiling or real-time monitoring.
 ---
 
 # Codebase Auditor
@@ -14,6 +14,10 @@ Comprehensive codebase audits using modern software engineering standards with a
 - Assess technical debt and estimate remediation
 - Prepare production readiness report
 - Evaluate legacy codebase for modernization
+- **Set up quality gates** for CI/CD pipelines
+- **Configure incremental audits** for large codebases (>100k LOC)
+- **Track audit history** and trends over time
+- **Measure DORA metrics** and deployment health
 
 ## Audit Phases
 
@@ -105,9 +109,14 @@ Complements: SonarQube, ESLint, Jest/Vitest, npm audit, Lighthouse, GitHub Actio
 - Internet needed for CVE data
 - Large codebases need chunked analysis
 
-## References
+## Additional Resources
 
-See `reference/` for:
-- Complete audit criteria checklist
-- Severity matrix and scoring rubric
-- 2024-25 SDLC best practices guide
+| Resource | Path | Description |
+|----------|------|-------------|
+| Audit Criteria | `reference/audit_criteria.md` | Complete checklist (200+ items) |
+| Severity Matrix | `reference/severity_matrix.md` | Scoring rubric |
+| Best Practices | `reference/best_practices_2025.md` | SDLC standards |
+| CI Integration | `reference/ci-integration.md` | GitHub Actions workflows |
+| Incremental Audit | `workflow/incremental-audit.md` | Large codebase strategies |
+| History Schema | `templates/audit-history-schema.sql` | SQLite tracking |
+| Custom Rules | `data/custom-rules.yaml` | Rule template |
