@@ -1,10 +1,10 @@
 ---
-name: playwright-e2e-automation
-version: 0.3.0
-description: Use PROACTIVELY when setting up e2e testing, debugging UI issues, or creating regression test suites. Automated Playwright framework with LLM-powered visual analysis, screenshot capture, and fix recommendations with file:line references. Zero-setup for React/Vite, Node.js, static sites, and full-stack applications. Not for unit testing, API-only testing, or mobile native apps.
+name: e2e-testing
+version: 0.4.0
+description: Use PROACTIVELY when setting up end-to-end testing, debugging UI issues, creating visual regression suites, or automating browser testing. Uses Playwright with LLM-powered visual analysis, screenshot capture, and fix recommendations. Zero-setup for React, Next.js, Vue, Node.js, and static sites. Not for unit testing, API-only testing, or mobile native apps.
 ---
 
-# Playwright E2E Automation
+# E2E Testing
 
 ## Overview
 
