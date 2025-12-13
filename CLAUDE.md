@@ -222,10 +222,10 @@ The `extract-explanatory-insights` hook automatically extracts `★ Insight` blo
 python3 scripts/validate-marketplace.py
 
 # Validate all skills against Anthropic spec
-python3 scripts/validate-skills.py --all
+python3 scripts/validate-skills.py plugins/
 
-# Validate specific category
-python3 scripts/validate-skills.py skills/analysis
+# Validate specific plugin
+python3 scripts/validate-skills.py plugins/api-tools
 ```
 
 **Expected output:** ✅ passed, ⚠️ warnings, or ❌ errors. Exit code 0 = valid.
@@ -269,6 +269,7 @@ python3 skills/category/skill-name/scripts/main.py
 - ❌ Start skill versions at 1.0.0 (use 0.1.0 for initial releases)
 - ❌ Use `/v` or flat `v` tags (use `@` separator: `name@version`)
 - ❌ Modify marketplace.json without validation
+- ❌ Use `source: "./"` for plugins with skills (causes cache duplication)
 
 ### ALWAYS:
 - ✅ Validate with `python3 scripts/validate-marketplace.py`
@@ -277,6 +278,48 @@ python3 skills/category/skill-name/scripts/main.py
 - ✅ Update README.md when adding skills
 - ✅ Include frontmatter in SKILL.md
 - ✅ Start new skills at version 0.1.0
+- ✅ Use isolated source paths (`./plugins/{name}`) for each plugin
+
+## Cache Duplication Prevention
+
+### The Problem
+
+When plugins share a root-level source path (`source: "./"`), Claude Code caches the entire repository for EACH plugin installation. With 6 plugins, this causes **10x cache duplication** and significantly degrades performance.
+
+### The Solution
+
+Each plugin MUST have an isolated source path:
+
+```json
+{
+  "name": "api-tools",
+  "source": "./plugins/api-tools",
+  "skills": ["./skills/structured-outputs-advisor", ...]
+}
+```
+
+**Valid patterns:**
+- `./plugins/plugin-name` - Isolated plugin directory
+- `./skills/category/skill-name` - Skill-specific isolation (for single-skill plugins)
+
+**Invalid patterns:**
+- `./` - Caches entire repo per plugin
+- `.` - Same as above
+- `""` - Empty string, same effect
+
+### Validation
+
+The marketplace validator automatically checks for cache duplication risks:
+
+```bash
+python3 scripts/validate-marketplace.py
+```
+
+This will ERROR if any plugin with skills uses `source: "./"`.
+
+### Exception: Hooks-Only Plugins
+
+Plugins with empty skills arrays (hooks-only) receive a WARNING instead of an error, since cache duplication primarily affects skill loading. However, isolated paths are still recommended for consistency.
 
 ## Skill Quality Standards
 
@@ -313,11 +356,17 @@ python3 skills/category/skill-name/scripts/main.py
 
 ## Marketplace Version History
 
-Current version: **2.0.0**
+Current version: **4.0.0**
+
+### Version 4.0.0 (Breaking Change)
+- Restructured plugin sources to prevent cache duplication
+- Moved skills from `skills/` to `plugins/{plugin-name}/skills/` for isolation
+- Added source isolation validation to prevent future cache issues
+- Archived redundant plugin skills (now using marketplace-level skills)
 
 **Plugin rename note:** In v1.1.3, `productivity-tools` was renamed to `claude-code-tools`. Users with the old name must update settings.
 
 **Total inventory:**
-- 10 plugin categories
-- 22 skills
+- 6 plugin categories
+- 16 skills
 - 1 hook

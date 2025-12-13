@@ -275,15 +275,29 @@ Claude analyzes the `description` field to determine skill relevance. **The name
 description: Helps with documents
 ```
 
-**Good** (specific with triggers + boundaries):
+**Good** - Two valid patterns exist:
+
+**Pattern A: Official Anthropic Style (Capability-First)**
 ```yaml
-description: Extract text and tables from PDF files, fill form fields, merge multiple PDFs. Use when working with PDF files, forms, document extraction, or when user mentions PDFs. NOT for simple viewing or image-based PDFs without OCR.
+description: Comprehensive PDF manipulation toolkit for extracting text and
+  tables, creating new PDFs, merging/splitting documents, and handling forms.
+  When Claude needs to fill in a PDF form or programmatically process,
+  generate, or analyze PDF documents at scale.
 ```
+
+**Pattern B: Claudex Convention (Trigger-First)**
+```yaml
+description: Use PROACTIVELY when working with PDF files, forms, or document
+  extraction. Extracts text and tables, fills form fields, merges documents.
+  NOT for simple viewing or image-based PDFs without OCR.
+```
+
+> **Note**: Both patterns are valid. Pattern A follows Anthropic's production skills (pdf, docx, xlsx). Pattern B emphasizes proactive triggering for marketplace discovery.
 
 ### Description Components
 
 1. **Capabilities** (verbs/actions): "Extract", "Generate", "Analyze"
-2. **Trigger context** (when to activate): "Use when...", "Triggers on..."
+2. **Trigger context** (when to activate): "When Claude needs to...", "Use when...", "Use PROACTIVELY when..."
 3. **Domain specifics**: File types, frameworks, technologies
 4. **Boundaries** (explicit): "NOT for...", "Not suitable for..."
 
@@ -634,13 +648,13 @@ Test both explicit and natural requests:
 Run the claudex validation script:
 ```bash
 # Validate all skills
-python3 .claude-plugin/validate-skills.py
+python3 scripts/validate-skills.py
 
 # Validate specific category
-python3 .claude-plugin/validate-skills.py skills/analysis
+python3 scripts/validate-skills.py skills/analysis
 
 # Verbose output
-python3 .claude-plugin/validate-skills.py --verbose
+python3 scripts/validate-skills.py --verbose
 ```
 
 ---
@@ -707,7 +721,7 @@ head -20 skills/category/skill-name/SKILL.md
 find skills/category/skill-name/ -type f | wc -l
 
 # Run validation
-python3 .claude-plugin/validate-skills.py --verbose
+python3 scripts/validate-skills.py --verbose
 ```
 
 ---

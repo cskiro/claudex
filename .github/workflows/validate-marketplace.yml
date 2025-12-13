@@ -1,0 +1,79 @@
+name: Validate Marketplace
+
+on:
+  pull_request:
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'skills/**'
+      - 'plugins/**'
+      - 'scripts/validate-marketplace.py'
+  push:
+    branches:
+      - main
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'skills/**'
+      - 'plugins/**'
+
+jobs:
+  validate-marketplace:
+    name: Validate Marketplace Schema & Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run marketplace validation
+        run: |
+          echo "Validating claudex marketplace..."
+          python3 scripts/validate-marketplace.py
+
+      - name: Verify source isolation
+        run: |
+          echo "Checking for cache duplication risks..."
+          python3 << 'EOF'
+          import json
+          import sys
+
+          with open('.claude-plugin/marketplace.json') as f:
+              marketplace = json.load(f)
+
+          plugins_with_skills_at_root = []
+
+          for plugin in marketplace.get('plugins', []):
+              source = plugin.get('source', '')
+              skills = plugin.get('skills', [])
+              name = plugin.get('name', 'unknown')
+
+              # Flag plugins with skills that use root source
+              if source in ['./', '.', ''] and len(skills) > 0:
+                  plugins_with_skills_at_root.append(name)
+
+          if plugins_with_skills_at_root:
+              print(f"Cache duplication risk detected!")
+              print(f"Plugins using root source './' with skills: {plugins_with_skills_at_root}")
+              print("Use isolated paths like './plugins/{name}' to prevent 10x cache duplication.")
+              sys.exit(1)
+
+          print("Source isolation check passed.")
+          EOF
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "================================"
+          echo "Marketplace validation passed!"
+          echo "================================"
+          echo ""
+          echo "Validated:"
+          echo "  - marketplace.json schema (Anthropic compliance)"
+          echo "  - Plugin structure and required fields"
+          echo "  - Source isolation (cache duplication prevention)"
+          echo "  - Skill path references"
+          echo "  - SKILL.md file existence"
