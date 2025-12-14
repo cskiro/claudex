@@ -1,6 +1,6 @@
 ---
 name: mcp-server-creator
-version: 0.2.0
+version: 0.2.1
 description: Use PROACTIVELY when creating Model Context Protocol servers for connecting AI applications to external data sources, tools, and workflows. Generates production-ready MCP servers with TypeScript/Python SDKs, configuration templates, and Claude Desktop integration. Includes testing workflow with MCP Inspector. Not for modifying existing MCP servers or non-MCP integrations.
 author: Connor
 ---

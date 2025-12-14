@@ -1,6 +1,6 @@
 ---
 name: otel-monitoring-setup
-version: 0.2.0
+version: 0.2.1
 description: Use PROACTIVELY when setting up OpenTelemetry monitoring for Claude Code usage tracking, cost analysis, or productivity metrics. Provides local PoC mode (full Docker stack with Grafana) and enterprise mode (centralized infrastructure). Configures telemetry collection, imports dashboards, and verifies data flow. Not for non-Claude telemetry or custom metric definitions.
 ---
 

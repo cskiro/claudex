@@ -1,6 +1,6 @@
 ---
 name: structured-outputs-advisor
-version: 0.2.0
+version: 0.2.1
 description: Use PROACTIVELY when users need guaranteed schema compliance or validated tool inputs from Anthropic's structured outputs feature. Expert advisor for choosing between JSON outputs (data extraction/formatting) and strict tool use (agentic workflows). Analyzes requirements, explains trade-offs, and delegates to specialized implementation skills. Not for simple text responses or unstructured outputs.
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: mutation-testing
-version: 0.1.0
+version: 0.1.1
 description: Use PROACTIVELY when checking if tests catch real bugs, assessing test suite quality, finding weak tests, or measuring mutation score. Validates test effectiveness beyond coverage metrics by introducing code mutations. Supports Stryker (JS/TS), PIT (Java), mutmut (Python). Not for projects without existing test suites.
 ---
 

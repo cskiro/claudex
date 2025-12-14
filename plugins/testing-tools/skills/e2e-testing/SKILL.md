@@ -1,6 +1,6 @@
 ---
 name: e2e-testing
-version: 0.4.0
+version: 0.4.1
 description: Use PROACTIVELY when setting up end-to-end testing, debugging UI issues, creating visual regression suites, or automating browser testing. Uses Playwright with LLM-powered visual analysis, screenshot capture, and fix recommendations. Zero-setup for React, Next.js, Vue, Node.js, and static sites. Not for unit testing, API-only testing, or mobile native apps.
 ---
 

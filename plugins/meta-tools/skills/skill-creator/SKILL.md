@@ -1,6 +1,6 @@
 ---
 name: skill-creator
-version: 0.2.0
+version: 0.2.1
 description: Use PROACTIVELY when creating new Claude Code skills from scratch. Automated generation tool following Claudex marketplace standards with intelligent templates, pattern detection, and quality validation. Supports guided creation, quick start templates, clone-and-modify, and validation-only modes. Not for modifying existing skills or non-skill Claude Code configurations.
 ---
 
@@ -95,9 +95,8 @@ Automates creation of Claude Code skills through interactive guidance, template 
 ## Generated Files
 
 **Required** (all skills):
-- `SKILL.md` - Main skill manifest
+- `SKILL.md` - Main skill manifest (with YAML frontmatter)
 - `README.md` - User documentation
-- `plugin.json` - Marketplace metadata
 - `CHANGELOG.md` - Version history
 
 **Optional** (based on type):
@@ -106,6 +105,8 @@ Automates creation of Claude Code skills through interactive guidance, template 
 - `examples/` - Example outputs
 - `templates/` - Reusable templates
 - `scripts/` - Automation scripts
+
+> **Note**: `plugin.json` is NOT required. The marketplace.json is the single source of truth for plugin metadata.
 
 ## Quality Validation
 
@@ -120,22 +121,21 @@ Validates against `data/quality-checklist.md`:
 
 ## Success Criteria
 
-- [ ] All required files generated
-- [ ] Valid YAML frontmatter
-- [ ] Valid JSON in plugin.json
-- [ ] No security issues
-- [ ] Kebab-case naming
+- [ ] All required files generated (SKILL.md, README.md, CHANGELOG.md)
+- [ ] Valid YAML frontmatter with `name` and `description`
+- [ ] `name` matches directory name (Anthropic spec requirement)
+- [ ] No security issues (no secrets in files)
+- [ ] Kebab-case naming (lowercase + hyphens only)
 - [ ] Version 0.1.0 for new skills
-- [ ] At least 3 trigger phrases
+- [ ] Description includes capabilities AND trigger context
 - [ ] Quality grade C or better
 
 ## Reference Materials
 
 ### Templates
-- `templates/SKILL.md.j2` - Main manifest
-- `templates/README.md.j2` - Documentation
-- `templates/plugin.json.j2` - Metadata
-- `templates/CHANGELOG.md.j2` - History
+- `templates/SKILL.md.j2` - Main manifest with frontmatter
+- `templates/README.md.j2` - User documentation
+- `templates/CHANGELOG.md.j2` - Version history
 
 ### Patterns
 - `patterns/mode-based.md` - Multi-mode skills
@@ -162,11 +162,11 @@ ls ~/.claude/skills/
 # View skill structure
 tree ~/.claude/skills/[skill-name]/
 
-# Validate frontmatter
+# Validate frontmatter syntax
 head -20 ~/.claude/skills/[skill-name]/SKILL.md
 
-# Validate JSON
-python -m json.tool ~/.claude/skills/[skill-name]/plugin.json
+# Run marketplace validation
+python3 scripts/validate-skills.py
 ```
 
 ## Error Handling

@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-version: 0.3.0
+version: 0.3.1
 description: Use PROACTIVELY when enforcing TDD red-green-refactor, setting up test infrastructure, configuring coverage gates, or implementing the Testing Trophy model. Installs git hooks, npm scripts, and CLAUDE.md configuration to enforce test-first development. Supports coverage thresholds and test distribution analysis. Not for prototypes or projects without test requirements.
 ---
 

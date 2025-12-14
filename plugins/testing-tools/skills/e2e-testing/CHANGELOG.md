@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1
+
+- Relocated to `plugins/testing-tools/skills/` for source isolation (marketplace v4.0.0)
+- Prevents cache duplication in Claude Code plugin system
+
 ## 0.4.0
 
 - Renamed from `playwright-e2e-automation` to `e2e-testing` (purpose-based naming)

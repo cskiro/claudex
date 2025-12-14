@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+- Relocated to `plugins/testing-tools/skills/` for source isolation (marketplace v4.0.0)
+- Prevents cache duplication in Claude Code plugin system
+
 ## 0.3.0
 
 - Renamed from `tdd-automation` to `test-driven-development` (Anthropic purpose-based naming)
