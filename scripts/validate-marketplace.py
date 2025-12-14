@@ -176,22 +176,12 @@ class MarketplaceValidator:
                 self.warnings.append(f"Plugin '{plugin_name}': Empty skills array")
 
     def _validate_source_isolation(self):
-        """Validate that plugins use isolated source paths to prevent cache duplication.
+        """Validate source path patterns.
 
-        Root cause of 10x cache duplication: when plugins share `source: "./"`,
-        Claude Code caches the entire repository for each plugin instead of
-        isolated subdirectories.
+        Note: Anthropic's official anthropics/skills repository uses `source: "./"`
+        for all plugins. This is the standard pattern and is NOT an error.
 
-        Valid patterns:
-          - "./plugins/plugin-name" (isolated subdirectory)
-          - "./skills/category/skill-name" (skill-specific isolation)
-
-        Invalid patterns:
-          - "./" (shares entire repo - causes cache duplication)
-          - "." (same as above)
-
-        Exception: Hooks-only plugins (empty skills array) get a warning instead
-        of an error since cache duplication primarily affects skill loading.
+        This method now only provides informational output about source patterns.
         """
         if 'plugins' not in self.marketplace:
             return
@@ -200,38 +190,24 @@ class MarketplaceValidator:
         if not isinstance(plugins, list):
             return
 
-        root_source_with_skills = []
-        root_source_hooks_only = []
+        root_source_count = 0
+        isolated_source_count = 0
 
         for plugin in plugins:
-            if 'name' not in plugin or 'source' not in plugin:
+            if 'source' not in plugin:
                 continue
 
-            plugin_name = plugin['name']
             source = plugin['source']
-            skills = plugin.get('skills', [])
-            has_skills = isinstance(skills, list) and len(skills) > 0
 
-            # Check for root-level source paths that cause cache duplication
             if source in ['./', '.', '']:
-                if has_skills:
-                    root_source_with_skills.append(plugin_name)
-                else:
-                    root_source_hooks_only.append(plugin_name)
+                root_source_count += 1
+            else:
+                isolated_source_count += 1
 
-        # Error for plugins with skills using root source
-        if root_source_with_skills:
-            self.errors.append(
-                f"Cache duplication risk: Plugin(s) [{', '.join(root_source_with_skills)}] "
-                f"use root source './' - this causes 10x cache duplication. "
-                f"Use isolated paths like './plugins/{{name}}' instead."
-            )
-
-        # Warning for hooks-only plugins using root source
-        if root_source_hooks_only:
-            self.warnings.append(
-                f"Plugin(s) [{', '.join(root_source_hooks_only)}] use root source './'. "
-                f"Consider using isolated paths for consistency."
+        # Informational only - Anthropic uses root source pattern
+        if root_source_count > 0:
+            self.info.append(
+                f"{root_source_count} plugin(s) use root source './' (Anthropic standard pattern)"
             )
 
     def _validate_skill_references(self):

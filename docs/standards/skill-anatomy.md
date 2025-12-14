@@ -4,7 +4,7 @@ A comprehensive guide to understanding, creating, and optimizing Claude Code ski
 
 > **Sources**: This document synthesizes official Anthropic documentation from multiple sources. See [Documentation Sources](#documentation-sources) for details.
 
-> **Claudex Note**: This marketplace uses a nested category structure: `skills/<category>/<skill-name>/SKILL.md`. All paths in this document reflect this structure.
+> **Claudex Note**: This marketplace follows Anthropic's official flat structure: `skills/<skill-name>/SKILL.md`. All paths in this document reflect this pattern.
 
 ## Table of Contents
 
@@ -648,13 +648,13 @@ Test both explicit and natural requests:
 Run the claudex validation script:
 ```bash
 # Validate all skills
-python3 scripts/validate-skills.py
+python3 scripts/validate-skills.py skills/
 
-# Validate specific category
-python3 scripts/validate-skills.py skills/analysis
+# Validate specific skill
+python3 scripts/validate-skills.py skills/skill-name
 
 # Verbose output
-python3 scripts/validate-skills.py --verbose
+python3 scripts/validate-skills.py skills/ --verbose
 ```
 
 ---
@@ -708,20 +708,20 @@ Before sharing or publishing a skill:
 ## Quick Reference Commands
 
 ```bash
-# List skills by category
-ls skills/*/
+# List all skills
+ls skills/
 
 # View skill structure
-tree skills/category/skill-name/
+tree skills/skill-name/
 
 # Validate frontmatter
-head -20 skills/category/skill-name/SKILL.md
+head -20 skills/skill-name/SKILL.md
 
 # Check skill file count
-find skills/category/skill-name/ -type f | wc -l
+find skills/skill-name/ -type f | wc -l
 
 # Run validation
-python3 scripts/validate-skills.py --verbose
+python3 scripts/validate-skills.py skills/
 ```
 
 ---

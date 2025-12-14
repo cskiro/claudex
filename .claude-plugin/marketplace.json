@@ -13,68 +13,66 @@
     {
       "name": "api-tools",
       "description": "Tools for leveraging Anthropic API features like structured outputs",
-      "source": "./plugins/api-tools",
+      "source": "./",
       "strict": false,
       "skills": [
-        "./plugins/api-tools/skills/json-structured-outputs/structured-outputs-advisor",
-        "./plugins/api-tools/skills/json-structured-outputs/json-outputs-implementer",
-        "./plugins/api-tools/skills/json-structured-outputs/strict-tool-implementer"
+        "./skills/structured-outputs-advisor",
+        "./skills/json-outputs-implementer",
+        "./skills/strict-tool-implementer"
       ]
     },
     {
       "name": "claude-code-tools",
       "description": "Tools for enhancing and extending the Claude Code ecosystem",
-      "source": "./plugins/claude-code-tools",
+      "source": "./",
       "strict": false,
       "skills": [
-        "./plugins/claude-code-tools/skills/cc-insights",
-        "./plugins/claude-code-tools/skills/sub-agent-creator",
-        "./plugins/claude-code-tools/skills/mcp-server-creator",
-        "./plugins/claude-code-tools/skills/claude-md-auditor",
-        "./plugins/claude-code-tools/skills/otel-monitoring-setup"
+        "./skills/cc-insights",
+        "./skills/sub-agent-creator",
+        "./skills/mcp-server-creator",
+        "./skills/claude-md-auditor",
+        "./skills/otel-monitoring-setup"
       ]
     },
     {
       "name": "meta-tools",
       "description": "Tools for creating and testing Claude Code skills",
-      "source": "./plugins/meta-tools",
+      "source": "./",
       "strict": false,
       "skills": [
-        "./plugins/meta-tools/skills/skill-creator",
-        "./plugins/meta-tools/skills/skill-isolation-tester"
+        "./skills/skill-creator",
+        "./skills/skill-isolation-tester"
       ]
     },
     {
       "name": "testing-tools",
       "description": "Automated testing frameworks including E2E, TDD, and mutation testing",
-      "source": "./plugins/testing-tools",
+      "source": "./",
       "strict": false,
       "skills": [
-        "./plugins/testing-tools/skills/e2e-testing",
-        "./plugins/testing-tools/skills/test-driven-development",
-        "./plugins/testing-tools/skills/mutation-testing"
+        "./skills/e2e-testing",
+        "./skills/test-driven-development",
+        "./skills/mutation-testing"
       ]
     },
     {
       "name": "devops-tools",
       "description": "Infrastructure automation, project scaffolding, and repository setup",
-      "source": "./plugins/devops-tools",
+      "source": "./",
       "strict": false,
       "skills": [
-        "./plugins/devops-tools/skills/react-project-scaffolder",
-        "./plugins/devops-tools/skills/github-repo-setup",
-        "./plugins/devops-tools/skills/git-worktree-setup"
+        "./skills/react-project-scaffolder",
+        "./skills/github-repo-setup",
+        "./skills/git-worktree-setup"
       ]
     },
     {
       "name": "productivity-hooks",
       "description": "Productivity enhancement hooks for automated insight extraction and learning",
-      "source": "./hooks",
+      "source": "./",
       "strict": false,
       "skills": [],
-      "hooks": "./hooks/hooks.json",
-      "category": "productivity",
-      "version": "0.1.0"
+      "hooks": "./hooks/hooks.json"
     }
   ]
 }

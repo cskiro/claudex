@@ -21,38 +21,25 @@
 /plugin install productivity-hooks@claudex
 ```
 
-### Updating from v3.x
-
-If you previously installed claudex v3.x or earlier:
-
-```bash
-# Update the marketplace
-/plugin marketplace update claudex
-
-# Note: Some plugins were archived in v4.0.0
-# - analysis-tools (use analysis-tools from main marketplace)
-# - release-management (archived)
-# - planning-tools (archived)
-# - benchmarking (archived)
-```
-
 ---
 
 ## Repository Structure
 
+Follows Anthropic's official `anthropics/skills` pattern:
+
 ```
 claudex/
-├── plugins/                    # Plugin bundles with isolated sources
-│   ├── api-tools/skills/       # Anthropic API features
-│   ├── claude-code-tools/skills/   # Claude Code ecosystem
-│   ├── meta-tools/skills/      # Skill creation tools
-│   ├── testing-tools/skills/   # Testing frameworks
-│   └── devops-tools/skills/    # Infrastructure automation
+├── .claude-plugin/
+│   └── marketplace.json        # Plugin registry
+├── skills/                     # Flat skill directory (16 skills)
+│   ├── cc-insights/
+│   ├── claude-md-auditor/
+│   ├── e2e-testing/
+│   ├── ...
 ├── hooks/                      # Event-driven automation
-│   └── hooks.json              # Hook registry
+│   └── hooks.json
 ├── archive/                    # Archived skills (not in marketplace)
-└── .claude-plugin/             # Marketplace configuration
-    └── marketplace.json        # Single source of truth
+└── docs/                       # Documentation
 ```
 
 ---
@@ -116,12 +103,7 @@ claudex/
 
 | Hook | Version | Description |
 |------|---------|-------------|
-| **extract-explanatory-insights** | 0.1.0 | Auto-extracts `★ Insight` blocks from Explanatory responses to categorized docs |
-
-**Usage:**
-1. Install: `/plugin install productivity-hooks@claudex`
-2. Enable Explanatory style: `/output-style explanatory`
-3. Insights auto-save to `docs/lessons-learned/{category}/insights.md`
+| **extract-explanatory-insights** | 0.1.0 | Auto-extracts `★ Insight` blocks from Explanatory responses |
 
 ---
 
@@ -132,20 +114,15 @@ claudex/
 - **Python** 3.8+ - For validation scripts and Python-based skills
 - **jq** 1.6+ - For hooks (install via `brew install jq` on macOS)
 
-### Optional (Skill-Specific)
-- **Docker Desktop** - For `otel-monitoring-setup`
-- **Python packages** - Install per skill's `requirements.txt`
-
 ---
 
 ## Features
 
 - **16 Skills** across 5 plugin categories
 - **1 Hook** for automated insight extraction
-- **Source isolation** - Each plugin has isolated source paths to prevent cache duplication
+- **Anthropic-aligned structure** - Follows official `anthropics/skills` patterns
 - **Semantic categorization** - Skills organized by purpose
 - **Cross-platform** - macOS, Linux, Windows (WSL2)
-- **Marketplace ready** - Standard directory structure following Anthropic patterns
 
 ---
 
@@ -168,60 +145,21 @@ Add to `.claude/settings.json` for automatic installation:
     "claude-code-tools@claudex",
     "meta-tools@claudex",
     "testing-tools@claudex",
-    "devops-tools@claudex",
-    "productivity-hooks@claudex"
+    "devops-tools@claudex"
   ]
 }
 ```
 
-When team members trust your repository, plugins install automatically.
-
----
-
-## Troubleshooting
-
-### Plugin Not Found: productivity-tools
-
-**Error:**
-```
-✘ productivity-tools@claudex
-   Plugin 'productivity-tools' not found in marketplace 'claudex'
-```
-
-**Cause:** In marketplace v1.1.3 (November 2025), `productivity-tools` was renamed to `claude-code-tools`.
-
-**Solution:** Update your settings to use `claude-code-tools@claudex`.
-
-### Plugin Not Found: analysis-tools, planning-tools, etc.
-
-**Error:**
-```
-✘ analysis-tools@claudex
-   Plugin 'analysis-tools' not found in marketplace 'claudex'
-```
-
-**Cause:** In marketplace v4.0.0 (December 2025), several plugins were archived to reduce duplication with the main Anthropic marketplace.
-
-**Archived plugins:**
-- `analysis-tools` - Use analysis skills from the main marketplace
-- `release-management` - Archived
-- `planning-tools` - Archived
-- `benchmarking` - Archived
-
-**Solution:** Remove these plugins from your settings and use alternatives from the main marketplace.
-
 ---
 
 ## Validation
-
-Validate marketplace integrity before committing:
 
 ```bash
 # Validate marketplace.json schema
 python3 scripts/validate-marketplace.py
 
 # Validate all skills
-python3 scripts/validate-skills.py plugins/
+python3 scripts/validate-skills.py skills/
 ```
 
 ---
@@ -233,7 +171,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v4.0.0
+**Current Version**: v4.1.0
 **Last Updated**: 2025-12-13
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*
