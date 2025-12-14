@@ -7,9 +7,10 @@ Desktop.ini
 /docs/archive/
 /docs/lessons-learned/
 
-# Internal automation (except validation scripts for contributors)
+# Internal automation (except validation scripts and hooks for contributors)
 /scripts/*
 !/scripts/validate-*.py
+!/scripts/pre-commit
 
 # Environment files
 .env

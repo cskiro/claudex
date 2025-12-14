@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
@@ -16,20 +16,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/api/json-structured-outputs/structured-outputs-advisor",
-        "./skills/api/json-structured-outputs/json-outputs-implementer",
-        "./skills/api/json-structured-outputs/strict-tool-implementer"
-      ]
-    },
-    {
-      "name": "analysis-tools",
-      "description": "Code quality, security, and architecture analysis tools for comprehensive codebase auditing",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/analysis/codebase-auditor",
-        "./skills/analysis/bulletproof-react-auditor",
-        "./skills/analysis/accessibility-audit"
+        "./skills/structured-outputs-advisor",
+        "./skills/json-outputs-implementer",
+        "./skills/strict-tool-implementer"
       ]
     },
     {
@@ -38,11 +27,11 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/claude-code/cc-insights",
-        "./skills/claude-code/sub-agent-creator",
-        "./skills/claude-code/mcp-server-creator",
-        "./skills/claude-code/claude-md-auditor",
-        "./skills/claude-code/otel-monitoring-setup"
+        "./skills/cc-insights",
+        "./skills/sub-agent-creator",
+        "./skills/mcp-server-creator",
+        "./skills/claude-md-auditor",
+        "./skills/otel-monitoring-setup"
       ]
     },
     {
@@ -51,9 +40,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/meta/skill-creator",
-        "./skills/meta/skill-isolation-tester",
-        "./skills/meta/insight-skill-generator"
+        "./skills/skill-creator",
+        "./skills/skill-isolation-tester"
       ]
     },
     {
@@ -62,9 +50,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/testing/e2e-testing",
-        "./skills/testing/test-driven-development",
-        "./skills/testing/mutation-testing"
+        "./skills/e2e-testing",
+        "./skills/test-driven-development",
+        "./skills/mutation-testing"
       ]
     },
     {
@@ -73,36 +61,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/devops/react-project-scaffolder",
-        "./skills/devops/github-repo-setup",
-        "./skills/devops/git-worktree-setup"
-      ]
-    },
-    {
-      "name": "release-management",
-      "description": "Automated release workflows, versioning, and deployment readiness tools",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/release-management/semantic-release-tagger"
-      ]
-    },
-    {
-      "name": "planning-tools",
-      "description": "Visual planning and documentation tools including ASCII diagrams for architecture, migrations, and data flows",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/planning/ascii-diagram-creator"
-      ]
-    },
-    {
-      "name": "benchmarking",
-      "description": "End-to-end benchmark report creation with diagrams, high-res PNG capture, and PDF export for AI/ML research documentation",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/benchmarking/benchmark-report-creator"
+        "./skills/react-project-scaffolder",
+        "./skills/github-repo-setup",
+        "./skills/git-worktree-setup"
       ]
     },
     {
@@ -111,9 +72,7 @@
       "source": "./",
       "strict": false,
       "skills": [],
-      "hooks": "./hooks/hooks.json",
-      "category": "productivity",
-      "version": "0.1.0"
+      "hooks": "./hooks/hooks.json"
     }
   ]
 }

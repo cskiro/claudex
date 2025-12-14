@@ -347,10 +347,18 @@ class SkillValidator:
             self.warnings.append(f"Description too long ({len(description)} chars, max {self.MAX_DESCRIPTION_LENGTH})")
             score -= 10
 
-        # Must start with "Use PROACTIVELY when..."
-        if not description.lower().startswith('use proactively'):
-            self.errors.append("Description must start with 'Use PROACTIVELY when...'")
-            score -= 25
+        # Check for proactive trigger pattern (info only - not required by Anthropic spec)
+        # Official pattern: "[Capabilities]. When Claude needs to [context]."
+        # Claudex convention: "Use PROACTIVELY when [context]. [Capabilities]."
+        if description.lower().startswith('use proactively'):
+            if self.verbose:
+                self.info.append("Uses Claudex proactive trigger convention")
+        elif 'when' in description.lower() or 'for' in description.lower():
+            if self.verbose:
+                self.info.append("Uses standard trigger context pattern")
+        else:
+            self.warnings.append("Consider adding trigger context ('When...' or 'Use when...')")
+            score -= 10
 
         # Check for action verbs
         action_verbs = ['validates', 'generates', 'creates', 'audits', 'analyzes',
@@ -505,15 +513,35 @@ class SkillsValidator:
         self.verbose = verbose
         self.results: List[Tuple[str, bool, float, SkillValidator]] = []
 
+    def _find_skills_recursive(self, base_path: Path) -> List[Path]:
+        """Recursively find all skill directories (those containing SKILL.md)."""
+        skill_dirs = []
+        for item in base_path.iterdir():
+            if item.is_dir():
+                if (item / "SKILL.md").exists():
+                    skill_dirs.append(item)
+                else:
+                    # Recurse into subdirectories
+                    skill_dirs.extend(self._find_skills_recursive(item))
+        return skill_dirs
+
     def validate(self) -> bool:
         """Validate all skills. Returns True if all passed."""
         print(f"{Colors.BOLD}🔍 Validating skills against Anthropic standards...{Colors.RESET}\n")
 
-        # Find all skills to validate
+        # Support both old (skills/) and new (plugins/) structures
+        plugins_dir = self.repo_root / "plugins"
         skills_dir = self.repo_root / "skills"
 
-        if not skills_dir.exists():
-            print(f"{Colors.RED}Error: skills/ directory not found{Colors.RESET}")
+        # Determine which structure exists
+        if plugins_dir.exists():
+            base_dir = plugins_dir
+            structure = "plugins"
+        elif skills_dir.exists():
+            base_dir = skills_dir
+            structure = "skills"
+        else:
+            print(f"{Colors.RED}Error: Neither plugins/ nor skills/ directory found{Colors.RESET}")
             return False
 
         # Get skill directories
@@ -523,25 +551,24 @@ class SkillsValidator:
                     # Target is a skill directory
                     skill_dirs = [self.target_path]
                 else:
-                    # Target is a category directory
-                    skill_dirs = [d for d in self.target_path.iterdir()
-                                 if d.is_dir() and (d / "SKILL.md").exists()]
+                    # Target is a category directory - recursively find skills
+                    skill_dirs = self._find_skills_recursive(self.target_path)
             else:
                 print(f"{Colors.RED}Error: {self.target_path} is not a directory{Colors.RESET}")
                 return False
         else:
-            # Find all skill directories
+            # Find all skill directories based on structure
             skill_dirs = []
-            for category_dir in skills_dir.iterdir():
-                if category_dir.is_dir():
-                    for skill_dir in category_dir.iterdir():
-                        if skill_dir.is_dir() and (skill_dir / "SKILL.md").exists():
-                            skill_dirs.append(skill_dir)
-                        # Handle nested structures (e.g., api/json-structured-outputs/skill)
-                        elif skill_dir.is_dir():
-                            for nested_skill in skill_dir.iterdir():
-                                if nested_skill.is_dir() and (nested_skill / "SKILL.md").exists():
-                                    skill_dirs.append(nested_skill)
+            if structure == "plugins":
+                # New structure: plugins/{plugin-name}/skills/{skill-name}/
+                for plugin_dir in base_dir.iterdir():
+                    if plugin_dir.is_dir():
+                        plugin_skills = plugin_dir / "skills"
+                        if plugin_skills.exists():
+                            skill_dirs.extend(self._find_skills_recursive(plugin_skills))
+            else:
+                # Old structure: skills/{category}/{skill-name}/
+                skill_dirs = self._find_skills_recursive(base_dir)
 
         if not skill_dirs:
             print(f"{Colors.YELLOW}No skills found to validate{Colors.RESET}")

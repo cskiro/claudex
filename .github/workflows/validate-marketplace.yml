@@ -1,0 +1,78 @@
+name: Validate Marketplace
+
+on:
+  pull_request:
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'skills/**'
+      - 'plugins/**'
+      - 'scripts/validate-marketplace.py'
+  push:
+    branches:
+      - main
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'skills/**'
+      - 'plugins/**'
+
+jobs:
+  validate-marketplace:
+    name: Validate Marketplace Schema & Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run marketplace validation
+        run: |
+          echo "Validating claudex marketplace..."
+          python3 scripts/validate-marketplace.py
+
+      - name: Verify source structure
+        run: |
+          echo "Checking source structure (informational)..."
+          python3 << 'EOF'
+          import json
+
+          with open('.claude-plugin/marketplace.json') as f:
+              marketplace = json.load(f)
+
+          plugins_with_root_source = []
+
+          for plugin in marketplace.get('plugins', []):
+              source = plugin.get('source', '')
+              skills = plugin.get('skills', [])
+              name = plugin.get('name', 'unknown')
+
+              if source in ['./', '.', ''] and len(skills) > 0:
+                  plugins_with_root_source.append(name)
+
+          if plugins_with_root_source:
+              print(f"ℹ️  {len(plugins_with_root_source)} plugin(s) use root source './'")
+              print(f"   This follows Anthropic's official 'anthropics/skills' pattern.")
+              print(f"   Plugins: {', '.join(plugins_with_root_source)}")
+          else:
+              print("All plugins use isolated source paths.")
+
+          print("✅ Source structure check passed.")
+          EOF
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "================================"
+          echo "Marketplace validation passed!"
+          echo "================================"
+          echo ""
+          echo "Validated:"
+          echo "  - marketplace.json schema (Anthropic compliance)"
+          echo "  - Plugin structure and required fields"
+          echo "  - Source structure (Anthropic pattern)"
+          echo "  - Skill path references"
+          echo "  - SKILL.md file existence"

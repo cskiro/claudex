@@ -6,7 +6,7 @@ Validates the marketplace.json file and skill integrity for Claude Code plugin m
 Follows Anthropic's official schema from anthropics/skills repository.
 
 Usage:
-    python3 .claude-plugin/validate-marketplace.py
+    python3 scripts/validate-marketplace.py
 
 Exit Codes:
     0 - All validations passed
@@ -57,6 +57,7 @@ class MarketplaceValidator:
         self._validate_owner()
         self._validate_metadata()
         self._validate_plugins()
+        self._validate_source_isolation()  # NEW: Prevent cache duplication
         self._validate_skill_references()
         self._validate_skill_files()
 
@@ -173,6 +174,41 @@ class MarketplaceValidator:
                 self.errors.append(f"Plugin '{plugin_name}': 'skills' must be an array")
             elif len(skills) == 0:
                 self.warnings.append(f"Plugin '{plugin_name}': Empty skills array")
+
+    def _validate_source_isolation(self):
+        """Validate source path patterns.
+
+        Note: Anthropic's official anthropics/skills repository uses `source: "./"`
+        for all plugins. This is the standard pattern and is NOT an error.
+
+        This method now only provides informational output about source patterns.
+        """
+        if 'plugins' not in self.marketplace:
+            return
+
+        plugins = self.marketplace['plugins']
+        if not isinstance(plugins, list):
+            return
+
+        root_source_count = 0
+        isolated_source_count = 0
+
+        for plugin in plugins:
+            if 'source' not in plugin:
+                continue
+
+            source = plugin['source']
+
+            if source in ['./', '.', '']:
+                root_source_count += 1
+            else:
+                isolated_source_count += 1
+
+        # Informational only - Anthropic uses root source pattern
+        if root_source_count > 0:
+            self.info.append(
+                f"{root_source_count} plugin(s) use root source './' (Anthropic standard pattern)"
+            )
 
     def _validate_skill_references(self):
         """Validate that skill paths are correctly formatted."""

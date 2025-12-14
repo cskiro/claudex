@@ -4,7 +4,7 @@ A comprehensive guide to understanding, creating, and optimizing Claude Code ski
 
 > **Sources**: This document synthesizes official Anthropic documentation from multiple sources. See [Documentation Sources](#documentation-sources) for details.
 
-> **Claudex Note**: This marketplace uses a nested category structure: `skills/<category>/<skill-name>/SKILL.md`. All paths in this document reflect this structure.
+> **Claudex Note**: This marketplace follows Anthropic's official flat structure: `skills/<skill-name>/SKILL.md`. All paths in this document reflect this pattern.
 
 ## Table of Contents
 
@@ -275,15 +275,29 @@ Claude analyzes the `description` field to determine skill relevance. **The name
 description: Helps with documents
 ```
 
-**Good** (specific with triggers + boundaries):
+**Good** - Two valid patterns exist:
+
+**Pattern A: Official Anthropic Style (Capability-First)**
 ```yaml
-description: Extract text and tables from PDF files, fill form fields, merge multiple PDFs. Use when working with PDF files, forms, document extraction, or when user mentions PDFs. NOT for simple viewing or image-based PDFs without OCR.
+description: Comprehensive PDF manipulation toolkit for extracting text and
+  tables, creating new PDFs, merging/splitting documents, and handling forms.
+  When Claude needs to fill in a PDF form or programmatically process,
+  generate, or analyze PDF documents at scale.
 ```
+
+**Pattern B: Claudex Convention (Trigger-First)**
+```yaml
+description: Use PROACTIVELY when working with PDF files, forms, or document
+  extraction. Extracts text and tables, fills form fields, merges documents.
+  NOT for simple viewing or image-based PDFs without OCR.
+```
+
+> **Note**: Both patterns are valid. Pattern A follows Anthropic's production skills (pdf, docx, xlsx). Pattern B emphasizes proactive triggering for marketplace discovery.
 
 ### Description Components
 
 1. **Capabilities** (verbs/actions): "Extract", "Generate", "Analyze"
-2. **Trigger context** (when to activate): "Use when...", "Triggers on..."
+2. **Trigger context** (when to activate): "When Claude needs to...", "Use when...", "Use PROACTIVELY when..."
 3. **Domain specifics**: File types, frameworks, technologies
 4. **Boundaries** (explicit): "NOT for...", "Not suitable for..."
 
@@ -634,13 +648,13 @@ Test both explicit and natural requests:
 Run the claudex validation script:
 ```bash
 # Validate all skills
-python3 .claude-plugin/validate-skills.py
+python3 scripts/validate-skills.py skills/
 
-# Validate specific category
-python3 .claude-plugin/validate-skills.py skills/analysis
+# Validate specific skill
+python3 scripts/validate-skills.py skills/skill-name
 
 # Verbose output
-python3 .claude-plugin/validate-skills.py --verbose
+python3 scripts/validate-skills.py skills/ --verbose
 ```
 
 ---
@@ -694,20 +708,20 @@ Before sharing or publishing a skill:
 ## Quick Reference Commands
 
 ```bash
-# List skills by category
-ls skills/*/
+# List all skills
+ls skills/
 
 # View skill structure
-tree skills/category/skill-name/
+tree skills/skill-name/
 
 # Validate frontmatter
-head -20 skills/category/skill-name/SKILL.md
+head -20 skills/skill-name/SKILL.md
 
 # Check skill file count
-find skills/category/skill-name/ -type f | wc -l
+find skills/skill-name/ -type f | wc -l
 
 # Run validation
-python3 .claude-plugin/validate-skills.py --verbose
+python3 scripts/validate-skills.py skills/
 ```
 
 ---
