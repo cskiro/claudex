@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
@@ -19,6 +19,17 @@
         "./skills/structured-outputs-advisor",
         "./skills/json-outputs-implementer",
         "./skills/strict-tool-implementer"
+      ]
+    },
+    {
+      "name": "analysis-tools",
+      "description": "Workflow-based code quality, security, and architecture analysis tools with checklists and progressive disclosure",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/codebase-auditor",
+        "./skills/bulletproof-react-auditor",
+        "./skills/accessibility-audit"
       ]
     },
     {
@@ -41,7 +52,8 @@
       "strict": false,
       "skills": [
         "./skills/skill-creator",
-        "./skills/skill-isolation-tester"
+        "./skills/skill-isolation-tester",
+        "./skills/insight-skill-generator"
       ]
     },
     {
@@ -64,6 +76,33 @@
         "./skills/react-project-scaffolder",
         "./skills/github-repo-setup",
         "./skills/git-worktree-setup"
+      ]
+    },
+    {
+      "name": "release-management",
+      "description": "Automated release workflows, semantic versioning, and deployment readiness tools",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/semantic-release-tagger"
+      ]
+    },
+    {
+      "name": "planning-tools",
+      "description": "Visual planning and documentation tools including ASCII diagrams for architecture and data flows",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/ascii-diagram-creator"
+      ]
+    },
+    {
+      "name": "benchmarking",
+      "description": "Benchmark report creation with diagrams and PDF export for AI/ML research documentation",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/benchmark-report-creator"
       ]
     },
     {

@@ -12,10 +12,14 @@
 
 # Install plugin bundles
 /plugin install api-tools@claudex
+/plugin install analysis-tools@claudex
 /plugin install claude-code-tools@claudex
 /plugin install meta-tools@claudex
 /plugin install testing-tools@claudex
 /plugin install devops-tools@claudex
+/plugin install release-management@claudex
+/plugin install planning-tools@claudex
+/plugin install benchmarking@claudex
 
 # (Optional) Install productivity hooks
 /plugin install productivity-hooks@claudex
@@ -30,15 +34,18 @@ Follows Anthropic's official `anthropics/skills` pattern:
 ```
 claudex/
 ├── .claude-plugin/
-│   └── marketplace.json        # Plugin registry
-├── skills/                     # Flat skill directory (16 skills)
+│   └── marketplace.json        # Plugin registry (single source of truth)
+├── skills/                     # Flat skill directory (23 skills)
+│   ├── accessibility-audit/
+│   ├── ascii-diagram-creator/
+│   ├── benchmark-report-creator/
+│   ├── bulletproof-react-auditor/
 │   ├── cc-insights/
 │   ├── claude-md-auditor/
-│   ├── e2e-testing/
+│   ├── codebase-auditor/
 │   ├── ...
 ├── hooks/                      # Event-driven automation
 │   └── hooks.json
-├── archive/                    # Archived skills (not in marketplace)
 └── docs/                       # Documentation
 ```
 
@@ -55,6 +62,16 @@ claudex/
 | **structured-outputs-advisor** | 0.2.1 | Expert advisor for choosing between JSON outputs and strict tool use modes |
 | **json-outputs-implementer** | 0.2.1 | Implement JSON outputs mode with guaranteed schema compliance |
 | **strict-tool-implementer** | 0.2.1 | Implement strict tool use mode with guaranteed parameter validation |
+
+### Analysis Tools
+
+**`analysis-tools`** - Workflow-based code quality, security, and architecture analysis
+
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **codebase-auditor** | 0.3.1 | Comprehensive codebase analysis against 2024-25 SDLC standards |
+| **bulletproof-react-auditor** | 0.2.1 | React codebase auditing against Bulletproof React architecture |
+| **accessibility-audit** | 0.1.2 | WCAG 2.2 Level AA compliance auditing with MUI awareness |
 
 ### Claude Code Tools
 
@@ -76,6 +93,7 @@ claudex/
 |-------|---------|-------------|
 | **skill-creator** | 0.2.1 | Generate skills following Claudex marketplace standards |
 | **skill-isolation-tester** | 0.2.1 | Test skills in isolated environments (worktree, Docker, VMs) |
+| **insight-skill-generator** | 0.1.1 | Generate skills from clustered insight patterns |
 
 ### Testing Tools
 
@@ -96,6 +114,30 @@ claudex/
 | **react-project-scaffolder** | 0.2.1 | React project setup (sandbox, enterprise, mobile modes) |
 | **github-repo-setup** | 0.2.1 | GitHub repository creation with security, CI/CD, and governance |
 | **git-worktree-setup** | 0.2.1 | Parallel Claude Code sessions via git worktrees |
+
+### Release Management
+
+**`release-management`** - Automated release workflows and semantic versioning
+
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **semantic-release-tagger** | 0.2.1 | Automated git tagging with conventional commit analysis |
+
+### Planning Tools
+
+**`planning-tools`** - Visual planning and documentation tools
+
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **ascii-diagram-creator** | 0.4.1 | ASCII diagram generation for architecture and data flows |
+
+### Benchmarking
+
+**`benchmarking`** - Benchmark report creation for AI/ML research
+
+| Skill | Version | Description |
+|-------|---------|-------------|
+| **benchmark-report-creator** | 0.1.2 | Academic benchmark reports with diagrams and PDF export |
 
 ### Productivity Hooks
 
@@ -118,7 +160,7 @@ claudex/
 
 ## Features
 
-- **16 Skills** across 5 plugin categories
+- **23 Skills** across 9 plugin categories
 - **1 Hook** for automated insight extraction
 - **Anthropic-aligned structure** - Follows official `anthropics/skills` patterns
 - **Semantic categorization** - Skills organized by purpose
@@ -142,10 +184,14 @@ Add to `.claude/settings.json` for automatic installation:
   },
   "enabledPlugins": [
     "api-tools@claudex",
+    "analysis-tools@claudex",
     "claude-code-tools@claudex",
     "meta-tools@claudex",
     "testing-tools@claudex",
-    "devops-tools@claudex"
+    "devops-tools@claudex",
+    "release-management@claudex",
+    "planning-tools@claudex",
+    "benchmarking@claudex"
   ]
 }
 ```
@@ -160,6 +206,9 @@ python3 scripts/validate-marketplace.py
 
 # Validate all skills
 python3 scripts/validate-skills.py skills/
+
+# Pre-release validation suite
+python3 scripts/validate-pre-release.py
 ```
 
 ---
@@ -171,7 +220,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v4.1.0
-**Last Updated**: 2025-12-13
+**Current Version**: v5.0.0
+**Last Updated**: 2025-12-14
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*

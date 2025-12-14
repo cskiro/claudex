@@ -1,27 +1,42 @@
-# Archived Skills
+# Archive
 
-Skills archived during toolset consolidation. These files are kept for reference but are no longer active.
+This directory contains archived or deprecated content.
 
-**Archived:** 2025-12-13
-**Reason:** Toolset overlap reduction per TOOLSET-OVERLAP-ANALYSIS.md
+## v5.0.0 Update
 
-## Archived Skills
+**All previously archived skills have been restored** to the main `skills/` directory as of v5.0.0.
 
-| Skill | Reason | Replacement |
-|-------|--------|-------------|
-| codebase-auditor | Covered by code-quality-reviewer agent | Agent does deeper analysis |
-| bulletproof-react-auditor | Niche, low expected usage | General architecture guidance |
-| accessibility-audit | Overlaps with ui-component-designer | Skill covers a11y specs |
-| benchmark-report-creator | Niche, low expected usage | Manual documentation |
-| ascii-diagram-creator | Built into rules (01-universal.md) | Rules provide guidance |
-| insight-skill-generator | Overlaps with skill-creator | skill-creator is canonical |
-| semantic-release-tagger | Niche, native git/npm handles this | Native tooling |
+### Restoration Summary
 
-## Restoration
+The following skills that were archived in v4.0.0 are now active again:
 
-To restore an archived skill:
+| Skill | Plugin | Status |
+|-------|--------|--------|
+| codebase-auditor | analysis-tools | ✅ Restored |
+| bulletproof-react-auditor | analysis-tools | ✅ Restored |
+| accessibility-audit | analysis-tools | ✅ Restored |
+| benchmark-report-creator | benchmarking | ✅ Restored |
+| ascii-diagram-creator | planning-tools | ✅ Restored |
+| insight-skill-generator | meta-tools | ✅ Restored |
+| semantic-release-tagger | release-management | ✅ Restored |
 
-1. Move the skill folder back to `skills/{category}/`
-2. Update `.claude-plugin/marketplace.json` to include the skill path
-3. Clear plugin cache: `rm -rf ~/.claude/plugins/cache/claudex`
-4. Restart Claude Code
+### Why Restored?
+
+The v4.0.0 archival caused plugin errors for users with existing installations. Analysis showed:
+- Only 1 of 7 archived skills had a true replacement
+- 3 skills had subagent "replacements" with different invocation models
+- 3 skills had no replacement at all
+
+v5.0.0 restores all skills to provide a comprehensive 23-skill marketplace while maintaining the flat directory structure introduced in v4.0.0.
+
+## Archive Contents
+
+This directory may contain:
+- Old documentation
+- Deprecated configurations
+- Historical reference materials
+
+## Related
+
+- [v5 Refactor Documentation](../docs/features/v5-marketplace-refactor/)
+- [marketplace.json](../.claude-plugin/marketplace.json)
