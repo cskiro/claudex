@@ -17,20 +17,20 @@ Manual testing checklist for all 23 skills across 9 plugin categories.
 ### structured-outputs-advisor
 | Test | Prompt | Expected | Pass |
 |------|--------|----------|------|
-| Trigger | "Should I use JSON outputs or strict tool use?" | Skill activates, explains trade-offs | [ ] |
-| Core function | "Help me choose between JSON mode and tool use for a form validator" | Provides decision framework | [ ] |
+| Trigger | "Help me with structured outputs" | Skill activates, asks clarifying questions | [ ] |
+| Core function | "I need to extract structured data from customer emails" | Recommends JSON outputs, delegates to implementer | [ ] |
 
 ### json-outputs-implementer
 | Test | Prompt | Expected | Pass |
 |------|--------|----------|------|
-| Trigger | "Implement JSON outputs mode for my API" | Skill activates | [ ] |
-| Core function | "Create a JSON schema for user registration" | Generates valid JSON schema | [ ] |
+| Trigger | "Implement JSON outputs for data extraction" | Skill activates | [ ] |
+| Core function | "Create a Pydantic schema for user registration" | Generates SDK-ready schema | [ ] |
 
 ### strict-tool-implementer
 | Test | Prompt | Expected | Pass |
 |------|--------|----------|------|
-| Trigger | "Set up strict tool use" | Skill activates | [ ] |
-| Core function | "Create a strict tool definition for file operations" | Generates tool schema | [ ] |
+| Trigger | "Implement strict tool use for my agent" | Skill activates | [ ] |
+| Core function | "Create a validated tool schema for booking flights" | Generates strict tool definition | [ ] |
 
 ---
 
