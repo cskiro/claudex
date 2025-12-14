@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 - 2025-12-14
+
+### Changed
+- Restored from archive to active marketplace (v5.0.0)
+- Moved from `archive/skills/` to flat `skills/` directory
+
 ## 0.3.0
 
 - Added incremental audit workflow for large codebases (>100k LOC)

@@ -2,6 +2,12 @@
 
 All notable changes to the benchmark-report-creator skill.
 
+## [0.1.2] - 2025-12-14
+
+### Changed
+- Restored from archive to active marketplace (v5.0.0)
+- Moved from `archive/skills/` to flat `skills/` directory
+
 ## [0.1.1] - 2025-12-05
 
 ### Changed

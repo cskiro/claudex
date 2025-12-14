@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 - 2025-12-14
+
+### Changed
+- Restored from archive to active marketplace (v5.0.0)
+- Moved from `archive/skills/` to flat `skills/` directory
+
 ## 0.2.0
 
 - Refactored to Anthropic progressive disclosure pattern
