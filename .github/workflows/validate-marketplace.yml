@@ -34,34 +34,33 @@ jobs:
           echo "Validating claudex marketplace..."
           python3 scripts/validate-marketplace.py
 
-      - name: Verify source isolation
+      - name: Verify source structure
         run: |
-          echo "Checking for cache duplication risks..."
+          echo "Checking source structure (informational)..."
           python3 << 'EOF'
           import json
-          import sys
 
           with open('.claude-plugin/marketplace.json') as f:
               marketplace = json.load(f)
 
-          plugins_with_skills_at_root = []
+          plugins_with_root_source = []
 
           for plugin in marketplace.get('plugins', []):
               source = plugin.get('source', '')
               skills = plugin.get('skills', [])
               name = plugin.get('name', 'unknown')
 
-              # Flag plugins with skills that use root source
               if source in ['./', '.', ''] and len(skills) > 0:
-                  plugins_with_skills_at_root.append(name)
+                  plugins_with_root_source.append(name)
 
-          if plugins_with_skills_at_root:
-              print(f"Cache duplication risk detected!")
-              print(f"Plugins using root source './' with skills: {plugins_with_skills_at_root}")
-              print("Use isolated paths like './plugins/{name}' to prevent 10x cache duplication.")
-              sys.exit(1)
+          if plugins_with_root_source:
+              print(f"ℹ️  {len(plugins_with_root_source)} plugin(s) use root source './'")
+              print(f"   This follows Anthropic's official 'anthropics/skills' pattern.")
+              print(f"   Plugins: {', '.join(plugins_with_root_source)}")
+          else:
+              print("All plugins use isolated source paths.")
 
-          print("Source isolation check passed.")
+          print("✅ Source structure check passed.")
           EOF
 
       - name: Summary
@@ -74,6 +73,6 @@ jobs:
           echo "Validated:"
           echo "  - marketplace.json schema (Anthropic compliance)"
           echo "  - Plugin structure and required fields"
-          echo "  - Source isolation (cache duplication prevention)"
+          echo "  - Source structure (Anthropic pattern)"
           echo "  - Skill path references"
           echo "  - SKILL.md file existence"

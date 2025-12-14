@@ -48,9 +48,9 @@ See [mode-selection-examples.md](./examples/mode-selection-examples.md) for deta
 ## Documentation
 
 - [Official Structured Outputs Docs](https://docs.anthropic.com/en/docs/build-with-claude/structured-outputs)
-- [JSON Schema Limitations](../reference/json-schema-limitations.md)
-- [Best Practices](../reference/best-practices.md)
-- [API Compatibility](../reference/api-compatibility.md)
+- [JSON Schema Limitations](./reference/json-schema-limitations.md)
+- [Best Practices](./reference/best-practices.md)
+- [API Compatibility](./reference/api-compatibility.md)
 
 ## Version
 

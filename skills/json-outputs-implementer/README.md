@@ -79,9 +79,9 @@ const response = await client.beta.messages.parse({
 
 ## Reference Materials
 
-- [JSON Schema Limitations](../reference/json-schema-limitations.md)
-- [Best Practices](../reference/best-practices.md)
-- [API Compatibility](../reference/api-compatibility.md)
+- [JSON Schema Limitations](../structured-outputs-advisor/reference/json-schema-limitations.md)
+- [Best Practices](../structured-outputs-advisor/reference/best-practices.md)
+- [API Compatibility](../structured-outputs-advisor/reference/api-compatibility.md)
 
 ## Version
 
