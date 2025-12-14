@@ -6,7 +6,8 @@
 # Exit Codes: 0 (success), 1 (no insights found - silent), 2 (error - blocks execution)
 # Version: 2.1.0 - Content-based deduplication using SHA256 hashes (allows multiple insights per session)
 
-set -euo pipefail
+set -o pipefail
+# Note: -e and -u removed for resilience - hooks should never crash Claude Code
 
 # Read hook input from stdin
 INPUT=$(cat)
