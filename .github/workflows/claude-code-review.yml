@@ -2,11 +2,12 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, ready_for_review, reopened]
     paths:
       - "skills/**"
       - ".claude-plugin/**"
       - "hooks/**"
+      - "scripts/**"
 
 jobs:
   claude-review:
@@ -28,31 +29,8 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: |
-            REPO: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number }}
-
-            This is the claudex skills marketplace. Please review this pull request focusing on:
-
-            **For skill changes (skills/**):**
-            - SKILL.md has valid frontmatter (name, description)
-            - Name matches directory name (Anthropic spec requirement)
-            - Description is clear with trigger phrases and boundaries
-            - Progressive disclosure pattern (lean SKILL.md, details in subdirs)
-            - CHANGELOG.md is updated with version bump
-
-            **For marketplace changes (.claude-plugin/**):**
-            - Valid JSON schema
-            - Skill paths exist
-            - Version bump follows semver
-
-            **General:**
-            - Conventional commit messages
-            - No plugin.json files in skill directories
-            - Security (no secrets, safe patterns)
-
-            Use the repository's CLAUDE.md for detailed conventions. Be constructive and specific.
-
-            Use `gh pr comment` with your Bash tool to leave your review as a comment on the PR.
-
-          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
+          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
+          plugins: 'code-review@claude-code-plugins'
+          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
+          # Claude will read CLAUDE.md automatically for claudex-specific conventions
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
