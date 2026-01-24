@@ -126,6 +126,37 @@ skill-name/
    python3 scripts/validate-marketplace.py
    ```
 
+## Automation
+
+### Sensei Agent
+
+The Sensei Agent automates skill improvements based on evaluation feedback. It is triggered via GitHub issues with the `agent-ready` label.
+
+**Workflow:**
+1. Create issue with evaluation feedback containing `**Skill**: \`skill-name\``
+2. Add `agent-ready` label
+3. Agent reads feedback, improves skill, creates PR
+4. Label changes to `agent-completed` on success
+
+**Files:**
+- `.github/workflows/run-sensei-agent.yml` - GitHub Actions workflow
+- `scripts/automation/sensei_agent.py` - Python agent script
+- `docs/automation/sensei-agent.md` - Full documentation
+
+**Safety:**
+- Writes restricted to `skills/*` directory only
+- Max 20 turns before automatic stop
+- Remove `agent-ready` label to cancel
+
+**Testing locally:**
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+python scripts/automation/sensei_agent.py \
+  --issue 123 --repo owner/claudex --skill skill-name --dry-run
+```
+
+**Required secret:** `ANTHROPIC_API_KEY` must be configured in repository settings.
+
 ## Development Commands
 
 ### Validation
