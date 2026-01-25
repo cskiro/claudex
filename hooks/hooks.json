@@ -1,5 +1,0 @@
-{
-  "$schema": "https://anthropic.com/claude-code/hooks.schema.json",
-  "description": "Claudex marketplace hooks - insight extraction handled at user level",
-  "hooks": {}
-}

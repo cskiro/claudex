@@ -1,0 +1,9 @@
+{
+  "name": "json-outputs-implementer",
+  "version": "1.0.0",
+  "description": "Anthropic API JSON outputs implementation with structured data extraction and schema validation",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

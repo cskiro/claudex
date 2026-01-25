@@ -1,0 +1,9 @@
+{
+  "name": "claude-md-auditor",
+  "version": "1.0.0",
+  "description": "CLAUDE.md configuration validation against Anthropic documentation and community best practices",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

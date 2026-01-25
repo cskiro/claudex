@@ -255,15 +255,22 @@ class MarketplaceValidator:
             if not isinstance(skills, list):
                 continue
 
+            # Get plugin source directory for relative path resolution
+            plugin_source = plugin.get('source', './')
+            if plugin_source.startswith('./'):
+                plugin_source_dir = self.repo_root / plugin_source.lstrip('./')
+            else:
+                plugin_source_dir = self.repo_root / plugin_source
+
             for skill_path in skills:
                 if not isinstance(skill_path, str):
                     continue
 
-                # Resolve skill directory path
+                # Resolve skill directory path relative to plugin source
                 if skill_path.startswith('./'):
-                    skill_dir = self.repo_root / skill_path.lstrip('./')
+                    skill_dir = plugin_source_dir / skill_path.lstrip('./')
                 else:
-                    skill_dir = self.repo_root / skill_path
+                    skill_dir = plugin_source_dir / skill_path
 
                 # Check directory exists
                 if not skill_dir.exists():

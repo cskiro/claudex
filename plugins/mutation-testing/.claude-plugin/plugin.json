@@ -1,0 +1,9 @@
+{
+  "name": "mutation-testing",
+  "version": "1.0.0",
+  "description": "Test suite quality validation through mutation testing - finds weak tests and measures mutation score beyond coverage",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

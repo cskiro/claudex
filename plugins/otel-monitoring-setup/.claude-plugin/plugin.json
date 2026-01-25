@@ -1,0 +1,9 @@
+{
+  "name": "otel-monitoring-setup",
+  "version": "1.0.0",
+  "description": "OpenTelemetry monitoring setup for Claude Code usage tracking, cost analysis, and productivity metrics",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "benchmark-report-creator",
+  "version": "1.0.0",
+  "description": "Research reports, experiment writeups, technical whitepapers, and empirical study documentation for LLM benchmarking",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

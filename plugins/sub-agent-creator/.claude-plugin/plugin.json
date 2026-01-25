@@ -1,0 +1,9 @@
+{
+  "name": "sub-agent-creator",
+  "version": "1.0.0",
+  "description": "Specialized Claude Code sub-agent creation following Anthropic patterns with proper tool configuration",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

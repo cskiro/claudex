@@ -1,0 +1,12 @@
+{
+  "hooks": [
+    {
+      "event": "Stop",
+      "command": [
+        "bash",
+        "./hooks/extract-explanatory-insights.sh"
+      ],
+      "description": "Extracts ★ Insight blocks from Claude responses and saves to docs/lessons-learned/"
+    }
+  ]
+}
