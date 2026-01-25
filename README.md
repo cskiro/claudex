@@ -184,9 +184,6 @@ rm -rf ~/.claude/plugins/claudex*
 /plugin install skill-creator@claudex
 # ... install other plugins as needed
 ```
-
-See [docs/MIGRATION.md](docs/MIGRATION.md) for full migration guide.
-
 ---
 
 ## Validation
