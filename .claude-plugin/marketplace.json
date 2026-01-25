@@ -6,111 +6,40 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "5.0.0",
+    "version": "6.0.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
     {
-      "name": "api-tools",
-      "description": "Tools for leveraging Anthropic API features like structured outputs",
+      "name": "claudex",
+      "description": "Complete skill suite: code quality, testing, API tools, DevOps, productivity",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/structured-outputs-advisor",
-        "./skills/json-outputs-implementer",
-        "./skills/strict-tool-implementer"
-      ]
-    },
-    {
-      "name": "analysis-tools",
-      "description": "Workflow-based code quality, security, and architecture analysis tools with checklists and progressive disclosure",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/codebase-auditor",
+        "./skills/accessibility-audit",
+        "./skills/ascii-diagram-creator",
+        "./skills/benchmark-report-creator",
         "./skills/bulletproof-react-auditor",
-        "./skills/accessibility-audit"
-      ]
-    },
-    {
-      "name": "claude-code-tools",
-      "description": "Tools for enhancing and extending the Claude Code ecosystem",
-      "source": "./",
-      "strict": false,
-      "skills": [
         "./skills/cc-insights",
-        "./skills/sub-agent-creator",
-        "./skills/mcp-server-creator",
         "./skills/claude-md-auditor",
-        "./skills/otel-monitoring-setup"
-      ]
-    },
-    {
-      "name": "meta-tools",
-      "description": "Tools for creating and testing Claude Code skills",
-      "source": "./",
-      "strict": false,
-      "skills": [
+        "./skills/codebase-auditor",
+        "./skills/e2e-testing",
+        "./skills/git-worktree-setup",
+        "./skills/github-repo-setup",
+        "./skills/insight-skill-generator",
+        "./skills/json-outputs-implementer",
+        "./skills/mcp-server-creator",
+        "./skills/mutation-testing",
+        "./skills/otel-monitoring-setup",
+        "./skills/react-project-scaffolder",
+        "./skills/semantic-release-tagger",
         "./skills/skill-creator",
         "./skills/skill-isolation-tester",
-        "./skills/insight-skill-generator"
-      ]
-    },
-    {
-      "name": "testing-tools",
-      "description": "Automated testing frameworks including E2E, TDD, and mutation testing",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/e2e-testing",
-        "./skills/test-driven-development",
-        "./skills/mutation-testing"
-      ]
-    },
-    {
-      "name": "devops-tools",
-      "description": "Infrastructure automation, project scaffolding, and repository setup",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/react-project-scaffolder",
-        "./skills/github-repo-setup",
-        "./skills/git-worktree-setup"
-      ]
-    },
-    {
-      "name": "release-management",
-      "description": "Automated release workflows, semantic versioning, and deployment readiness tools",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/semantic-release-tagger"
-      ]
-    },
-    {
-      "name": "planning-tools",
-      "description": "Visual planning and documentation tools including ASCII diagrams for architecture and data flows",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/ascii-diagram-creator"
-      ]
-    },
-    {
-      "name": "benchmarking",
-      "description": "Benchmark report creation with diagrams and PDF export for AI/ML research documentation",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/benchmark-report-creator"
-      ]
-    },
-    {
-      "name": "productivity-hooks",
-      "description": "Productivity enhancement hooks for automated insight extraction and learning",
-      "source": "./",
-      "strict": false,
-      "skills": [],
+        "./skills/strict-tool-implementer",
+        "./skills/structured-outputs-advisor",
+        "./skills/sub-agent-creator",
+        "./skills/test-driven-development"
+      ],
       "hooks": "./hooks/hooks.json"
     }
   ]

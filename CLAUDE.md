@@ -11,7 +11,7 @@ Claudex is a **Claude Code marketplace** that distributes skills and hooks throu
 ```
 marketplace.json (Single Source of Truth)
     ↓
-6 Plugin Categories → 16 Skills + 1 Hook
+1 Plugin (claudex) → 23 Skills + 1 Hook
     ↓
 Each skill: SKILL.md (agent manifest) + supporting files
 ```
@@ -30,16 +30,23 @@ claudex/
 │   ├── validate-marketplace.py    # Schema validation
 │   └── validate-skills.py         # Skill quality validation
 ├── skills/                        # FLAT skill directory (Anthropic pattern)
+│   ├── accessibility-audit/
+│   ├── ascii-diagram-creator/
+│   ├── benchmark-report-creator/
+│   ├── bulletproof-react-auditor/
 │   ├── cc-insights/
 │   ├── claude-md-auditor/
+│   ├── codebase-auditor/
 │   ├── e2e-testing/
 │   ├── git-worktree-setup/
 │   ├── github-repo-setup/
+│   ├── insight-skill-generator/
 │   ├── json-outputs-implementer/
 │   ├── mcp-server-creator/
 │   ├── mutation-testing/
 │   ├── otel-monitoring-setup/
 │   ├── react-project-scaffolder/
+│   ├── semantic-release-tagger/
 │   ├── skill-creator/
 │   ├── skill-isolation-tester/
 │   ├── strict-tool-implementer/
@@ -81,23 +88,25 @@ skill-name/
 {
   "name": "claudex",
   "metadata": {
-    "version": "X.Y.Z"
+    "version": "6.0.0"
   },
   "plugins": [
     {
-      "name": "plugin-name",
-      "description": "Plugin description",
+      "name": "claudex",
+      "description": "Complete skill suite: code quality, testing, API tools, DevOps, productivity",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/skill-name"
-      ]
+        "./skills/skill-name",
+        ...
+      ],
+      "hooks": "./hooks/hooks.json"
     }
   ]
 }
 ```
 
-**Note**: All plugins use `source: "./"` following Anthropic's official pattern. Plugin grouping is logical (via the `skills` array), not physical (separate directories).
+**Note**: All skills are in a single `claudex` plugin using `source: "./"`. This prevents the duplication issue where skills were copied across multiple plugin namespaces.
 
 ### Adding a New Skill
 
@@ -118,7 +127,7 @@ skill-name/
    - `CHANGELOG.md` starting at v0.1.0
 
 3. **Update marketplace.json**:
-   - Add skill path to appropriate plugin's `skills` array
+   - Add skill path to the `claudex` plugin's `skills` array
    - Bump marketplace version (MINOR for new skills)
 
 4. **Validate**:
@@ -198,6 +207,7 @@ git push origin marketplace@X.Y.Z
 - ❌ Use `/v` or flat `v` tags (use `@` separator: `name@version`)
 - ❌ Modify marketplace.json without validation
 - ❌ Create nested skill directories (use flat `skills/` structure)
+- ❌ Create multiple plugins (single `claudex` plugin only)
 
 ### ALWAYS:
 - ✅ Validate with `python3 scripts/validate-marketplace.py`
@@ -207,6 +217,7 @@ git push origin marketplace@X.Y.Z
 - ✅ Include frontmatter in SKILL.md
 - ✅ Start new skills at version 0.1.0
 - ✅ Follow Anthropic's flat skill directory pattern
+- ✅ Add skills to the single `claudex` plugin
 
 ## Skill Quality Standards
 
@@ -236,17 +247,24 @@ git push origin marketplace@X.Y.Z
 
 ## Marketplace Version History
 
-Current version: **4.0.0**
+Current version: **6.0.0**
+
+### Version 6.0.0
+- **BREAKING**: Consolidated from 10 plugins to single `claudex` plugin
+- Fixes skill duplication issue (230 entries → 23 entries)
+- Skills now use `claudex:skill-name` namespace
+- Migration required: see `docs/MIGRATION.md`
+
+### Version 5.0.0
+- Restored archived skills
+- 10 plugin categories with 23 skills
 
 ### Version 4.0.0
 - Aligned with Anthropic's official `anthropics/skills` structure
 - Flat `skills/` directory (no nested plugin directories)
 - All plugins use `source: "./"` following Anthropic pattern
-- Plugin grouping is logical (via skills array), not physical
-
-**Plugin rename note:** In v1.1.3, `productivity-tools` was renamed to `claude-code-tools`. Users with the old name must update settings.
 
 **Total inventory:**
-- 6 plugin categories
-- 16 skills
+- 1 plugin (claudex)
+- 23 skills
 - 1 hook
