@@ -20,6 +20,15 @@
       ]
     },
     {
+      "name": "adr-generator",
+      "description": "Architecture Decision Records (ADRs) creation with standard templates and structured documentation",
+      "source": "./plugins/adr-generator",
+      "strict": false,
+      "skills": [
+        "./skills/adr-generator"
+      ]
+    },
+    {
       "name": "ascii-diagram-creator",
       "description": "ASCII diagrams and text-based visual representations of systems, workflows, and architecture",
       "source": "./plugins/ascii-diagram-creator",
