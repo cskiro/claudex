@@ -1,6 +1,5 @@
 ---
 name: adr-generator
-version: 0.1.0
 description: Creates Architecture Decision Records (ADRs) following standard templates. Documents architectural decisions with context, options considered, and rationale. TRIGGERS - "create ADR", "document architecture decision", "new ADR", "record decision", "architecture decision record". Use when making significant architectural choices that should be documented. NOT for code documentation or README files.
 ---
 

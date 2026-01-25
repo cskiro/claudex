@@ -5,7 +5,7 @@ Architecture Decision Records (ADRs) creation with standard templates and struct
 ## Installation
 
 ```bash
-/plugin marketplace add cskiro/claudex --plugin adr-generator
+/plugin install adr-generator@claudex
 ```
 
 ## Usage
@@ -64,6 +64,10 @@ Generated ADRs follow the standard format:
 - Implementation details
 - Trivial decisions that don't affect architecture
 
-## Version
+## Skill Documentation
 
-0.1.0
+See [`skills/adr-generator/SKILL.md`](./skills/adr-generator/SKILL.md) for detailed usage instructions.
+
+## License
+
+MIT
