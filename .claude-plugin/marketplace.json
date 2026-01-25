@@ -6,112 +6,208 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "5.0.0",
+    "version": "6.0.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
     {
-      "name": "api-tools",
-      "description": "Tools for leveraging Anthropic API features like structured outputs",
-      "source": "./",
+      "name": "accessibility-audit",
+      "description": "WCAG compliance auditing, screen reader testing, keyboard navigation validation, and color contrast analysis",
+      "source": "./plugins/accessibility-audit",
       "strict": false,
       "skills": [
-        "./skills/structured-outputs-advisor",
-        "./skills/json-outputs-implementer",
-        "./skills/strict-tool-implementer"
-      ]
-    },
-    {
-      "name": "analysis-tools",
-      "description": "Workflow-based code quality, security, and architecture analysis tools with checklists and progressive disclosure",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/codebase-auditor",
-        "./skills/bulletproof-react-auditor",
         "./skills/accessibility-audit"
       ]
     },
     {
-      "name": "claude-code-tools",
-      "description": "Tools for enhancing and extending the Claude Code ecosystem",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/cc-insights",
-        "./skills/sub-agent-creator",
-        "./skills/mcp-server-creator",
-        "./skills/claude-md-auditor",
-        "./skills/otel-monitoring-setup"
-      ]
-    },
-    {
-      "name": "meta-tools",
-      "description": "Tools for creating and testing Claude Code skills",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/skill-creator",
-        "./skills/skill-isolation-tester",
-        "./skills/insight-skill-generator"
-      ]
-    },
-    {
-      "name": "testing-tools",
-      "description": "Automated testing frameworks including E2E, TDD, and mutation testing",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/e2e-testing",
-        "./skills/test-driven-development",
-        "./skills/mutation-testing"
-      ]
-    },
-    {
-      "name": "devops-tools",
-      "description": "Infrastructure automation, project scaffolding, and repository setup",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/react-project-scaffolder",
-        "./skills/github-repo-setup",
-        "./skills/git-worktree-setup"
-      ]
-    },
-    {
-      "name": "release-management",
-      "description": "Automated release workflows, semantic versioning, and deployment readiness tools",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/semantic-release-tagger"
-      ]
-    },
-    {
-      "name": "planning-tools",
-      "description": "Visual planning and documentation tools including ASCII diagrams for architecture and data flows",
-      "source": "./",
+      "name": "ascii-diagram-creator",
+      "description": "ASCII diagrams and text-based visual representations of systems, workflows, and architecture",
+      "source": "./plugins/ascii-diagram-creator",
       "strict": false,
       "skills": [
         "./skills/ascii-diagram-creator"
       ]
     },
     {
-      "name": "benchmarking",
-      "description": "Benchmark report creation with diagrams and PDF export for AI/ML research documentation",
-      "source": "./",
+      "name": "benchmark-report-creator",
+      "description": "Research reports, experiment writeups, and empirical study documentation for LLM benchmarking",
+      "source": "./plugins/benchmark-report-creator",
       "strict": false,
       "skills": [
         "./skills/benchmark-report-creator"
       ]
     },
     {
-      "name": "productivity-hooks",
-      "description": "Productivity enhancement hooks for automated insight extraction and learning",
-      "source": "./",
+      "name": "bulletproof-react-auditor",
+      "description": "React project structure auditing using Bulletproof React patterns and anti-pattern detection",
+      "source": "./plugins/bulletproof-react-auditor",
       "strict": false,
-      "skills": [],
+      "skills": [
+        "./skills/bulletproof-react-auditor"
+      ]
+    },
+    {
+      "name": "cc-insights",
+      "description": "RAG-powered Claude Code conversation analysis, development pattern search, and activity reports",
+      "source": "./plugins/cc-insights",
+      "strict": false,
+      "skills": [
+        "./skills/cc-insights"
+      ],
       "hooks": "./hooks/hooks.json"
+    },
+    {
+      "name": "claude-md-auditor",
+      "description": "CLAUDE.md configuration validation against Anthropic documentation and best practices",
+      "source": "./plugins/claude-md-auditor",
+      "strict": false,
+      "skills": [
+        "./skills/claude-md-auditor"
+      ]
+    },
+    {
+      "name": "codebase-auditor",
+      "description": "Code quality auditing, security scans, technical debt assessment, and DORA metrics tracking",
+      "source": "./plugins/codebase-auditor",
+      "strict": false,
+      "skills": [
+        "./skills/codebase-auditor"
+      ]
+    },
+    {
+      "name": "e2e-testing",
+      "description": "End-to-end testing setup with Playwright, visual analysis, and browser automation",
+      "source": "./plugins/e2e-testing",
+      "strict": false,
+      "skills": [
+        "./skills/e2e-testing"
+      ]
+    },
+    {
+      "name": "git-worktree-setup",
+      "description": "Git worktree automation for parallel branch development and multiple Claude Code sessions",
+      "source": "./plugins/git-worktree-setup",
+      "strict": false,
+      "skills": [
+        "./skills/git-worktree-setup"
+      ]
+    },
+    {
+      "name": "github-repo-setup",
+      "description": "GitHub repository creation with best practices and project templates",
+      "source": "./plugins/github-repo-setup",
+      "strict": false,
+      "skills": [
+        "./skills/github-repo-setup"
+      ]
+    },
+    {
+      "name": "insight-skill-generator",
+      "description": "Transforms Claude Code explanatory insights into reusable, production-ready skills",
+      "source": "./plugins/insight-skill-generator",
+      "strict": false,
+      "skills": [
+        "./skills/insight-skill-generator"
+      ]
+    },
+    {
+      "name": "json-outputs-implementer",
+      "description": "Anthropic API JSON outputs implementation with structured data extraction",
+      "source": "./plugins/json-outputs-implementer",
+      "strict": false,
+      "skills": [
+        "./skills/json-outputs-implementer"
+      ]
+    },
+    {
+      "name": "mcp-server-creator",
+      "description": "Model Context Protocol server generation for AI application integrations",
+      "source": "./plugins/mcp-server-creator",
+      "strict": false,
+      "skills": [
+        "./skills/mcp-server-creator"
+      ]
+    },
+    {
+      "name": "mutation-testing",
+      "description": "Test suite quality validation through mutation testing and mutation score analysis",
+      "source": "./plugins/mutation-testing",
+      "strict": false,
+      "skills": [
+        "./skills/mutation-testing"
+      ]
+    },
+    {
+      "name": "otel-monitoring-setup",
+      "description": "OpenTelemetry monitoring setup for Claude Code usage tracking and cost analysis",
+      "source": "./plugins/otel-monitoring-setup",
+      "strict": false,
+      "skills": [
+        "./skills/otel-monitoring-setup"
+      ]
+    },
+    {
+      "name": "react-project-scaffolder",
+      "description": "React project scaffolding with modern tooling - Vite sandbox and Next.js enterprise modes",
+      "source": "./plugins/react-project-scaffolder",
+      "strict": false,
+      "skills": [
+        "./skills/react-project-scaffolder"
+      ]
+    },
+    {
+      "name": "semantic-release-tagger",
+      "description": "Automated git tagging and release management using conventional commits",
+      "source": "./plugins/semantic-release-tagger",
+      "strict": false,
+      "skills": [
+        "./skills/semantic-release-tagger"
+      ]
+    },
+    {
+      "name": "skill-creator",
+      "description": "Claude Code skill generation following Claudex marketplace standards",
+      "source": "./plugins/skill-creator",
+      "strict": false,
+      "skills": [
+        "./skills/skill-creator"
+      ]
+    },
+    {
+      "name": "skill-isolation-tester",
+      "description": "Skill validation in isolation environments before public release",
+      "source": "./plugins/skill-isolation-tester",
+      "strict": false,
+      "skills": [
+        "./skills/skill-isolation-tester"
+      ]
+    },
+    {
+      "name": "strict-tool-implementer",
+      "description": "Anthropic API strict tool use implementation for guaranteed schema compliance",
+      "source": "./plugins/strict-tool-implementer",
+      "strict": false,
+      "skills": [
+        "./skills/strict-tool-implementer"
+      ]
+    },
+    {
+      "name": "structured-outputs-advisor",
+      "description": "Expert advisor for choosing between Anthropic JSON outputs and strict tool use",
+      "source": "./plugins/structured-outputs-advisor",
+      "strict": false,
+      "skills": [
+        "./skills/structured-outputs-advisor"
+      ]
+    },
+    {
+      "name": "sub-agent-creator",
+      "description": "Specialized Claude Code sub-agent creation following Anthropic patterns",
+      "source": "./plugins/sub-agent-creator",
+      "strict": false,
+      "skills": [
+        "./skills/sub-agent-creator"
+      ]
     }
   ]
 }

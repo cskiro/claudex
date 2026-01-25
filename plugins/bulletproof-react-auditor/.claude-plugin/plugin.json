@@ -1,0 +1,9 @@
+{
+  "name": "bulletproof-react-auditor",
+  "version": "1.0.0",
+  "description": "React project structure auditing using Bulletproof React patterns, anti-pattern detection, and feature-sliced architecture guidance",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

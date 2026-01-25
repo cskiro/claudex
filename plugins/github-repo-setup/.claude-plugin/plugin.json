@@ -1,0 +1,9 @@
+{
+  "name": "github-repo-setup",
+  "version": "1.0.0",
+  "description": "GitHub repository creation with best practices - quick public repos, enterprise-grade workflows, and project templates",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

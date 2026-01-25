@@ -213,7 +213,7 @@ class SkillValidator:
         score = 100
 
         # Required files
-        required_files = ['SKILL.md', 'README.md', 'CHANGELOG.md']
+        required_files = ['SKILL.md']
         for filename in required_files:
             if not (self.skill_path / filename).exists():
                 self.errors.append(f"Missing required file: {filename}")

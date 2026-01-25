@@ -1,0 +1,9 @@
+{
+  "name": "semantic-release-tagger",
+  "version": "1.0.0",
+  "description": "Automated git tagging and release management using conventional commits and semantic versioning",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

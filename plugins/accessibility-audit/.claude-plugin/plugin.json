@@ -1,0 +1,9 @@
+{
+  "name": "accessibility-audit",
+  "version": "1.0.0",
+  "description": "WCAG compliance auditing, screen reader testing, keyboard navigation validation, and color contrast analysis for React/TypeScript applications",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

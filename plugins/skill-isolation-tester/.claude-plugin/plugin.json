@@ -1,0 +1,9 @@
+{
+  "name": "skill-isolation-tester",
+  "version": "1.0.0",
+  "description": "Skill validation in isolation environments (git worktree, Docker, VMs) before public release",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

@@ -3,9 +3,8 @@
 Thumbs.db
 Desktop.ini
 
-# Internal documentation (only standards are public)
-/docs/archive/
-/docs/lessons-learned/
+# Internal documentation
+/docs/
 
 # Internal automation (except validation scripts, automation folder, and hooks for contributors)
 /scripts/*

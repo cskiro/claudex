@@ -53,6 +53,14 @@ jobs:
 
           echo "skill_name=$skill_name" >> $GITHUB_OUTPUT
 
+          # Find skill location in plugins structure
+          skill_path=$(find plugins -type d -name "$skill_name" -path "*/skills/*" | head -1)
+          if [ -z "$skill_path" ]; then
+            echo "::error::Skill '$skill_name' not found in plugins/"
+            exit 1
+          fi
+          echo "skill_path=$skill_path" >> $GITHUB_OUTPUT
+
           # Create branch
           branch_name="fix/${skill_name}/${{ github.event.issue.number }}"
           git checkout -b "$branch_name"
@@ -97,7 +105,7 @@ jobs:
 
           ## Test Plan
 
-          - [ ] Verify skill validation passes: \`python3 scripts/validate-skills.py skills/${{ steps.setup.outputs.skill_name }}\`
+          - [ ] Verify skill validation passes: \`python3 scripts/validate-skills.py ${{ steps.setup.outputs.skill_path }}\`
           - [ ] Review changes align with evaluation feedback
           - [ ] Test skill invocation with sample prompts
 

@@ -1,0 +1,9 @@
+{
+  "name": "git-worktree-setup",
+  "version": "1.0.0",
+  "description": "Git worktree automation for parallel branch development and multiple Claude Code sessions",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

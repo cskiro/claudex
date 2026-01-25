@@ -1,0 +1,9 @@
+{
+  "name": "ascii-diagram-creator",
+  "version": "1.0.0",
+  "description": "ASCII diagrams and text-based visual representations of systems, workflows, architecture, and relationships",
+  "author": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
+  }
+}

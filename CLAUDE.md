@@ -11,16 +11,16 @@ Claudex is a **Claude Code marketplace** that distributes skills and hooks throu
 ```
 marketplace.json (Single Source of Truth)
     ↓
-6 Plugin Categories → 16 Skills + 1 Hook
+22 Plugins (1 per skill)
     ↓
-Each skill: SKILL.md (agent manifest) + supporting files
+Each plugin: plugin.json + skills/ + README.md
 ```
 
-**Key Principle**: The `.claude-plugin/marketplace.json` file is the **single source of truth** for all marketplace metadata. Individual `plugin.json` files in skill directories are NOT used and should NOT be created.
+**Key Principle**: The `.claude-plugin/marketplace.json` file is the **single source of truth** for all marketplace metadata. Each plugin has its own `.claude-plugin/plugin.json` for per-plugin metadata.
 
 ## Repository Structure
 
-Follows Anthropic's official `anthropics/skills` pattern with flat skill directories:
+Follows Anthropic's official `anthropics/claude-code/plugins/` pattern:
 
 ```
 claudex/
@@ -29,39 +29,43 @@ claudex/
 ├── scripts/
 │   ├── validate-marketplace.py    # Schema validation
 │   └── validate-skills.py         # Skill quality validation
-├── skills/                        # FLAT skill directory (Anthropic pattern)
-│   ├── cc-insights/
-│   ├── claude-md-auditor/
-│   ├── e2e-testing/
-│   ├── git-worktree-setup/
-│   ├── github-repo-setup/
-│   ├── json-outputs-implementer/
-│   ├── mcp-server-creator/
-│   ├── mutation-testing/
-│   ├── otel-monitoring-setup/
-│   ├── react-project-scaffolder/
-│   ├── skill-creator/
-│   ├── skill-isolation-tester/
-│   ├── strict-tool-implementer/
-│   ├── structured-outputs-advisor/
-│   ├── sub-agent-creator/
-│   └── test-driven-development/
-├── hooks/
-│   └── hooks.json                 # Hook registry
+├── plugins/                       # 22 plugins (1 per skill)
+│   ├── accessibility-audit/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── skills/
+│   │   │   └── accessibility-audit/
+│   │   │       ├── SKILL.md
+│   │   │       ├── README.md
+│   │   │       └── CHANGELOG.md
+│   │   └── README.md
+│   ├── cc-insights/               # Includes hooks
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── skills/
+│   │   │   └── cc-insights/
+│   │   ├── hooks/
+│   │   │   ├── hooks.json
+│   │   │   └── extract-explanatory-insights.sh
+│   │   └── README.md
+│   └── ... (20 more plugins)
 └── archive/                       # Archived skills (not in marketplace)
 ```
 
-### Skill Directory Structure
+### Plugin Directory Structure
 
-**Required files for every skill:**
+**Required structure for every plugin:**
 ```
-skill-name/
-├── SKILL.md           # Agent manifest (frontmatter + workflow)
-├── README.md          # User documentation
-└── CHANGELOG.md       # Version history
+plugin-name/
+├── .claude-plugin/
+│   └── plugin.json        # Plugin metadata
+├── skills/
+│   └── skill-name/
+│       └── SKILL.md       # Agent manifest (frontmatter + workflow)
+└── README.md              # Plugin documentation
 ```
 
-**Recommended files:**
+**Optional directories within skill:**
 ```
 skill-name/
 ├── data/              # Reference materials, insights
@@ -71,8 +75,6 @@ skill-name/
 └── requirements.txt   # Python dependencies (if applicable)
 ```
 
-**IMPORTANT**: Do NOT create `plugin.json` files in skill directories. They are not required by Anthropic schema.
-
 ## Marketplace Integration
 
 ### marketplace.json Schema (Anthropic Pattern)
@@ -80,50 +82,55 @@ skill-name/
 ```json
 {
   "name": "claudex",
-  "metadata": {
-    "version": "X.Y.Z"
+  "version": "6.0.0",
+  "description": "Skills and hooks for Claude Code",
+  "owner": {
+    "name": "Connor",
+    "email": "noreply@claudex.dev"
   },
   "plugins": [
     {
       "name": "plugin-name",
       "description": "Plugin description",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/skill-name"
-      ]
+      "source": "./plugins/plugin-name"
     }
   ]
 }
 ```
 
-**Note**: All plugins use `source: "./"` following Anthropic's official pattern. Plugin grouping is logical (via the `skills` array), not physical (separate directories).
+### Adding a New Skill/Plugin
 
-### Adding a New Skill
-
-1. **Create skill directory** in flat skills folder:
+1. **Create plugin directory**:
    ```bash
-   mkdir -p skills/skill-name
+   mkdir -p plugins/skill-name/.claude-plugin
+   mkdir -p plugins/skill-name/skills/skill-name
    ```
 
-2. **Create required files**:
-   - `SKILL.md` with frontmatter:
-     ```yaml
-     ---
-     name: skill-name
-     description: Brief description
-     ---
-     ```
-   - `README.md` with quick start
-   - `CHANGELOG.md` starting at v0.1.0
+2. **Create plugin.json**:
+   ```json
+   {
+     "name": "skill-name",
+     "version": "1.0.0",
+     "description": "Brief description",
+     "author": {
+       "name": "Connor",
+       "email": "noreply@claudex.dev"
+     }
+   }
+   ```
 
-3. **Update marketplace.json**:
-   - Add skill path to appropriate plugin's `skills` array
-   - Bump marketplace version (MINOR for new skills)
+3. **Create skill files**:
+   - `skills/skill-name/SKILL.md` with frontmatter
 
-4. **Validate**:
+4. **Create plugin README.md**
+
+5. **Update marketplace.json**:
+   - Add plugin entry to `plugins` array
+
+6. **Validate**:
    ```bash
    python3 scripts/validate-marketplace.py
+   python3 scripts/validate-skills.py plugins/skill-name
    ```
 
 ## Automation
@@ -144,7 +151,7 @@ The Sensei Agent automates skill improvements based on evaluation feedback. It i
 - `docs/automation/sensei-agent.md` - Full documentation
 
 **Safety:**
-- Writes restricted to `skills/*` directory only
+- Writes restricted to `plugins/*/skills/*` directory only
 - Max 20 turns before automatic stop
 - Remove `agent-ready` label to cancel
 
@@ -166,10 +173,10 @@ python scripts/automation/sensei_agent.py \
 python3 scripts/validate-marketplace.py
 
 # Validate all skills against Anthropic spec
-python3 scripts/validate-skills.py skills/
+python3 scripts/validate-skills.py plugins/
 
 # Validate specific skill
-python3 scripts/validate-skills.py skills/skill-name
+python3 scripts/validate-skills.py plugins/skill-name/skills/skill-name
 ```
 
 **Expected output:** ✅ passed, ⚠️ warnings, or ❌ errors. Exit code 0 = valid.
@@ -181,7 +188,7 @@ python3 scripts/validate-skills.py skills/skill-name
 git checkout -b feature/add-skill-name
 
 # Conventional commit
-git commit -m "feat: Add skill-name skill"
+git commit -m "feat: Add skill-name plugin"
 
 # Tag marketplace release
 git tag -a "marketplace@X.Y.Z" -m "Release marketplace X.Y.Z"
@@ -191,22 +198,22 @@ git push origin marketplace@X.Y.Z
 ## Critical Constraints
 
 ### DO NOT:
-- ❌ Create `plugin.json` files in skill directories
 - ❌ Run npm/TypeScript commands (this is not a Node.js project)
 - ❌ Add ESLint or testing frameworks
 - ❌ Start skill versions at 1.0.0 (use 0.1.0 for initial releases)
 - ❌ Use `/v` or flat `v` tags (use `@` separator: `name@version`)
 - ❌ Modify marketplace.json without validation
-- ❌ Create nested skill directories (use flat `skills/` structure)
+- ❌ Create skills outside of plugin directories
 
 ### ALWAYS:
 - ✅ Validate with `python3 scripts/validate-marketplace.py`
 - ✅ Follow conventional commit format
 - ✅ Use semantic versioning (MAJOR.MINOR.PATCH)
-- ✅ Update README.md when adding skills
+- ✅ Update README.md when adding plugins
 - ✅ Include frontmatter in SKILL.md
 - ✅ Start new skills at version 0.1.0
-- ✅ Follow Anthropic's flat skill directory pattern
+- ✅ Follow Anthropic's `plugins/` directory pattern
+- ✅ Create one plugin per skill
 
 ## Skill Quality Standards
 
@@ -236,17 +243,24 @@ git push origin marketplace@X.Y.Z
 
 ## Marketplace Version History
 
-Current version: **4.0.0**
+Current version: **6.0.0**
+
+### Version 6.0.0
+- **BREAKING**: Migrated to Anthropic's `plugins/` directory pattern
+- 22 plugins (1 per skill) instead of grouped plugins
+- Each plugin independently installable
+- Deprecated `test-driven-development` (use `~/.claude/rules/` instead)
+- Migration required: see `docs/MIGRATION.md`
+
+### Version 5.0.0
+- Restored archived skills
+- 10 plugin categories with 23 skills
 
 ### Version 4.0.0
 - Aligned with Anthropic's official `anthropics/skills` structure
 - Flat `skills/` directory (no nested plugin directories)
-- All plugins use `source: "./"` following Anthropic pattern
-- Plugin grouping is logical (via skills array), not physical
-
-**Plugin rename note:** In v1.1.3, `productivity-tools` was renamed to `claude-code-tools`. Users with the old name must update settings.
 
 **Total inventory:**
-- 6 plugin categories
-- 16 skills
-- 1 hook
+- 22 plugins
+- 22 skills
+- 1 hook (bundled with cc-insights)
