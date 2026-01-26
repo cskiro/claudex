@@ -11,7 +11,7 @@ Claudex is a **Claude Code marketplace** that distributes skills and hooks throu
 ```
 marketplace.json (Single Source of Truth)
     ↓
-22 Plugins (1 per skill)
+23 Plugins (1 per skill)
     ↓
 Each plugin: plugin.json + skills/ + README.md
 ```
@@ -29,7 +29,7 @@ claudex/
 ├── scripts/
 │   ├── validate-marketplace.py    # Schema validation
 │   └── validate-skills.py         # Skill quality validation
-├── plugins/                       # 22 plugins (1 per skill)
+├── plugins/                       # 23 plugins (1 per skill)
 │   ├── accessibility-audit/
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json
@@ -48,7 +48,7 @@ claudex/
 │   │   │   ├── hooks.json
 │   │   │   └── extract-explanatory-insights.sh
 │   │   └── README.md
-│   └── ... (20 more plugins)
+│   └── ... (21 more plugins)
 └── archive/                       # Archived skills (not in marketplace)
 ```
 
@@ -82,7 +82,7 @@ skill-name/
 ```json
 {
   "name": "claudex",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Skills and hooks for Claude Code",
   "owner": {
     "name": "Connor",
@@ -243,7 +243,13 @@ git push origin marketplace@X.Y.Z
 
 ## Marketplace Version History
 
-Current version: **6.0.0**
+Current version: **6.1.0**
+
+### Version 6.1.0
+- Added adr-generator plugin for Architecture Decision Records
+- Removed `version` field from all SKILL.md frontmatter (Anthropic pattern: version only in plugin.json)
+- Updated validation script to enforce no-version-in-SKILL.md rule
+- 23 plugins (1 per skill)
 
 ### Version 6.0.0
 - **BREAKING**: Migrated to Anthropic's `plugins/` directory pattern
@@ -261,6 +267,6 @@ Current version: **6.0.0**
 - Flat `skills/` directory (no nested plugin directories)
 
 **Total inventory:**
-- 22 plugins
-- 22 skills
+- 23 plugins
+- 23 skills
 - 1 hook (bundled with cc-insights)
