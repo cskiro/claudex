@@ -255,10 +255,15 @@ class SkillValidator:
             score -= 30
 
         # Optional fields (info only)
-        optional_fields = ['version', 'author', 'category', 'tags', 'license']
+        optional_fields = ['author', 'category', 'tags', 'license']
         present_optional = [f for f in optional_fields if f in self.frontmatter]
         if present_optional and self.verbose:
             self.info.append(f"Optional frontmatter fields: {', '.join(present_optional)}")
+
+        # Version field should NOT be in SKILL.md (Anthropic pattern: version only in plugin.json)
+        if 'version' in self.frontmatter:
+            self.errors.append("SKILL.md contains 'version' field - version should only be in plugin.json (Anthropic pattern)")
+            score -= 20
 
         return max(0, score)
 
@@ -292,15 +297,10 @@ class SkillValidator:
                 self.warnings.append(f"Description has {word_count} words (recommended: ~{self.RECOMMENDED_DESC_WORDS})")
                 score -= 5
 
-        # 4. Version field check (recommended for marketplace)
-        if 'version' not in self.frontmatter:
-            self.warnings.append("Missing 'version' field in frontmatter (recommended for marketplace)")
-            score -= 10
-
-        # 5. Check referenced files exist
+        # 4. Check referenced files exist
         self._check_referenced_files()
 
-        # 6. Check script permissions
+        # 5. Check script permissions
         self._check_script_permissions()
 
         return max(0, score)
