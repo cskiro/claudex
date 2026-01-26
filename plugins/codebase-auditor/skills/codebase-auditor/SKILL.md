@@ -1,6 +1,5 @@
 ---
 name: codebase-auditor
-version: 0.3.0
 description: Use PROACTIVELY when auditing code quality, running security scans, assessing technical debt, reviewing code for production readiness, setting up CI quality gates, or tracking DORA metrics. Analyzes codebases against OWASP Top 10, SOLID principles, Testing Trophy, and 2024-25 SDLC standards. Supports incremental audits for large codebases. Not for runtime profiling or real-time monitoring.
 ---
 

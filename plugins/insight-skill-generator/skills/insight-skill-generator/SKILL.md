@@ -1,6 +1,5 @@
 ---
 name: insight-skill-generator
-version: 0.1.0
 description: Use PROACTIVELY when working with projects that have docs/lessons-learned/ directories to transform Claude Code explanatory insights into reusable, production-ready skills. Analyzes insight files, clusters related content, and generates interactive skills following Anthropic's standards.
 ---
 
