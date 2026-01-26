@@ -110,9 +110,10 @@ All plugins follow the `plugin-name@claudex` installation pattern.
 
 | Plugin | Description |
 |--------|-------------|
-| **semantic-release-tagger** | Automated git tagging with conventional commit analysis |
+| **adr-generator** | Architecture Decision Records creation with standard templates |
 | **ascii-diagram-creator** | ASCII diagram generation for architecture and data flows |
 | **benchmark-report-creator** | Academic benchmark reports with diagrams and PDF export |
+| **semantic-release-tagger** | Automated git tagging with conventional commit analysis |
 
 ### Hooks
 
@@ -135,7 +136,7 @@ The `cc-insights` plugin includes:
 
 ## Features
 
-- **22 Skills** distributed as individual plugins
+- **23 Skills** distributed as individual plugins
 - **1 Hook** for automated insight extraction (bundled with cc-insights)
 - **Anthropic-aligned structure** - Mirrors official `anthropics/claude-code/plugins/` pattern
 - **Modular installation** - Install only what you need
