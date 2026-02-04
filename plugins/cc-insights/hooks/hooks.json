@@ -1,12 +1,15 @@
 {
-  "hooks": [
-    {
-      "event": "Stop",
-      "command": [
-        "bash",
-        "./hooks/extract-explanatory-insights.sh"
-      ],
-      "description": "Extracts ★ Insight blocks from Claude responses and saves to docs/lessons-learned/"
-    }
-  ]
+  "description": "Extracts ★ Insight blocks from Claude responses and saves to docs/lessons-learned/",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/extract-explanatory-insights.sh"
+          }
+        ]
+      }
+    ]
+  }
 }

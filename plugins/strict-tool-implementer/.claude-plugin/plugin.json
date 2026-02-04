@@ -1,9 +1,0 @@
-{
-  "name": "strict-tool-implementer",
-  "version": "1.0.0",
-  "description": "Anthropic API strict tool use implementation for guaranteed schema compliance and validated inputs",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

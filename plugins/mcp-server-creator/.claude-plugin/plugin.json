@@ -1,9 +1,0 @@
-{
-  "name": "mcp-server-creator",
-  "version": "1.0.0",
-  "description": "Model Context Protocol server generation for connecting AI applications to external data sources, tools, and workflows",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

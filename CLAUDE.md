@@ -31,8 +31,6 @@ claudex/
 │   └── validate-skills.py         # Skill quality validation
 ├── plugins/                       # 23 plugins (1 per skill)
 │   ├── accessibility-audit/
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
 │   │   ├── skills/
 │   │   │   └── accessibility-audit/
 │   │   │       ├── SKILL.md
@@ -40,8 +38,6 @@ claudex/
 │   │   │       └── CHANGELOG.md
 │   │   └── README.md
 │   ├── cc-insights/               # Includes hooks
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
 │   │   ├── skills/
 │   │   │   └── cc-insights/
 │   │   ├── hooks/
@@ -57,13 +53,13 @@ claudex/
 **Required structure for every plugin:**
 ```
 plugin-name/
-├── .claude-plugin/
-│   └── plugin.json        # Plugin metadata
 ├── skills/
 │   └── skill-name/
 │       └── SKILL.md       # Agent manifest (frontmatter + workflow)
 └── README.md              # Plugin documentation
 ```
+
+Note: Plugin metadata (name, description) lives in marketplace.json only. No per-plugin plugin.json files are needed.
 
 **Optional directories within skill:**
 ```
@@ -82,11 +78,13 @@ skill-name/
 ```json
 {
   "name": "claudex",
-  "version": "6.1.0",
-  "description": "Skills and hooks for Claude Code",
   "owner": {
     "name": "Connor",
     "email": "noreply@claudex.dev"
+  },
+  "metadata": {
+    "version": "6.2.0",
+    "description": "Skills and hooks for Claude Code"
   },
   "plugins": [
     {
@@ -98,36 +96,30 @@ skill-name/
 }
 ```
 
+**Auto-Discovery**: Claude Code automatically discovers components from the plugin's directory structure:
+- `skills/` - Skill definitions (SKILL.md files)
+- `hooks/` - Hook configurations (hooks.json)
+- `agents/` - Agent definitions
+- `commands/` - Custom commands
+
+Do NOT add `strict`, `skills`, or `hooks` fields to marketplace entries - Claude Code auto-discovers these from directory structure.
+
 ### Adding a New Skill/Plugin
 
 1. **Create plugin directory**:
    ```bash
-   mkdir -p plugins/skill-name/.claude-plugin
    mkdir -p plugins/skill-name/skills/skill-name
    ```
 
-2. **Create plugin.json**:
-   ```json
-   {
-     "name": "skill-name",
-     "version": "1.0.0",
-     "description": "Brief description",
-     "author": {
-       "name": "Connor",
-       "email": "noreply@claudex.dev"
-     }
-   }
-   ```
-
-3. **Create skill files**:
+2. **Create skill files**:
    - `skills/skill-name/SKILL.md` with frontmatter
 
-4. **Create plugin README.md**
+3. **Create plugin README.md**
 
-5. **Update marketplace.json**:
-   - Add plugin entry to `plugins` array
+4. **Update marketplace.json**:
+   - Add plugin entry to `plugins` array with `name`, `description`, and `source`
 
-6. **Validate**:
+5. **Validate**:
    ```bash
    python3 scripts/validate-marketplace.py
    python3 scripts/validate-skills.py plugins/skill-name
@@ -243,7 +235,15 @@ git push origin marketplace@X.Y.Z
 
 ## Marketplace Version History
 
-Current version: **6.1.0**
+Current version: **6.2.0**
+
+### Version 6.2.0
+- **FIX**: Removed all plugin.json files from plugins (single source of truth)
+- **FIX**: Fixed cc-insights hooks.json to use correct Anthropic schema format
+- Eliminated dual-manifest conflict (marketplace.json + plugin.json)
+- Plugin metadata now lives exclusively in marketplace.json
+- Resolves "Plugin has conflicting manifests" and hook load errors from `/doctor`
+- 23 plugins (1 per skill)
 
 ### Version 6.1.0
 - Added adr-generator plugin for Architecture Decision Records

@@ -1,9 +1,0 @@
-{
-  "name": "react-project-scaffolder",
-  "version": "1.0.0",
-  "description": "React project scaffolding with modern tooling - sandbox mode (Vite), enterprise mode (Next.js with testing and CI/CD)",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

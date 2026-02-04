@@ -1,9 +1,0 @@
-{
-  "name": "adr-generator",
-  "version": "0.1.0",
-  "description": "Architecture Decision Records (ADRs) creation with standard templates and structured documentation",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

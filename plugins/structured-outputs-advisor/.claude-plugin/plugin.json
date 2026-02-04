@@ -1,9 +1,0 @@
-{
-  "name": "structured-outputs-advisor",
-  "version": "1.0.0",
-  "description": "Expert advisor for Anthropic structured outputs - choosing between JSON outputs and strict tool use",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

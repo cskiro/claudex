@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "6.1.0",
+    "version": "6.2.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
@@ -14,209 +14,139 @@
       "name": "accessibility-audit",
       "description": "WCAG compliance auditing, screen reader testing, keyboard navigation validation, and color contrast analysis",
       "source": "./plugins/accessibility-audit",
-      "strict": false,
-      "skills": [
-        "./skills/accessibility-audit"
-      ]
+      "strict": true
     },
     {
       "name": "adr-generator",
       "description": "Architecture Decision Records (ADRs) creation with standard templates and structured documentation",
       "source": "./plugins/adr-generator",
-      "strict": false,
-      "skills": [
-        "./skills/adr-generator"
-      ]
+      "strict": true
     },
     {
       "name": "ascii-diagram-creator",
       "description": "ASCII diagrams and text-based visual representations of systems, workflows, and architecture",
       "source": "./plugins/ascii-diagram-creator",
-      "strict": false,
-      "skills": [
-        "./skills/ascii-diagram-creator"
-      ]
+      "strict": true
     },
     {
       "name": "benchmark-report-creator",
       "description": "Research reports, experiment writeups, and empirical study documentation for LLM benchmarking",
       "source": "./plugins/benchmark-report-creator",
-      "strict": false,
-      "skills": [
-        "./skills/benchmark-report-creator"
-      ]
+      "strict": true
     },
     {
       "name": "bulletproof-react-auditor",
       "description": "React project structure auditing using Bulletproof React patterns and anti-pattern detection",
       "source": "./plugins/bulletproof-react-auditor",
-      "strict": false,
-      "skills": [
-        "./skills/bulletproof-react-auditor"
-      ]
+      "strict": true
     },
     {
       "name": "cc-insights",
       "description": "RAG-powered Claude Code conversation analysis, development pattern search, and activity reports",
       "source": "./plugins/cc-insights",
-      "strict": false,
-      "skills": [
-        "./skills/cc-insights"
-      ],
-      "hooks": "./hooks/hooks.json"
+      "strict": true
     },
     {
       "name": "claude-md-auditor",
       "description": "CLAUDE.md configuration validation against Anthropic documentation and best practices",
       "source": "./plugins/claude-md-auditor",
-      "strict": false,
-      "skills": [
-        "./skills/claude-md-auditor"
-      ]
+      "strict": true
     },
     {
       "name": "codebase-auditor",
       "description": "Code quality auditing, security scans, technical debt assessment, and DORA metrics tracking",
       "source": "./plugins/codebase-auditor",
-      "strict": false,
-      "skills": [
-        "./skills/codebase-auditor"
-      ]
+      "strict": true
     },
     {
       "name": "e2e-testing",
       "description": "End-to-end testing setup with Playwright, visual analysis, and browser automation",
       "source": "./plugins/e2e-testing",
-      "strict": false,
-      "skills": [
-        "./skills/e2e-testing"
-      ]
+      "strict": true
     },
     {
       "name": "git-worktree-setup",
       "description": "Git worktree automation for parallel branch development and multiple Claude Code sessions",
       "source": "./plugins/git-worktree-setup",
-      "strict": false,
-      "skills": [
-        "./skills/git-worktree-setup"
-      ]
+      "strict": true
     },
     {
       "name": "github-repo-setup",
       "description": "GitHub repository creation with best practices and project templates",
       "source": "./plugins/github-repo-setup",
-      "strict": false,
-      "skills": [
-        "./skills/github-repo-setup"
-      ]
+      "strict": true
     },
     {
       "name": "insight-skill-generator",
       "description": "Transforms Claude Code explanatory insights into reusable, production-ready skills",
       "source": "./plugins/insight-skill-generator",
-      "strict": false,
-      "skills": [
-        "./skills/insight-skill-generator"
-      ]
+      "strict": true
     },
     {
       "name": "json-outputs-implementer",
       "description": "Anthropic API JSON outputs implementation with structured data extraction",
       "source": "./plugins/json-outputs-implementer",
-      "strict": false,
-      "skills": [
-        "./skills/json-outputs-implementer"
-      ]
+      "strict": true
     },
     {
       "name": "mcp-server-creator",
       "description": "Model Context Protocol server generation for AI application integrations",
       "source": "./plugins/mcp-server-creator",
-      "strict": false,
-      "skills": [
-        "./skills/mcp-server-creator"
-      ]
+      "strict": true
     },
     {
       "name": "mutation-testing",
       "description": "Test suite quality validation through mutation testing and mutation score analysis",
       "source": "./plugins/mutation-testing",
-      "strict": false,
-      "skills": [
-        "./skills/mutation-testing"
-      ]
+      "strict": true
     },
     {
       "name": "otel-monitoring-setup",
       "description": "OpenTelemetry monitoring setup for Claude Code usage tracking and cost analysis",
       "source": "./plugins/otel-monitoring-setup",
-      "strict": false,
-      "skills": [
-        "./skills/otel-monitoring-setup"
-      ]
+      "strict": true
     },
     {
       "name": "react-project-scaffolder",
       "description": "React project scaffolding with modern tooling - Vite sandbox and Next.js enterprise modes",
       "source": "./plugins/react-project-scaffolder",
-      "strict": false,
-      "skills": [
-        "./skills/react-project-scaffolder"
-      ]
+      "strict": true
     },
     {
       "name": "semantic-release-tagger",
       "description": "Automated git tagging and release management using conventional commits",
       "source": "./plugins/semantic-release-tagger",
-      "strict": false,
-      "skills": [
-        "./skills/semantic-release-tagger"
-      ]
+      "strict": true
     },
     {
       "name": "skill-creator",
       "description": "Claude Code skill generation following Claudex marketplace standards",
       "source": "./plugins/skill-creator",
-      "strict": false,
-      "skills": [
-        "./skills/skill-creator"
-      ]
+      "strict": true
     },
     {
       "name": "skill-isolation-tester",
       "description": "Skill validation in isolation environments before public release",
       "source": "./plugins/skill-isolation-tester",
-      "strict": false,
-      "skills": [
-        "./skills/skill-isolation-tester"
-      ]
+      "strict": true
     },
     {
       "name": "strict-tool-implementer",
       "description": "Anthropic API strict tool use implementation for guaranteed schema compliance",
       "source": "./plugins/strict-tool-implementer",
-      "strict": false,
-      "skills": [
-        "./skills/strict-tool-implementer"
-      ]
+      "strict": true
     },
     {
       "name": "structured-outputs-advisor",
       "description": "Expert advisor for choosing between Anthropic JSON outputs and strict tool use",
       "source": "./plugins/structured-outputs-advisor",
-      "strict": false,
-      "skills": [
-        "./skills/structured-outputs-advisor"
-      ]
+      "strict": true
     },
     {
       "name": "sub-agent-creator",
       "description": "Specialized Claude Code sub-agent creation following Anthropic patterns",
       "source": "./plugins/sub-agent-creator",
-      "strict": false,
-      "skills": [
-        "./skills/sub-agent-creator"
-      ]
+      "strict": true
     }
   ]
 }

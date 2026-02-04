@@ -1,9 +1,0 @@
-{
-  "name": "codebase-auditor",
-  "version": "1.0.0",
-  "description": "Code quality auditing, security scans, technical debt assessment, production readiness review, and DORA metrics tracking",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}
