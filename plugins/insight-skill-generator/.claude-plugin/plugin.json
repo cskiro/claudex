@@ -1,9 +1,0 @@
-{
-  "name": "insight-skill-generator",
-  "version": "1.0.0",
-  "description": "Transforms Claude Code explanatory insights from docs/lessons-learned/ into reusable, production-ready skills",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

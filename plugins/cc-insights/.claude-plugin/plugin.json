@@ -1,9 +1,0 @@
-{
-  "name": "cc-insights",
-  "version": "1.0.0",
-  "description": "RAG-powered Claude Code conversation analysis, development pattern search, and activity report generation",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

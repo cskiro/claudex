@@ -28,19 +28,17 @@ Follows Anthropic's official `anthropics/claude-code/plugins/` pattern:
 ```
 claudex/
 ├── .claude-plugin/
-│   └── marketplace.json        # Plugin registry (single source of truth)
-├── plugins/                    # 22 plugins (1 per skill)
+│   └── marketplace.json        # Single source of truth for all plugin metadata
+├── plugins/                    # 23 plugins (1 per skill)
 │   ├── accessibility-audit/
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
 │   │   ├── skills/
 │   │   │   └── accessibility-audit/
+│   │   │       └── SKILL.md
 │   │   └── README.md
 │   ├── cc-insights/            # Includes hooks
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
 │   │   ├── skills/
 │   │   │   └── cc-insights/
+│   │   │       └── SKILL.md
 │   │   ├── hooks/
 │   │   │   ├── hooks.json
 │   │   │   └── extract-explanatory-insights.sh
@@ -209,7 +207,7 @@ Apache 2.0
 ---
 
 **Maintained by**: Connor
-**Current Version**: v6.0.0
-**Last Updated**: 2026-01-24
+**Current Version**: v6.2.0
+**Last Updated**: 2026-02-04
 
 *Skills and hooks for extending Claude Code capabilities across the software development lifecycle.*

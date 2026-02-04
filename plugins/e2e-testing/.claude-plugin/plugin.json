@@ -1,9 +1,0 @@
-{
-  "name": "e2e-testing",
-  "version": "1.0.0",
-  "description": "End-to-end testing setup with Playwright, LLM-powered visual analysis, screenshot comparison, and browser automation",
-  "author": {
-    "name": "Connor",
-    "email": "noreply@claudex.dev"
-  }
-}

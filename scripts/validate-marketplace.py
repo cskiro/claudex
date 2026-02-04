@@ -139,7 +139,8 @@ class MarketplaceValidator:
     def _validate_plugin_entry(self, plugin: Dict, idx: int, plugin_names: Set[str]):
         """Validate a single plugin entry per Anthropic schema."""
         # Check required fields per Anthropic schema
-        required_fields = ['name', 'description', 'source', 'strict', 'skills']
+        # Note: strict and skills/hooks are NOT required - Claude Code auto-discovers components
+        required_fields = ['name', 'description', 'source']
 
         plugin_name = plugin.get('name', f'Plugin #{idx}')
 
@@ -162,18 +163,27 @@ class MarketplaceValidator:
             elif not source.startswith('./'):
                 self.warnings.append(f"Plugin '{plugin_name}': Source should start with './' (Anthropic pattern)")
 
-        # Validate strict field (boolean)
+        # Validate strict field (boolean) - OPTIONAL, defaults to true
         if 'strict' in plugin:
             if not isinstance(plugin['strict'], bool):
                 self.errors.append(f"Plugin '{plugin_name}': 'strict' must be a boolean")
+            # Warn if strict: false is used (causes manifest conflicts)
+            if plugin.get('strict') is False:
+                self.warnings.append(f"Plugin '{plugin_name}': 'strict: false' can cause manifest conflicts with plugin.json")
 
-        # Validate skills array
+        # Validate skills array - OPTIONAL, Claude Code auto-discovers from skills/ directory
         if 'skills' in plugin:
             skills = plugin['skills']
             if not isinstance(skills, list):
                 self.errors.append(f"Plugin '{plugin_name}': 'skills' must be an array")
             elif len(skills) == 0:
                 self.warnings.append(f"Plugin '{plugin_name}': Empty skills array")
+            else:
+                self.warnings.append(f"Plugin '{plugin_name}': Explicit 'skills' field is deprecated - Claude Code auto-discovers from skills/ directory")
+
+        # Validate hooks - OPTIONAL, Claude Code auto-discovers from hooks/ directory
+        if 'hooks' in plugin:
+            self.warnings.append(f"Plugin '{plugin_name}': Explicit 'hooks' field is deprecated - Claude Code auto-discovers from hooks/ directory")
 
     def _validate_source_isolation(self):
         """Validate source path patterns.
@@ -211,13 +221,14 @@ class MarketplaceValidator:
             )
 
     def _validate_skill_references(self):
-        """Validate that skill paths are correctly formatted."""
+        """Validate that skill paths are correctly formatted (for legacy explicit skills arrays)."""
         if 'plugins' not in self.marketplace:
             return
 
         all_skill_paths: Set[str] = set()
 
         for plugin in self.marketplace['plugins']:
+            # Skip plugins without explicit skills array (modern pattern - auto-discovery)
             if 'name' not in plugin or 'skills' not in plugin:
                 continue
 
@@ -241,19 +252,20 @@ class MarketplaceValidator:
                 all_skill_paths.add(skill_path)
 
     def _validate_skill_files(self):
-        """Validate that skill directories and SKILL.md files exist."""
+        """Validate that skill directories and SKILL.md files exist.
+
+        Supports two patterns:
+        1. Legacy explicit skills arrays (validates paths from skills field)
+        2. Modern auto-discovery (validates skills/ directory structure)
+        """
         if 'plugins' not in self.marketplace:
             return
 
         for plugin in self.marketplace['plugins']:
-            if 'name' not in plugin or 'skills' not in plugin:
+            if 'name' not in plugin:
                 continue
 
             plugin_name = plugin['name']
-            skills = plugin['skills']
-
-            if not isinstance(skills, list):
-                continue
 
             # Get plugin source directory for relative path resolution
             plugin_source = plugin.get('source', './')
@@ -262,46 +274,61 @@ class MarketplaceValidator:
             else:
                 plugin_source_dir = self.repo_root / plugin_source
 
-            for skill_path in skills:
-                if not isinstance(skill_path, str):
+            # Check if plugin has explicit skills array (legacy) or uses auto-discovery (modern)
+            if 'skills' in plugin:
+                skills = plugin['skills']
+                if not isinstance(skills, list):
                     continue
 
-                # Resolve skill directory path relative to plugin source
-                if skill_path.startswith('./'):
-                    skill_dir = plugin_source_dir / skill_path.lstrip('./')
+                # Validate explicit skill paths
+                for skill_path in skills:
+                    if not isinstance(skill_path, str):
+                        continue
+                    self._validate_single_skill(plugin_name, plugin_source_dir, skill_path)
+            else:
+                # Modern pattern: auto-discover skills from skills/ directory
+                skills_dir = plugin_source_dir / 'skills'
+                if skills_dir.exists() and skills_dir.is_dir():
+                    for skill_subdir in skills_dir.iterdir():
+                        if skill_subdir.is_dir():
+                            skill_path = f"./skills/{skill_subdir.name}"
+                            self._validate_single_skill(plugin_name, plugin_source_dir, skill_path)
                 else:
-                    skill_dir = plugin_source_dir / skill_path
+                    self.warnings.append(f"Plugin '{plugin_name}': No skills/ directory found for auto-discovery")
 
-                # Check directory exists
-                if not skill_dir.exists():
-                    self.errors.append(f"Plugin '{plugin_name}': Skill directory not found: {skill_path}")
-                    continue
+    def _validate_single_skill(self, plugin_name: str, plugin_source_dir: Path, skill_path: str):
+        """Validate a single skill directory and its SKILL.md file."""
+        # Resolve skill directory path relative to plugin source
+        if skill_path.startswith('./'):
+            skill_dir = plugin_source_dir / skill_path.lstrip('./')
+        else:
+            skill_dir = plugin_source_dir / skill_path
 
-                if not skill_dir.is_dir():
-                    self.errors.append(f"Plugin '{plugin_name}': Skill path is not a directory: {skill_path}")
-                    continue
+        # Check directory exists
+        if not skill_dir.exists():
+            self.errors.append(f"Plugin '{plugin_name}': Skill directory not found: {skill_path}")
+            return
 
-                # Check SKILL.md exists (Anthropic pattern - NO plugin.json)
-                skill_md_path = skill_dir / "SKILL.md"
-                if not skill_md_path.exists():
-                    self.errors.append(f"Plugin '{plugin_name}': Missing SKILL.md at {skill_path}/SKILL.md")
-                    continue
+        if not skill_dir.is_dir():
+            self.errors.append(f"Plugin '{plugin_name}': Skill path is not a directory: {skill_path}")
+            return
 
-                # Validate SKILL.md has content
-                try:
-                    with open(skill_md_path, 'r') as f:
-                        content = f.read()
-                        if len(content.strip()) == 0:
-                            self.errors.append(f"Plugin '{plugin_name}': SKILL.md is empty in {skill_path}")
-                        elif len(content) < 100:
-                            self.warnings.append(f"Plugin '{plugin_name}': SKILL.md seems very short in {skill_path} ({len(content)} chars)")
-                except Exception as e:
-                    self.errors.append(f"Plugin '{plugin_name}': Could not read SKILL.md in {skill_path}: {e}")
+        # Check SKILL.md exists (Anthropic pattern)
+        skill_md_path = skill_dir / "SKILL.md"
+        if not skill_md_path.exists():
+            self.errors.append(f"Plugin '{plugin_name}': Missing SKILL.md at {skill_path}/SKILL.md")
+            return
 
-                # Warn if plugin.json exists (not part of Anthropic pattern)
-                plugin_json_path = skill_dir / "plugin.json"
-                if plugin_json_path.exists():
-                    self.warnings.append(f"Skill '{skill_path}': Contains plugin.json (not required in Anthropic schema, marketplace.json is single source of truth)")
+        # Validate SKILL.md has content
+        try:
+            with open(skill_md_path, 'r') as f:
+                content = f.read()
+                if len(content.strip()) == 0:
+                    self.errors.append(f"Plugin '{plugin_name}': SKILL.md is empty in {skill_path}")
+                elif len(content) < 100:
+                    self.warnings.append(f"Plugin '{plugin_name}': SKILL.md seems very short in {skill_path} ({len(content)} chars)")
+        except Exception as e:
+            self.errors.append(f"Plugin '{plugin_name}': Could not read SKILL.md in {skill_path}: {e}")
 
     def _is_valid_semver(self, version: str) -> bool:
         """Check if version follows semantic versioning format."""
@@ -336,16 +363,28 @@ class MarketplaceValidator:
         if len(self.errors) == 0:
             plugin_count = len(self.marketplace.get('plugins', []))
 
-            # Count total skills
+            # Count total skills (auto-discovered from directory structure)
             total_skills = 0
             for plugin in self.marketplace.get('plugins', []):
                 if 'skills' in plugin and isinstance(plugin['skills'], list):
+                    # Legacy explicit skills array
                     total_skills += len(plugin['skills'])
+                else:
+                    # Modern auto-discovery: count skills/ subdirectories
+                    plugin_source = plugin.get('source', './')
+                    if plugin_source.startswith('./'):
+                        plugin_source_dir = self.repo_root / plugin_source.lstrip('./')
+                    else:
+                        plugin_source_dir = self.repo_root / plugin_source
+
+                    skills_dir = plugin_source_dir / 'skills'
+                    if skills_dir.exists() and skills_dir.is_dir():
+                        total_skills += sum(1 for d in skills_dir.iterdir() if d.is_dir())
 
             print(f"{Colors.GREEN}{Colors.BOLD}✅ Validation passed!{Colors.RESET}")
             print(f"   Marketplace: {self.marketplace.get('name', 'unknown')}")
-            print(f"   Plugin groups: {plugin_count}")
-            print(f"   Total skills: {total_skills}")
+            print(f"   Plugins: {plugin_count}")
+            print(f"   Skills (auto-discovered): {total_skills}")
             print(f"   Warnings: {len(self.warnings)}")
             print()
         else:
