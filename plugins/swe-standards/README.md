@@ -76,6 +76,7 @@ For the full standards experience:
 
 - **pr-review-toolkit** *(external — Anthropic marketplace)* — Required for Quality profile's review agents. Install from Anthropic's plugin marketplace.
 - **adr-generator** *(claudex marketplace)* — Architecture Decision Records. Install: `/plugin install adr-generator@claudex`
+- **ascii-diagram-creator** *(claudex marketplace)* — Visual documentation standards. Install: `/plugin install ascii-diagram-creator@claudex`
 
 ## What's Included
 

@@ -29,7 +29,7 @@ claudex/
 ├── scripts/
 │   ├── validate-marketplace.py    # Schema validation
 │   └── validate-skills.py         # Skill quality validation
-├── plugins/                       # 23 plugins (1 per skill)
+├── plugins/                       # 24 plugins (1 per skill)
 │   ├── accessibility-audit/
 │   │   ├── skills/
 │   │   │   └── accessibility-audit/
@@ -44,7 +44,7 @@ claudex/
 │   │   │   ├── hooks.json
 │   │   │   └── extract-explanatory-insights.sh
 │   │   └── README.md
-│   └── ... (21 more plugins)
+│   └── ... (22 more plugins)
 └── archive/                       # Archived skills (not in marketplace)
 ```
 
