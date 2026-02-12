@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Skills and hooks for Claude Code - code quality analysis, testing automation, productivity tools, and DevOps workflows",
-    "version": "6.2.0",
+    "version": "6.3.0",
     "homepage": "https://github.com/cskiro/claudex"
   },
   "plugins": [
@@ -146,6 +146,12 @@
       "name": "sub-agent-creator",
       "description": "Specialized Claude Code sub-agent creation following Anthropic patterns",
       "source": "./plugins/sub-agent-creator",
+      "strict": true
+    },
+    {
+      "name": "swe-standards",
+      "description": "Production-grade engineering standards with installable profiles for TDD, git flow, security, and code quality",
+      "source": "./plugins/swe-standards",
       "strict": true
     }
   ]
