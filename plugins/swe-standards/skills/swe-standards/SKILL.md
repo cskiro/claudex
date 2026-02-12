@@ -23,9 +23,9 @@ Production-grade engineering standards for Claude Code projects, packaged as ins
 | Profile | Rules | Covers |
 |---------|-------|--------|
 | **Core** | 5 rules | Fail-fast, XP principles, git branching, git narrative, visual docs |
-| **TypeScript** | 2 rules | Strict types, React patterns, Vitest CPU protection (shared with Testing) |
+| **TypeScript** | 1 rule | Strict types, React patterns, naming conventions |
 | **Python** | 1 rule | Type hints, Black/Ruff/mypy, Google docstrings |
-| **Testing** | 2 rules | TDD red-green-refactor, Testing Trophy, Vitest CPU protection (shared with TypeScript) |
+| **Testing** | 1 rule | TDD red-green-refactor, Testing Trophy, AAA pattern |
 | **Quality** | 3 rules | PR review toolkit, code simplifier, docs freshness |
 | **Security** | 1 rule | OWASP Top 10, auth patterns, secrets management |
 
@@ -57,9 +57,9 @@ See [reference/rule-catalog.md](reference/rule-catalog.md) for summaries of ever
 
 See [workflow/setup-guide.md](workflow/setup-guide.md) for step-by-step adoption instructions.
 
-## Companion Plugins
+## Dependencies
 
-See [workflow/setup-guide.md](workflow/setup-guide.md#companion-plugins) for recommended companion plugins (`pr-review-toolkit`, `adr-generator`, `ascii-diagram-creator`).
+See [workflow/setup-guide.md](workflow/setup-guide.md#dependencies) for required external plugins. The Quality profile depends on `pr-review-toolkit` (Anthropic marketplace) — `/init` and `/check` will detect and prompt if missing.
 
 ## Limitations
 

@@ -25,13 +25,7 @@ Types: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `perf`
 
 ## Visual Communication
 
-When explaining flows, architecture, comparisons, or state machines → **USE ASCII DIAGRAMS**
-
-```
-┌─────────┐     ┌─────────┐     ┌─────────┐
-│  Box 1  │────▶│  Box 2  │────▶│  Box 3  │
-└─────────┘     └─────────┘     └─────────┘
-```
+When explaining flows, architecture, comparisons, or state machines → **use ASCII diagrams**. See `visual-documentation.md` for patterns and best practices.
 
 ## Security (Always)
 

@@ -17,7 +17,6 @@ Which rules belong to which profiles. Core is always included.
 | `quality/pr-review-toolkit-workflow.md` | | | | | x | |
 | `quality/code-simplifier-workflow.md` | | | | | x | |
 | `quality/docs-check-workflow.md` | | | | | x | |
-| `quality/vitest-cpu-protection.md` | | x | | x | | |
 | `domain/security.md` | | | | | | x |
 
 ## Profile Descriptions
@@ -26,13 +25,13 @@ Which rules belong to which profiles. Core is always included.
 Foundation rules that apply to every project: fail-fast principles, XP methodology, git branching conventions, narrative commit templates, and visual documentation standards.
 
 ### TypeScript
-Language-specific standards for TypeScript/React projects: strict types, naming conventions, React component patterns, import organization. Includes Vitest CPU protection.
+Language-specific standards for TypeScript/React projects: strict types, naming conventions, React component patterns, import organization.
 
 ### Python
 Language-specific standards for Python projects: type hints, Black/Ruff/mypy toolchain, Google-style docstrings, functional patterns, Pydantic configuration.
 
 ### Testing
-TDD workflow and Testing Trophy methodology: red-green-refactor cycle, AAA pattern, coverage requirements, mocking best practices. Includes Vitest CPU protection.
+TDD workflow and Testing Trophy methodology: red-green-refactor cycle, AAA pattern, coverage requirements, mocking best practices.
 
 ### Quality
 Pre-PR quality gates: PR review toolkit workflow (6 specialized agents), code simplifier workflow, documentation freshness checks.

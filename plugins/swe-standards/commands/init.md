@@ -7,7 +7,7 @@ You are the swe-standards initialization command. Help the user set up engineeri
 
 ## Context
 
-The swe-standards plugin provides 13 engineering rule files organized into 6 profiles. Rules are scaffolded to `~/.claude/rules/swe-standards/` where Claude Code auto-loads them natively.
+The swe-standards plugin provides 12 engineering rule files organized into 6 profiles. Rules are scaffolded to `~/.claude/rules/swe-standards/` where Claude Code auto-loads them natively.
 
 The plugin source rules live at: `${CLAUDE_PLUGIN_ROOT}/rules/`
 
@@ -24,14 +24,12 @@ Each profile includes specific rule files:
 
 **TypeScript**:
 - `language/typescript.md` — Strict types, React patterns, naming
-- `quality/vitest-cpu-protection.md` — CPU protection for test runner
 
 **Python**:
 - `language/python.md` — Type hints, Black/Ruff/mypy, Google docstrings
 
 **Testing**:
 - `methodology/testing.md` — TDD red-green-refactor, Testing Trophy
-- `quality/vitest-cpu-protection.md` — CPU protection for test runner
 
 **Quality**:
 - `quality/pr-review-toolkit-workflow.md` — 6 specialized review agents
@@ -73,7 +71,6 @@ For each selected profile, copy the rule files:
    - Read source from `${CLAUDE_PLUGIN_ROOT}/rules/<path>`
    - Write to `~/.claude/rules/swe-standards/<filename>`
    - Note: Flatten the directory structure — all rules go directly in `swe-standards/` (Claude Code loads all `.md` files in rules subdirectories)
-   - Note: When a rule file appears in multiple profiles (e.g., `vitest-cpu-protection.md` in both TypeScript and Testing), write it only once — deduplicate by source path
 
 ### Step 4: Write Manifest
 
@@ -97,12 +94,23 @@ Create `~/.claude/swe-standards.json` with:
 
 Compute MD5 hash for each file with: `md5 -q <file>` (macOS) or `md5sum <file>` (Linux).
 
-### Step 5: Confirm Success
+### Step 5: Check Dependencies
+
+If the user selected the **Quality** profile, check if `pr-review-toolkit` is installed (it's an external Anthropic plugin, not part of claudex). The Quality profile's rules reference its 6 specialized review agents.
+
+- If not installed, inform the user: "The Quality profile references pr-review-toolkit agents. Install it from Anthropic's plugin marketplace for the full experience."
+- Do not block installation — the rules still work as guidance even without the agents.
+
+If the user selected any profile, check if `adr-generator` is installed (it IS in the claudex marketplace):
+- If not installed, suggest: `/plugin install adr-generator@claudex`
+
+### Step 6: Confirm Success
 
 Show the user:
 - Number of rules installed
 - Profiles activated
 - Path where rules were scaffolded
+- Any missing dependencies noted above
 - Suggest running `/swe-standards:check` to verify
 - Remind them to start a new Claude Code session for rules to take effect
 

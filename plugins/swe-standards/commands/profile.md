@@ -12,9 +12,9 @@ Rules are installed at `~/.claude/rules/swe-standards/` and tracked via a manife
 ## Profile Definitions
 
 **Core**: core.md, xp-principles.md, git-branching.md, git-flow-narrative.md, visual-documentation.md
-**TypeScript**: typescript.md, vitest-cpu-protection.md
+**TypeScript**: typescript.md
 **Python**: python.md
-**Testing**: testing.md, vitest-cpu-protection.md
+**Testing**: testing.md
 **Quality**: pr-review-toolkit-workflow.md, code-simplifier-workflow.md, docs-check-workflow.md
 **Security**: security.md
 
@@ -39,13 +39,11 @@ Core (5 rules)
   ⚠️  git-flow-narrative.md (modified locally)
   ✅ visual-documentation.md
 
-TypeScript (2 rules)
+TypeScript (1 rule)
   ✅ typescript.md
-  ✅ vitest-cpu-protection.md
 
-Testing (2 rules)
+Testing (1 rule)
   ✅ testing.md
-  ✅ vitest-cpu-protection.md (shared with TypeScript)
 
 Quality (3 rules)
   ✅ pr-review-toolkit-workflow.md

@@ -94,8 +94,3 @@ Final quality gate before PR: extract named functions, simplify array operations
 
 Documentation freshness checks: CLAUDE.md, README.md, CHANGELOG.md, architecture diagrams, ADRs. Trigger table mapping change types to required doc updates. Anti-patterns (stale docs, orphan docs).
 
-### vitest-cpu-protection.md
-**Profile**: TypeScript, Testing
-**Scope**: Universal
-
-CPU protection for Vitest: thread limiting (4 max per instance), shell wrapper (`vtest`), status monitor (`vtest_status`), recommended limits table, CI configuration.

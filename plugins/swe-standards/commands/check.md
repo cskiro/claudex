@@ -42,13 +42,20 @@ List all `.md` files in `~/.claude/rules/swe-standards/` and identify any files 
 - Manually added rules (fine, report as custom)
 - Leftover from a previous profile (suggest cleanup)
 
-### Step 5: Check Companion Plugins
+### Step 5: Check Dependencies
 
-Check if recommended companion plugins are installed by looking for their directories:
-- `pr-review-toolkit` — needed for Quality profile
-- `adr-generator` — referenced by XP principles
+Check if required external plugins are installed:
 
-Report as installed/not installed.
+1. **pr-review-toolkit** (required for Quality profile):
+   - Check if the plugin is installed by running: look for `pr-review-toolkit` in the user's installed plugins
+   - If not installed, report as missing and suggest: `Install pr-review-toolkit from Anthropic's plugin marketplace to enable Quality profile agents`
+   - This is an external Anthropic plugin, not part of the claudex marketplace
+
+2. **adr-generator** (recommended, in claudex marketplace):
+   - Check if installed by looking for its directory
+   - If not installed, suggest: `/plugin install adr-generator@claudex`
+
+Report installation status for each.
 
 ### Step 6: Report Health Summary
 
@@ -71,9 +78,9 @@ Rules Status:
   ❌ Missing:              0
   📄 Custom (not managed): 1
 
-Companion Plugins:
-  ✅ pr-review-toolkit: installed
-  ⚠️  adr-generator: not installed
+Dependencies:
+  ✅ pr-review-toolkit: installed (external — Anthropic marketplace)
+  ⚠️  adr-generator: not installed (run: /plugin install adr-generator@claudex)
 
 Overall: ✅ Healthy (2 locally modified rules)
 ```

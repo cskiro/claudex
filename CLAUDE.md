@@ -239,7 +239,7 @@ Current version: **6.3.0**
 
 ### Version 6.3.0
 - Added swe-standards plugin — production-grade engineering standards with installable profiles
-- 6 profiles: Core, TypeScript, Python, Testing, Quality, Security (13 rule files)
+- 6 profiles: Core, TypeScript, Python, Testing, Quality, Security (12 rule files)
 - 4 slash commands: `/swe-standards:init`, `/sync`, `/check`, `/profile`
 - First plugin to use `commands/` directory for auto-discovered slash commands
 - 24 plugins (1 per skill)
