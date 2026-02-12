@@ -1,6 +1,6 @@
 ---
 name: swe-standards
-description: Software engineering standards navigator and scaffolder. Install production-grade TDD, git flow, security, and code quality rules into any project. Supports profiles (Core, TypeScript, Python, Testing, Quality, Security) for incremental adoption. TRIGGERS - "engineering standards", "what standards apply", "setup standards", "TDD workflow", "git branching rules", "code quality standards", "install swe standards". Use when adopting or navigating engineering standards for Claude Code projects.
+description: Software engineering standards navigator and scaffolder for Claude Code projects. This skill should be used when users want to install, configure, or navigate production-grade engineering rules for TDD, git flow, security, and code quality. Supports 6 installable profiles (Core, TypeScript, Python, Testing, Quality, Security) for incremental adoption. Common triggers include "set up engineering standards", "what standards apply to this file", "configure Claude Code rules", "install TDD workflow", "add TypeScript standards", "git branching rules", "code quality standards", "show my installed profiles", "update my standards", "help me set up project rules", "what rules should I use".
 ---
 
 # Software Engineering Standards
@@ -23,9 +23,9 @@ Production-grade engineering standards for Claude Code projects, packaged as ins
 | Profile | Rules | Covers |
 |---------|-------|--------|
 | **Core** | 5 rules | Fail-fast, XP principles, git branching, git narrative, visual docs |
-| **TypeScript** | 2 rules | Strict types, React patterns, Vitest CPU protection |
+| **TypeScript** | 2 rules | Strict types, React patterns, Vitest CPU protection (shared with Testing) |
 | **Python** | 1 rule | Type hints, Black/Ruff/mypy, Google docstrings |
-| **Testing** | 2 rules | TDD red-green-refactor, Testing Trophy, Vitest CPU protection |
+| **Testing** | 2 rules | TDD red-green-refactor, Testing Trophy, Vitest CPU protection (shared with TypeScript) |
 | **Quality** | 3 rules | PR review toolkit, code simplifier, docs freshness |
 | **Security** | 1 rule | OWASP Top 10, auth patterns, secrets management |
 
@@ -38,12 +38,6 @@ Production-grade engineering standards for Claude Code projects, packaged as ins
 │  init        │     │  (guided)    │     │  swe-standards/      │
 └─────────────┘     └──────────────┘     └─────────────────────┘
 ```
-
-1. **`/init`** detects your project type and recommends profiles
-2. Selected rules are copied to `~/.claude/rules/swe-standards/`
-3. Claude Code auto-loads them via its native rules system
-4. **`/sync`** updates rules when upstream changes
-5. **`/check`** verifies everything is healthy
 
 ## When to Use This Skill
 
@@ -61,16 +55,11 @@ See [reference/rule-catalog.md](reference/rule-catalog.md) for summaries of ever
 
 ## Adoption Guide
 
-See [workflow/phase-1-setup.md](workflow/phase-1-setup.md) for step-by-step adoption instructions.
+See [workflow/setup-guide.md](workflow/setup-guide.md) for step-by-step adoption instructions.
 
 ## Companion Plugins
 
-These Claudex plugins work alongside swe-standards:
-
-| Plugin | Purpose |
-|--------|---------|
-| `pr-review-toolkit` | Automated PR review agents (referenced by Quality profile) |
-| `adr-generator` | Architecture Decision Records (referenced by XP principles) |
+See [workflow/setup-guide.md](workflow/setup-guide.md#companion-plugins) for recommended companion plugins (`pr-review-toolkit`, `adr-generator`, `ascii-diagram-creator`).
 
 ## Limitations
 

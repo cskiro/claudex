@@ -1,4 +1,4 @@
-# Phase 1: Setup & Adoption
+# Setup & Adoption Guide
 
 Step-by-step guide for adopting swe-standards in your projects.
 

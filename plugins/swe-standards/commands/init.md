@@ -73,6 +73,7 @@ For each selected profile, copy the rule files:
    - Read source from `${CLAUDE_PLUGIN_ROOT}/rules/<path>`
    - Write to `~/.claude/rules/swe-standards/<filename>`
    - Note: Flatten the directory structure — all rules go directly in `swe-standards/` (Claude Code loads all `.md` files in rules subdirectories)
+   - Note: When a rule file appears in multiple profiles (e.g., `vitest-cpu-protection.md` in both TypeScript and Testing), write it only once — deduplicate by source path
 
 ### Step 4: Write Manifest
 
