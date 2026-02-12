@@ -22,7 +22,7 @@ Production-grade engineering standards for Claude Code projects, packaged as ins
 
 | Profile | Rules | Covers |
 |---------|-------|--------|
-| **Core** | 4 rules | Fail-fast, XP principles, git branching, git narrative, visual docs |
+| **Core** | 5 rules | Fail-fast, XP principles, git branching, git narrative, visual docs |
 | **TypeScript** | 2 rules | Strict types, React patterns, Vitest CPU protection |
 | **Python** | 1 rule | Type hints, Black/Ruff/mypy, Google docstrings |
 | **Testing** | 2 rules | TDD red-green-refactor, Testing Trophy, Vitest CPU protection |

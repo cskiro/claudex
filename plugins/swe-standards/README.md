@@ -52,8 +52,8 @@ Standards are organized into 6 profiles for incremental adoption:
 Plugin Source (rules/)          User Machine
 ┌─────────────────────┐        ┌─────────────────────────┐
 │ core/               │  /init │ ~/.claude/rules/         │
-│   00-core.md        │───────▶│   swe-standards/         │
-│   xp-principles.md  │        │     00-core.md           │
+│   core.md           │───────▶│   swe-standards/         │
+│   xp-principles.md  │        │     core.md              │
 │ methodology/        │        │     xp-principles.md     │
 │   git-branching.md  │        │     git-branching.md     │
 │   ...               │        │     ...                  │
@@ -83,7 +83,7 @@ For the full standards experience, also install:
 
 | Category | Rules |
 |----------|-------|
-| Core | `00-core.md` (fail-fast, no silent failures), `xp-principles.md` (Kent Beck's 16 principles) |
+| Core | `core.md` (fail-fast, no silent failures), `xp-principles.md` (Kent Beck's 16 principles) |
 | Methodology | `git-branching.md`, `git-flow-narrative.md`, `testing.md` |
 | Domain | `security.md`, `visual-documentation.md` |
 | Language | `typescript.md`, `python.md` |

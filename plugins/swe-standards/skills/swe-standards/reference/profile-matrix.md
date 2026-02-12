@@ -6,7 +6,7 @@ Which rules belong to which profiles. Core is always included.
 
 | Rule File | Core | TypeScript | Python | Testing | Quality | Security |
 |-----------|:----:|:----------:|:------:|:-------:|:-------:|:--------:|
-| `core/00-core.md` | x | x | x | x | x | x |
+| `core/core.md` | x | | | | | |
 | `core/xp-principles.md` | x | | | | | |
 | `methodology/git-branching.md` | x | | | | | |
 | `methodology/git-flow-narrative.md` | x | | | | | |

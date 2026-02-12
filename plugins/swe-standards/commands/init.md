@@ -16,7 +16,7 @@ The plugin source rules live at: `${CLAUDE_PLUGIN_ROOT}/rules/`
 Each profile includes specific rule files:
 
 **Core** (always included):
-- `core/00-core.md` — Fail-fast, no silent failures, conventional commits
+- `core/core.md` — Fail-fast, no silent failures, conventional commits
 - `core/xp-principles.md` — Kent Beck's 16 XP principles
 - `methodology/git-branching.md` — Branch naming and workflow
 - `methodology/git-flow-narrative.md` — Narrative commit/PR templates
@@ -85,8 +85,8 @@ Create `~/.claude/swe-standards.json` with:
   "updated_at": "<ISO timestamp>",
   "profiles": ["core", "typescript", "testing", "quality"],
   "files": {
-    "00-core.md": {
-      "source": "core/00-core.md",
+    "core.md": {
+      "source": "core/core.md",
       "profile": "core",
       "hash": "<md5 hash of file contents>"
     }

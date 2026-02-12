@@ -6,8 +6,8 @@ Summary of every rule included in the swe-standards plugin.
 
 ## Core Rules
 
-### 00-core.md
-**Profile**: All profiles
+### core.md
+**Profile**: Core
 **Scope**: Universal (all files)
 
 Foundation principles: fail fast (validate inputs at boundaries), no silent failures (log errors with context), conventional commit format, visual communication via ASCII diagrams, and security basics (no hardcoded secrets, parameterized queries).
@@ -48,7 +48,7 @@ TDD red-green-refactor-audit cycle, Testing Trophy (70% integration, 20% unit, 1
 **Profile**: Security
 **Scope**: Path-scoped (`**/auth/**`, `**/security/**`, `**/middleware/**`, `**/*.env*`, etc.)
 
-OWASP Top 10 prevention table, auth patterns (OAuth 2.0, short-lived tokens, argon2), data protection (AES-256, TLS 1.2+, PII redaction), secrets management, secure coding examples (SQL, paths, passwords), security headers, pre-production checklist.
+OWASP Top 10 prevention table, auth patterns (OAuth 2.0, short-lived tokens, bcrypt/argon2), data protection (AES-256, TLS 1.2+, PII redaction), secrets management, secure coding examples (SQL, paths, passwords), security headers, pre-production checklist.
 
 ### visual-documentation.md
 **Profile**: Core

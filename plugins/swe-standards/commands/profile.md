@@ -11,7 +11,7 @@ Rules are installed at `~/.claude/rules/swe-standards/` and tracked via a manife
 
 ## Profile Definitions
 
-**Core**: 00-core.md, xp-principles.md, git-branching.md, git-flow-narrative.md, visual-documentation.md
+**Core**: core.md, xp-principles.md, git-branching.md, git-flow-narrative.md, visual-documentation.md
 **TypeScript**: typescript.md, vitest-cpu-protection.md
 **Python**: python.md
 **Testing**: testing.md, vitest-cpu-protection.md
@@ -33,7 +33,7 @@ Active Profiles
 ===============
 
 Core (5 rules)
-  ✅ 00-core.md
+  ✅ core.md
   ✅ xp-principles.md
   ✅ git-branching.md
   ⚠️  git-flow-narrative.md (modified locally)
