@@ -11,12 +11,12 @@ Claudex is a **Claude Code marketplace** that distributes skills and hooks throu
 ```
 marketplace.json (Single Source of Truth)
     ↓
-23 Plugins (1 per skill)
+24 Plugins (1 per skill)
     ↓
-Each plugin: plugin.json + skills/ + README.md
+Each plugin: skills/ + README.md
 ```
 
-**Key Principle**: The `.claude-plugin/marketplace.json` file is the **single source of truth** for all marketplace metadata. Each plugin has its own `.claude-plugin/plugin.json` for per-plugin metadata.
+**Key Principle**: The `.claude-plugin/marketplace.json` file is the **single source of truth** for all marketplace metadata. No per-plugin `plugin.json` files are used (removed in v6.2.0).
 
 ## Repository Structure
 
@@ -29,7 +29,7 @@ claudex/
 ├── scripts/
 │   ├── validate-marketplace.py    # Schema validation
 │   └── validate-skills.py         # Skill quality validation
-├── plugins/                       # 23 plugins (1 per skill)
+├── plugins/                       # 24 plugins (1 per skill)
 │   ├── accessibility-audit/
 │   │   ├── skills/
 │   │   │   └── accessibility-audit/
@@ -44,7 +44,7 @@ claudex/
 │   │   │   ├── hooks.json
 │   │   │   └── extract-explanatory-insights.sh
 │   │   └── README.md
-│   └── ... (21 more plugins)
+│   └── ... (22 more plugins)
 └── archive/                       # Archived skills (not in marketplace)
 ```
 
@@ -83,7 +83,7 @@ skill-name/
     "email": "noreply@claudex.dev"
   },
   "metadata": {
-    "version": "6.2.0",
+    "version": "X.Y.Z",
     "description": "Skills and hooks for Claude Code"
   },
   "plugins": [
@@ -102,7 +102,7 @@ skill-name/
 - `agents/` - Agent definitions
 - `commands/` - Custom commands
 
-Do NOT add `strict`, `skills`, or `hooks` fields to marketplace entries - Claude Code auto-discovers these from directory structure.
+Do NOT add `skills` or `hooks` fields to marketplace entries - Claude Code auto-discovers these from directory structure. The `strict` field is acceptable (all 24 plugins use it for enforced loading).
 
 ### Adding a New Skill/Plugin
 
@@ -235,7 +235,14 @@ git push origin marketplace@X.Y.Z
 
 ## Marketplace Version History
 
-Current version: **6.2.0**
+Current version: **6.3.0**
+
+### Version 6.3.0
+- Added swe-standards plugin — production-grade engineering standards with installable profiles
+- 6 profiles: Core, TypeScript, Python, Testing, Quality, Security (12 rule files)
+- 4 slash commands: `/swe-standards:init`, `/sync`, `/check`, `/profile`
+- First plugin to use `commands/` directory for auto-discovered slash commands
+- 24 plugins (1 per skill)
 
 ### Version 6.2.0
 - **FIX**: Removed all plugin.json files from plugins (single source of truth)
@@ -267,6 +274,7 @@ Current version: **6.2.0**
 - Flat `skills/` directory (no nested plugin directories)
 
 **Total inventory:**
-- 23 plugins
-- 23 skills
+- 24 plugins
+- 24 skills
 - 1 hook (bundled with cc-insights)
+- 4 commands (bundled with swe-standards)
