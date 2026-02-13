@@ -46,7 +46,7 @@ TDD red-green-refactor-audit cycle, Testing Trophy (70% integration, 20% unit, 1
 
 ### security.md
 **Profile**: Security
-**Scope**: Path-scoped (`**/auth/**`, `**/security/**`, `**/middleware/**`, `**/*.env*`, etc.)
+**Scope**: Path-scoped (`**/auth/**/*`, `**/security/**/*`, `**/middleware/**/*`, `**/*.env*`, `**/secrets/**/*`)
 
 OWASP Top 10 prevention table, auth patterns (OAuth 2.0, short-lived tokens, bcrypt/argon2), data protection (AES-256, TLS 1.2+, PII redaction), secrets management, secure coding examples (SQL, paths, passwords), security headers, pre-production checklist.
 

@@ -13,10 +13,10 @@ marketplace.json (Single Source of Truth)
     ↓
 24 Plugins (1 per skill)
     ↓
-Each plugin: plugin.json + skills/ + README.md
+Each plugin: skills/ + README.md
 ```
 
-**Key Principle**: The `.claude-plugin/marketplace.json` file is the **single source of truth** for all marketplace metadata. Each plugin has its own `.claude-plugin/plugin.json` for per-plugin metadata.
+**Key Principle**: The `.claude-plugin/marketplace.json` file is the **single source of truth** for all marketplace metadata. No per-plugin `plugin.json` files are used (removed in v6.2.0).
 
 ## Repository Structure
 
@@ -83,7 +83,7 @@ skill-name/
     "email": "noreply@claudex.dev"
   },
   "metadata": {
-    "version": "6.2.0",
+    "version": "X.Y.Z",
     "description": "Skills and hooks for Claude Code"
   },
   "plugins": [
@@ -102,7 +102,7 @@ skill-name/
 - `agents/` - Agent definitions
 - `commands/` - Custom commands
 
-Do NOT add `strict`, `skills`, or `hooks` fields to marketplace entries - Claude Code auto-discovers these from directory structure.
+Do NOT add `skills` or `hooks` fields to marketplace entries - Claude Code auto-discovers these from directory structure. The `strict` field is acceptable (all 24 plugins use it for enforced loading).
 
 ### Adding a New Skill/Plugin
 

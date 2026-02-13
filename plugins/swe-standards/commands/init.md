@@ -7,37 +7,9 @@ You are the swe-standards initialization command. Help the user set up engineeri
 
 ## Context
 
-The swe-standards plugin provides 12 engineering rule files organized into 6 profiles. Rules are scaffolded to `~/.claude/rules/swe-standards/` where Claude Code auto-loads them natively.
+The swe-standards plugin provides 12 engineering rule files organized into 6 profiles. Rules are scaffolded to `~/.claude/rules/swe-standards/` where Claude Code auto-loads them natively. The plugin source rules live at `${CLAUDE_PLUGIN_ROOT}/rules/`.
 
-The plugin source rules live at: `${CLAUDE_PLUGIN_ROOT}/rules/`
-
-## Profile Definitions
-
-Each profile includes specific rule files:
-
-**Core** (always included):
-- `core/core.md` — Fail-fast, no silent failures, conventional commits
-- `core/xp-principles.md` — Kent Beck's 16 XP principles
-- `methodology/git-branching.md` — Branch naming and workflow
-- `methodology/git-flow-narrative.md` — Narrative commit/PR templates
-- `domain/visual-documentation.md` — ASCII diagram standards
-
-**TypeScript**:
-- `language/typescript.md` — Strict types, React patterns, naming
-
-**Python**:
-- `language/python.md` — Type hints, Black/Ruff/mypy, Google docstrings
-
-**Testing**:
-- `methodology/testing.md` — TDD red-green-refactor, Testing Trophy
-
-**Quality**:
-- `quality/pr-review-toolkit-workflow.md` — 6 specialized review agents
-- `quality/code-simplifier-workflow.md` — Final pre-PR quality gate
-- `quality/docs-check-workflow.md` — Documentation freshness
-
-**Security**:
-- `domain/security.md` — OWASP Top 10, auth patterns, secrets management
+For the full profile-to-rule mapping, see `${CLAUDE_PLUGIN_ROOT}/skills/swe-standards/reference/profile-matrix.md`.
 
 ## Execution Steps
 
@@ -53,12 +25,15 @@ Look in the current working directory for:
 
 ### Step 2: Present Profile Selection
 
-If the user provided arguments ($ARGUMENTS), use those as pre-selected profiles. Otherwise, present the detection results and recommend profiles.
+If the user provided arguments ($ARGUMENTS), use those as pre-selected profiles. Otherwise, present detection results and recommend profiles.
 
 Always include Core. Recommend additional profiles based on detection:
-- TypeScript project detected → Core + TypeScript + Testing + Quality
-- Python project detected → Core + Python + Testing + Quality
-- Both detected → Core + TypeScript + Python + Testing + Quality
+
+| Detected | Recommend |
+|----------|-----------|
+| TypeScript | Core + TypeScript + Testing + Quality |
+| Python | Core + Python + Testing + Quality |
+| Both | Core + TypeScript + Python + Testing + Quality |
 
 Ask the user to confirm or adjust the selection.
 
@@ -101,8 +76,13 @@ If the user selected the **Quality** profile, check if `pr-review-toolkit` is in
 - If not installed, inform the user: "The Quality profile references pr-review-toolkit agents. Install it from Anthropic's plugin marketplace for the full experience."
 - Do not block installation — the rules still work as guidance even without the agents.
 
-If the user selected any profile, check if `adr-generator` is installed (it IS in the claudex marketplace):
-- If not installed, suggest: `/plugin install adr-generator@claudex`
+If the user selected any profile, check these claudex marketplace dependencies:
+
+1. **adr-generator** (referenced by XP Principle #6 — Document Decisions):
+   - If not installed, suggest: `/plugin install adr-generator@claudex`
+
+2. **ascii-diagram-creator** (referenced by Core profile's visual-documentation rule):
+   - If not installed, suggest: `/plugin install ascii-diagram-creator@claudex`
 
 ### Step 6: Confirm Success
 

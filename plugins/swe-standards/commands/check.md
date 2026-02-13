@@ -55,6 +55,10 @@ Check if required external plugins are installed:
    - Check if installed by looking for its directory
    - If not installed, suggest: `/plugin install adr-generator@claudex`
 
+3. **ascii-diagram-creator** (recommended, in claudex marketplace):
+   - Check if installed by looking for its directory
+   - If not installed, suggest: `/plugin install ascii-diagram-creator@claudex`
+
 Report installation status for each.
 
 ### Step 6: Report Health Summary

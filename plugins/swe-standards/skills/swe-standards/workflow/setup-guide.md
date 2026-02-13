@@ -78,7 +78,7 @@ Install security standards for production-grade protection.
 | Plugin | Source | Why | Install |
 |--------|--------|-----|---------|
 | `pr-review-toolkit` | Anthropic marketplace (external) | Quality profile's 6 review agents | Install from Anthropic's plugin marketplace |
-| `adr-generator` | claudex marketplace | XP principles reference ADR creation | `/plugin install adr-generator@claudex` |
+| `adr-generator` | claudex marketplace | Document Decisions (XP Principle #6) references ADR creation | `/plugin install adr-generator@claudex` |
 | `ascii-diagram-creator` | claudex marketplace | Visual documentation standards | `/plugin install ascii-diagram-creator@claudex` |
 
 The `/swe-standards:init` and `/swe-standards:check` commands will detect missing dependencies and prompt you to install them.
